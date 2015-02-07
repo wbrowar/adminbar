@@ -3,7 +3,7 @@ namespace Craft;
 
 class AdminbarVariable
 {
-  public function show($currentEntry = '', $type = 'bar', $color = '#d85b4b')
+  public function show($currentEntry = '', $color = '#d85b4b', $type = 'bar')
   {
     // load template and print at point of user variable
     $oldTemplatesPath = craft()->path->getTemplatesPath();
