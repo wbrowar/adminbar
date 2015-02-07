@@ -1,0 +1,25 @@
+{% if currentUser.can('accessCp') %}
+  <div class="admin_bar_wrapper">
+    <div class="admin_bar_greeting">
+      Hi, {{ currentUser.getFriendlyName() }}
+    </div>
+    <div class="admin_bar_links">
+      {% if entry|length %}
+        <a href="{{ entry.getCpEditUrl() }}">Edit</a>
+      {% endif %}
+      {% if currentUser.admin %}
+        <a href="{{ siteUrl }}admin/settings/">Settings</a>
+      {% endif %}
+    </div>
+    <div class="admin_bar_logout">
+      <a href="{{ logoutUrl }}">Logout</a>
+    </div>
+  </div>
+{% endif %}
+
+{% if type == 'bar' %}
+  {% set adminbarCss %}
+.admin_bar_wrapper{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-flow:row nowrap;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;margin:0;padding:0;width:100%;box-sizing:border-box;background-color:#000;background-color:rgba(0,0,0,.8);font-size:.9em;color:#fff}.admin_bar_wrapper a{margin:0;padding:6px 10px;text-align:center;text-decoration:none;color:#fff;transition:color .2s ease-out,background .2s ease-out}.admin_bar_wrapper a:hover{background-color:#fff;color:{{ color }}}.admin_bar_greeting{display:none;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;padding:0 15px}.admin_bar_links{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex-flow:row wrap;-ms-flex-flow:row wrap;flex-flow:row wrap;-webkit-flex:1 1 auto;-ms-flex:1 1 auto;flex:1 1 auto;padding:0}.admin_bar_links a{-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto}.admin_bar_logout{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex:0 0 60px;-ms-flex:0 0 60px;flex:0 0 60px;padding:0 15px;text-align:right}.admin_bar_logout:hover{background-color:{{ color }};transition:background .2s ease-out}.admin_bar_logout:hover a{background-color:transparent;color:#fff}@media screen and (min-width:601px){.admin_bar_greeting{display:-webkit-flex;display:-ms-flexbox;display:flex}}
+  {% endset %}
+  {% includeCss adminbarCss %}
+{% endif %}
