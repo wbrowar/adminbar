@@ -9,7 +9,8 @@ Simple front-end shortcut bar for users logged into Craft CMS.
 3. In your template, add the tag `{{ craft.Adminbar.show(entry) }}` at the top of the `<body>` tag or wherever you want it to show up.
 
 ## Options
-> Format: `{{ craft.Adminbar.show(currentEntry, color, type) }}`
+Format: `{{ craft.Adminbar.show(currentEntry, color, type) }}`
+
 * **currentEntry** – Current entry passed in as a TWIG object.
 * **color** – The color used for rollovers or highlights. You can change this to better fit the branding of your website.
 * **type** – Changes the style of the Admin Bar. For now, the only options are `bar` or `none`.
