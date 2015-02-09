@@ -10,6 +10,9 @@
       {% if currentUser.admin %}
         <a href="{{ siteUrl }}admin/settings/">Settings</a>
       {% endif %}
+      {% for link in craft.Adminbar.getCustomLinks %}
+        <a href="{{ link.linkUrl }}">{{ link.linkLabel }}</a>
+      {% endfor %}
     </div>
     <div class="admin_bar_logout">
       <a href="{{ logoutUrl }}">Logout</a>
