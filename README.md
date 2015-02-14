@@ -20,9 +20,9 @@ Format: `{{ craft.Adminbar.show(currentEntry, color, type) }}`
 
 Embedding the Admin Bar using this tag will let you overwrite the settings found on the plugin settings page.
 
-* **currentEntry** *entry*  – Current entry passed in as a TWIG object.
-* **color** *'#d85b4b'* – The color used for rollovers or highlights. You can change this to better fit the branding of your website. Use any CSS color format.
-* **type** *'bar'* – Changes the style of the Admin Bar. For now, the only options are `bar` or `none`.
+* **currentEntry** *`entry`*  – Current entry passed in as a TWIG object.
+* **color** *`'#d85b4b'`* – The color used for rollovers or highlights. You can change this to better fit the branding of your website. Use any CSS color format.
+* **type** *`'bar'`* – Changes the style of the Admin Bar. For now, the only options are `bar` or `none`.
   * `bar` – Creates a black bar that spans 100% the width of the element that it is placed in. It's *slightly* responsive.
   * `none` – Has the same markup as `bar`, but removes all of the CSS, so you may style it however you'd like.
 
