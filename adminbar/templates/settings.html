@@ -1,3 +1,9 @@
 {% import "_includes/forms" as forms %}
 
+{{ forms.lightswitchField({
+'label': 'Auto Embed', 'instructions': 'Add the Admin Bar to your front-end template without using the embed tag.', 'id': 'autoEmbed', 'name': 'autoEmbed', 'on': autoEmbedValue}) }}
+
+{{ forms.colorField({
+'label': 'Default Color', 'instructions': 'Color used for highlights and rollovers. This can be overridden if color value is added to the embed tag.', 'id': 'defaultColor', 'name': 'defaultColor', 'value': defaultColorValue}) }}
+
 {{ customLinksTable }}
