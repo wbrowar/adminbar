@@ -1,4 +1,4 @@
-{% if currentUser.can('accessCp') %}
+{% if currentUser and currentUser.can('accessCp') %}
   <div {% if type == 'primary' %}id="admin_bar_primary"{% endif %} class="admin_bar_wrapper">
     <div class="admin_bar_greeting">
       Hi, {{ currentUser.getFriendlyName() }}
@@ -11,10 +11,12 @@
         <a href="{{ siteUrl }}admin/settings/">Settings</a>
       {% endif %}
       {% for link in customLinks %}
-        {% if link.adminOnly != true %}
-          <a href="{{ link.linkUrl }}">{{ link.linkLabel }}</a>
-        {% elseif link.adminOnly and currentUser.admin %}
-          <a href="{{ link.linkUrl }}">{{ link.linkLabel }}</a>
+        {% if link.linkUrl|length %}
+          {% if link.adminOnly != true %}
+            <a href="{{ link.linkUrl }}">{{ link.linkLabel }}</a>
+          {% elseif link.adminOnly and currentUser.admin %}
+            <a href="{{ link.linkUrl }}">{{ link.linkLabel }}</a>
+          {% endif %}
         {% endif %}
       {% endfor %}
     </div>
@@ -39,5 +41,5 @@
       {% includeJs adminbarEmbedJs %}
     {% endif %}
   {% endif %}
-  
+
 {% endif %}

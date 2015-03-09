@@ -34,6 +34,9 @@ Embedding the Admin Bar using this tag will let you overwrite the settings found
 * Add a way to toggle links from other plugins in the CP if users don't want to use them.
 
 ## Releases
+#### *1.2.1*
+* Fixed an error when checking for user permissions (flagged an error in devMode)
+
 #### *1.2.0*
 **NOTE:** Craft will ask you to make a one-time database update to accommodate the new options. 
 * Added option to make custom links available only to users with the admin role.
