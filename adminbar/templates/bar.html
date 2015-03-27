@@ -8,7 +8,7 @@
         <a href="{{ entry.getCpEditUrl() }}">Edit</a>
       {% endif %}
       {% if currentUser.admin %}
-        <a href="{{ siteUrl }}admin/settings/">Settings</a>
+        <a href="/{{ craft.config.cpTrigger }}/settings">Settings</a>
       {% endif %}
       {% for link in customLinks %}
         {% if link.linkUrl|length %}

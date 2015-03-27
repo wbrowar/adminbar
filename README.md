@@ -34,6 +34,9 @@ Embedding the Admin Bar using this tag will let you overwrite the settings found
 * Add a way to toggle links from other plugins in the CP if users don't want to use them.
 
 ## Releases
+#### *1.2.2*
+* Changed the hard-coded url for the "Settings" link to use Craft's cpTrigger variable (thanks to mildlygeeky for the tip)
+
 #### *1.2.1*
 * Fixed an error when checking for user permissions (flagged an error in devMode)
 
