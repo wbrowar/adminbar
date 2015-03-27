@@ -4,7 +4,7 @@
       Hi, {{ currentUser.getFriendlyName() }}
     </div>
     <div class="admin_bar_links">
-      {% if entry|length %}
+      {% if entry is defined %}
         <a href="{{ entry.getCpEditUrl() }}">Edit</a>
       {% endif %}
       {% if currentUser.admin %}
