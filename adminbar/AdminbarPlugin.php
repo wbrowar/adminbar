@@ -9,14 +9,16 @@ class AdminbarPlugin extends BasePlugin
 	{
 		parent::init();
 		if (craft()->request->isCpRequest()) {
+  		// get data for custom links
 			$this->_customLinks();
 		}
 	
   	// add event listeners
     craft()->on('plugins.onLoadPlugins', function(Event $event) {
     	if (!craft()->request->isCpRequest() && $this->getSettings()->autoEmbed == 1) {
+      	// show adminbar in template
       	$element = craft()->urlManager->getMatchedElement();
-        craft()->adminbar_bar->show($element, $this->getSettings()->defaultColor, 'primary');
+        craft()->adminbar->show($element, $this->getSettings()->defaultColor, 'primary');
     	}
     });
 	}
@@ -27,7 +29,7 @@ class AdminbarPlugin extends BasePlugin
   }
   public function getVersion()
   {
-    return '1.2.2';
+    return '1.3.0';
   }
   public function getDeveloper()
   {
@@ -48,20 +50,21 @@ class AdminbarPlugin extends BasePlugin
   		'autoEmbed' => array(AttributeType::Bool, 'default' => false),
 			'customLinks' => array(AttributeType::Mixed, 'label' => 'Custom Links', 'default' => array()),
 			'defaultColor' => array(AttributeType::String, 'label' => 'Default Color', 'default' => '#d85b4b'),
+			'enabledLinks' => array(AttributeType::Mixed, 'label' => 'Enabled Link', 'default' => array()),
 		);
 	}
 	public function getSettingsHtml()
 	{
-		// If not set, create a default row
+		// if not set, create a default row for custom links table
 		if (!$this->_customLinks) {
 			$this->_customLinks = array(array('linkLabel' => '', 'linkUrl' => '', 'adminOnly' => ''));
 		}
 		
-		// Generate table for custom links
+		// generate table for custom links
 		$customLinksTable = craft()->templates->renderMacro('_includes/forms', 'editableTableField', array(
 			array(
 				'label'        => Craft::t('Custom Links'),
-				'instructions' => Craft::t('Add your own links to the Admin Bar. The URL can be absolute or relative.'),
+				'instructions' => Craft::t('Add your own links to the Admin Bar.'),
 				'id'           => 'customLinks',
 				'name'         => 'customLinks',
 				'cols'         => array(
@@ -83,11 +86,18 @@ class AdminbarPlugin extends BasePlugin
 			)
 		));
 		
-		// Output settings template
+		// get links from other plugins
+    Craft::import('plugins.adminbar.events.AdminbarEvent');
+    $event = new AdminbarEvent(craft()->adminbar);
+    craft()->adminbar->onFindPluginLinks($event);
+		
+		// output settings template
 		return craft()->templates->render('adminbar/settings', array(
-			'customLinksTable' => $customLinksTable,
-			'defaultColorValue' => $this->getSettings()->defaultColor,
 			'autoEmbedValue' => $this->getSettings()->autoEmbed,
+			'defaultColorValue' => $this->getSettings()->defaultColor,
+			'customLinksTable' => $customLinksTable,
+			'pluginLinks' => $event->pluginLinksData,
+			'enabledLinks' => $this->getSettings()->enabledLinks,
 		));
 	}
 	

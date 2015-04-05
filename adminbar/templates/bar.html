@@ -1,14 +1,15 @@
 {% if currentUser and currentUser.can('accessCp') %}
   <div {% if type == 'primary' %}id="admin_bar_primary"{% endif %} class="admin_bar_wrapper">
     <div class="admin_bar_greeting">
-      Hi, {{ currentUser.getFriendlyName() }}
+      {% if currentUser.photoUrl %}<span class="admin_bar_user_photo"><img src="{{ currentUser.photoUrl(40) }}" alt="{{ currentUser.friendlyName }}’s photo" /></span>{% endif %}Hi, {{ currentUser.getFriendlyName() }}
     </div>
     <div class="admin_bar_links">
-      {% if entry is defined %}
+      <a href="{{ craft.config.baseCpUrl }}/{{ craft.config.cpTrigger }}/dashboard">Dashboard</a>
+      {% if entry is defined and entry|length %}
         <a href="{{ entry.getCpEditUrl() }}">Edit</a>
       {% endif %}
       {% if currentUser.admin %}
-        <a href="/{{ craft.config.cpTrigger }}/settings">Settings</a>
+        <a href="{{ craft.config.baseCpUrl }}/{{ craft.config.cpTrigger }}/settings">Settings</a>
       {% endif %}
       {% for link in customLinks %}
         {% if link.linkUrl|length %}
@@ -16,6 +17,15 @@
             <a href="{{ link.linkUrl }}">{{ link.linkLabel }}</a>
           {% elseif link.adminOnly and currentUser.admin %}
             <a href="{{ link.linkUrl }}">{{ link.linkLabel }}</a>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+      {% for link in enabledLinks %}
+        {% if link.linkStatus == '1' %}
+          {% if link.linkType == 'url' %}
+            <a href="{{ link.linkUrl }}">{{ link.linkTitle }}</a>
+          {% elseif link.linkType == 'cpUrl' %}
+            <a href="{{ craft.config.baseCpUrl }}/{{ craft.config.cpTrigger }}/{{ link.linkUrl }}">{{ link.linkTitle }}</a>
           {% endif %}
         {% endif %}
       {% endfor %}
@@ -28,7 +38,7 @@
   {% if adminbarEmbedded != true %}
     {% if type == 'bar' or type == 'primary' %}
       {% set adminbarCss %}
-.admin_bar_wrapper{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-flow:row nowrap;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;margin:0;padding:0;width:100%;box-sizing:border-box;background-color:#000;background-color:rgba(0,0,0,.8);font-family:'Trebuchet MS','Lucida Grande','Lucida Sans Unicode','Lucida Sans',Tahoma,sans-serif;font-size:17px;color:#fff}.admin_bar_wrapper a{margin:0;padding:6px 10px;text-align:center;text-decoration:none;transition:color .2s ease-out,background .2s ease-out}.admin_bar_greeting{display:none;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;padding:0 15px;color:rgba(255,255,255,.8)}.admin_bar_links{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex-flow:row wrap;-ms-flex-flow:row wrap;flex-flow:row wrap;-webkit-flex:1 1 auto;-ms-flex:1 1 auto;flex:1 1 auto;padding:0}.admin_bar_links a{-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;color:#fff}.admin_bar_links a:hover{background-color:#fff;color:{{ color }}}.admin_bar_logout{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;padding:0;text-align:right}.admin_bar_logout a{padding-left:25px;padding-right:25px;background-color:transparent;color:#fff}.admin_bar_logout a:hover{background-color:{{ color }}}@media screen and (min-width:601px){.admin_bar_wrapper{font-size:14px}.admin_bar_greeting{display:-webkit-flex;display:-ms-flexbox;display:flex}}
+.admin_bar_wrapper{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-flow:row nowrap;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;margin:0;padding:0;width:100%;box-sizing:border-box;background-color:#000;background-color:rgba(0,0,0,.8);font-family:'Trebuchet MS','Lucida Grande','Lucida Sans Unicode','Lucida Sans',Tahoma,sans-serif;font-size:17px;color:#fff}.admin_bar_wrapper a{margin:0;padding:6px 10px;text-align:center;text-decoration:none;transition:color .2s ease-out,background .2s ease-out}.admin_bar_greeting{display:none;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;padding:0 15px;color:rgba(255,255,255,.8);white-space:nowrap}.admin_bar_links{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex-flow:row wrap;-ms-flex-flow:row wrap;flex-flow:row wrap;-webkit-flex:1 1 auto;-ms-flex:1 1 auto;flex:1 1 auto;padding:0}.admin_bar_links a{-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;color:#fff}.admin_bar_links a:hover{background-color:#fff;color:{{ color }}}.admin_bar_logout{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;padding:0;text-align:right}.admin_bar_logout a{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-ms-flex-align:center;align-items:center;padding:6px 25px;background-color:transparent;color:#fff}.admin_bar_logout a:hover{background-color:{{ color }}}.admin_bar_user_photo{padding-right:7px;width:23px;line-height:0}.admin_bar_user_photo img{max-width:100%;height:auto;border-radius:50%}@media screen and (min-width:601px){.admin_bar_wrapper{font-size:14px}.admin_bar_greeting{display:-webkit-flex;display:-ms-flexbox;display:flex}}
       {% endset %}
       {% includeCss adminbarCss %}
     {% endif %}

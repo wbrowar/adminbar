@@ -7,3 +7,34 @@
 'label': 'Default Color', 'instructions': 'Color used for highlights and rollovers. This can be overridden if color value is added to the embed tag.', 'id': 'defaultColor', 'name': 'defaultColor', 'value': defaultColorValue}) }}
 
 {{ customLinksTable }}
+
+<div class="field">
+  <label>Plugins Links</label>
+	{% if pluginLinks|length %}
+    <div class="instructions"><p>Enable links provided by other plugins that you&rsquo;ve installed.</p></div>
+    <table class="data fullwidth">
+    	<thead>
+    		<th>Link Title</th>
+    		<th>Enable Link</th>
+    	</thead>
+      {% for link in pluginLinks %}
+        {% set linkRendered = '<a href="' ~ link.url ~ '">' ~ link.title ~ '</a>' %}
+    		<tr>
+          <input type="hidden" name="enabledLinks[{{ link.id }}][linkId]"value="{{ link.id }}">
+          <input type="hidden" name="enabledLinks[{{ link.id }}][linkTitle]"value="{{ link.title }}">
+          <input type="hidden" name="enabledLinks[{{ link.id }}][linkUrl]"value="{{ link.url }}">
+          <input type="hidden" name="enabledLinks[{{ link.id }}][linkType]"value="{{ link.type }}">
+    			<td>{{ link.title }}</td>
+    			<td>
+    				{{ forms.lightswitch({
+    					name: "enabledLinks[" ~ link.id ~ "][linkStatus]",
+    					on: (enabledLinks[link.id]["linkStatus"] is defined and enabledLinks[link.id]["linkStatus"] is not empty ? enabledLinks[link.id]["linkStatus"] : false),
+    				}) }}
+    			</td>
+    		</tr>
+      {% endfor %}
+    </table>
+	{% else %}
+    <p>Other plugins can add links to the Admin Bar. After installing supporting plugins, come back here to enable new links.</p>
+	{% endif %}
+</div>

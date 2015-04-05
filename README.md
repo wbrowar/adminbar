@@ -3,7 +3,7 @@ Simple front-end shortcut bar for users logged into [Craft CMS](https://buildwit
 
 ![Screenshot](screenshot.png)
 
-> 50 shades of any color you want, with the new Default Color option!
+> The User Photo update!
 
 ## Installation
 1. Upload the adminbar/ folder to your craft/plugins/ folder.
@@ -11,7 +11,7 @@ Simple front-end shortcut bar for users logged into [Craft CMS](https://buildwit
 3. Either add the Admin Bar through the plugin settings page, or add the tag, `{{ craft.Adminbar.show(entry) }}`, to your template.
 
 ## Auto Embed
-Using the "Auto Embed" option will add the Admin Bar to the top of your `<body>` tag. Doing it this way will base the "Edit" button off of the current page entry. Branding colors will use the color selected through the "Default Color" color picker.
+Using the "Auto Embed" setting will add the Admin Bar to the top of your `<body>` tag. Doing it this way will base the "Edit" button off of the current page entry. Branding colors will use the color selected through the "Default Color" color picker.
 
 For more control, or to add the admin bar to multiple entries, use the embed tag, below.
 
@@ -26,31 +26,71 @@ Embedding the Admin Bar using this tag will let you overwrite the settings found
   * `bar` – Creates a black bar that spans 100% the width of the element that it is placed in. It's *slightly* responsive.
   * `none` – Has the same markup as `bar`, but removes all of the CSS, so you may style it however you'd like.
 
+## Adding Links Through Plugins
+Links can be added through the `onFindPluginLinks` event by using the `addPluginLink` method. Call `addPluginLink` for each link you'd like to add.
+
+```php
+craft()->adminbar->addPluginLink(array(
+  'title' => 'Craft',
+  'url' => 'http://buildwithcraft.com',
+  'type' => 'url',
+));
+```
+
+* **title** *required*  – The label that will appear for this link in the Admin Bar.
+* **url** *required* – The url or path used for the link.
+* **type** *required* – The context of the url or path.
+  * `url` – Used for relative or absolute URLs.
+  * `cpUrl` – Prepends `baseCpUrl/cpTrigger/` to the **url** value for links found within the Control Panel. For example, if you wanted to link to Craft's default Entries page, set **url** to `'entries'` and **type** to `'cpUrl'`. The final url will be `http://example.com/admin/entries`
+
+Included in the `eventexample` directory is an example of the full event code that should go within your plugin's `init` function, in your main plugin class:
+
+```php
+Craft::import('plugins.adminbar.events.AdminbarEvent');
+craft()->on('adminbar.onFindPluginLinks', function(AdminbarEvent $event) {
+  
+  craft()->adminbar->addPluginLink(array(
+    'title' => 'Entries',
+    'url' => 'entries',
+    'type' => 'cpUrl',
+  ));
+  
+});
+```
+
 ## To Do
 * ~~Add options to CP.~~
 * Add a new type to be used within multiple entries.
 * ~~Automatically add the bar to the top of the `<body>` tag.~~
-* Add custom hook for other plugins to add custom links.
-* Add a way to toggle links from other plugins in the CP if users don't want to use them.
+* ~~Add custom hook for other plugins to add custom links.~~ (turns out it used an Event)
+* ~~Add a way to toggle links from other plugins in the CP if users don't want to use them.~~
 
 ## Releases
-#### *1.2.2*
-* Changed the hard-coded url for the "Settings" link to use Craft's cpTrigger variable (thanks to mildlygeeky for the tip)
+##### *1.3.0*
+* Added the logged in user photo. Just for kicks. :bust_in_silhouette:
+* Added a new "Dashboard" link.
+* Added `baseCpUrl` in front of root-relative links.
+* Added support for plugins to add links to the Admin Bar.
+* Added setting to enable/disable links added by plugins.
+* Added example plugin for plugin makers.
 
-#### *1.2.1*
-* Fixed an error when checking for user permissions (flagged an error in devMode)
+##### *1.2.2*
+* Changed the hard-coded url for the "Settings" link to use Craft's cpTrigger variable (thanks to @mildlygeeky for the tip).
 
-#### *1.2.0*
+##### *1.2.1*
+* Fixed an error when checking for user permissions (flagged an error in devMode).
+
+##### *1.2.0*
 **NOTE:** Craft will ask you to make a one-time database update to accommodate the new options. 
 * Added option to make custom links available only to users with the admin role.
 * Added option to embed Admin Bar from the plugin settings page.
 * Added color picker for default branding color.
-* Removed duplicate CSS and JS code for multiple instances of the Admin Bar
+* Removed duplicate CSS and JS code for multiple instances of the Admin Bar.
 
-#### *1.1.0*
+##### *1.1.0*
 * Added ability to add custom links to CP settings.
 
-#### *1.0*
+##### *1.0*
 * Basic admin bar with Edit, Settings, and Logout buttons.
 
 Please, let me know if this plugin is useful or if you have any suggestions or issues. [@wbrowar](https://twitter.com/wbrowar)
