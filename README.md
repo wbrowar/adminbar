@@ -46,9 +46,11 @@ craft()->adminbar->addPluginLink(array(
 Included in the `eventexample` directory is an example of the full event code that should go within your plugin's `init` function, in your main plugin class:
 
 ```php
+// import event class and wait for adminbar to fire event
 Craft::import('plugins.adminbar.events.AdminbarEvent');
 craft()->on('adminbar.onFindPluginLinks', function(AdminbarEvent $event) {
   
+  // call this for each link you want to add
   craft()->adminbar->addPluginLink(array(
     'title' => 'Entries',
     'url' => 'entries',
@@ -58,12 +60,15 @@ craft()->on('adminbar.onFindPluginLinks', function(AdminbarEvent $event) {
 });
 ```
 
+*Please note: links in the admin bar are updated when the user saves the Admin Bar plugin settings. While you can use PHP to determine the argument values and which URLs appear based on your plugin's settings, the links will not update until the user goes back and updates their Admin Bar settings.*
+
 ## To Do
 * ~~Add options to CP.~~
 * Add a new type to be used within multiple entries.
 * ~~Automatically add the bar to the top of the `<body>` tag.~~
 * ~~Add custom hook for other plugins to add custom links.~~ (turns out it used an Event)
 * ~~Add a way to toggle links from other plugins in the CP if users don't want to use them.~~
+* A few ideas are brewing...
 
 ## Releases
 ##### *1.3.0*
