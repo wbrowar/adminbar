@@ -15,10 +15,12 @@ class AdminbarPlugin extends BasePlugin
 	
   	// add event listeners
     craft()->on('plugins.onLoadPlugins', function(Event $event) {
-    	if (!craft()->request->isCpRequest() && $this->getSettings()->autoEmbed == 1) {
+      $plugin = craft()->plugins->getPlugin('Adminbar');
+    	
+    	if (!craft()->request->isCpRequest() && $plugin->getSettings()->autoEmbed == 1) {
       	// show adminbar in template
       	$element = craft()->urlManager->getMatchedElement();
-        craft()->adminbar->show($element, $this->getSettings()->defaultColor, 'primary');
+        craft()->adminbar->show($element, $plugin->getSettings()->defaultColor, 'primary');
     	}
     });
 	}
@@ -29,7 +31,7 @@ class AdminbarPlugin extends BasePlugin
   }
   public function getVersion()
   {
-    return '1.3.0';
+    return '1.3.1';
   }
   public function getDeveloper()
   {

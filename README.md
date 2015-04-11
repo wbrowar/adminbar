@@ -71,6 +71,9 @@ craft()->on('adminbar.onFindPluginLinks', function(AdminbarEvent $event) {
 * A few ideas are brewing...
 
 ## Releases
+##### *1.3.1*
+* Fixed a couple of PHP 5.3 errors
+
 ##### *1.3.0*
 * Added the logged in user photo. Just for kicks. :bust_in_silhouette:
 * Added a new "Dashboard" link.

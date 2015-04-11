@@ -20,14 +20,14 @@ class AdminbarService extends BaseApplicationComponent
     }
     
     // render admin bar
-    $adminbarHtml = craft()->templates->render('bar', [
+    $adminbarHtml = craft()->templates->render('bar', array(
       'adminbarEmbedded' => $this->_adminbarEmbedded,
       'entry' => $currentEntry,
       'color' => $color,
       'type' => $type,
       'customLinks' => $this->getAdminbarSettings()->customLinks,
       'enabledLinks' => $this->getAdminbarSettings()->enabledLinks,
-    ]);
+    ));
     
     if ($type == 'primary') {
       craft()->templates->includeFootHtml($adminbarHtml);
