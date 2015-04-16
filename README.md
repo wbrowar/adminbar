@@ -3,7 +3,7 @@ Simple front-end shortcut bar for users logged into [Craft CMS](https://buildwit
 
 ![Screenshot](screenshot.png)
 
-> IMPORTANT: if you had started to use the `onFindPluginLinks` event, please see Adding Links Through Plugins below
+> IMPORTANT: plugin authors, if you had started to use the `onFindPluginLinks` event, please see [Adding Links Through Plugins](#adding-links-through-plugins) below
 
 ## Installation
 1. Upload the adminbar/ folder to your craft/plugins/ folder.
