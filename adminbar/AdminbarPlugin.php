@@ -31,7 +31,7 @@ class AdminbarPlugin extends BasePlugin
   }
   public function getVersion()
   {
-    return '1.3.1';
+    return '1.3.2';
   }
   public function getDeveloper()
   {
@@ -89,16 +89,27 @@ class AdminbarPlugin extends BasePlugin
 		));
 		
 		// get links from other plugins
-    Craft::import('plugins.adminbar.events.AdminbarEvent');
-    $event = new AdminbarEvent(craft()->adminbar);
-    craft()->adminbar->onFindPluginLinks($event);
+		$pluginLinksHook = craft()->plugins->call('addAdminBarLinks');
+		$pluginLinks = array();
+		
+		foreach ($pluginLinksHook as $key => $link) {
+  		$pluginName = craft()->plugins->getPlugin($key)->getName();
+  		
+  		for($i=0; $i<count($link); $i++) {
+    		if (isset($link[$i]['title']) && isset($link[$i]['url']) && isset($link[$i]['type'])) {
+      		$link[$i]['id'] = str_replace(' ', '', $link[$i]['title']) . $link[$i]['url'] . $link[$i]['type'];
+      		$link[$i]['originator'] = $pluginName;
+      		array_push($pluginLinks, $link[$i]);
+    		}
+  		}
+		}
 		
 		// output settings template
 		return craft()->templates->render('adminbar/settings', array(
 			'autoEmbedValue' => $this->getSettings()->autoEmbed,
 			'defaultColorValue' => $this->getSettings()->defaultColor,
 			'customLinksTable' => $customLinksTable,
-			'pluginLinks' => $event->pluginLinksData,
+			'pluginLinks' => $pluginLinks,
 			'enabledLinks' => $this->getSettings()->enabledLinks,
 		));
 	}

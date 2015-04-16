@@ -3,7 +3,7 @@ Simple front-end shortcut bar for users logged into [Craft CMS](https://buildwit
 
 ![Screenshot](screenshot.png)
 
-> The User Photo update!
+> IMPORTANT: if you had started to use the `onFindPluginLinks` event, please see Adding Links Through Plugins below
 
 ## Installation
 1. Upload the adminbar/ folder to your craft/plugins/ folder.
@@ -27,14 +27,25 @@ Embedding the Admin Bar using this tag will let you overwrite the settings found
   * `none` – Has the same markup as `bar`, but removes all of the CSS, so you may style it however you'd like.
 
 ## Adding Links Through Plugins
-Links can be added through the `onFindPluginLinks` event by using the `addPluginLink` method. Call `addPluginLink` for each link you'd like to add.
+Links can be added through the `addAdminBarLinks()` method in your main plugin class. Return an array for each link you'd like to add.
 
 ```php
-craft()->adminbar->addPluginLink(array(
-  'title' => 'Craft',
-  'url' => 'http://buildwithcraft.com',
-  'type' => 'url',
-));
+public function addAdminBarLinks() {
+  return array(
+    // an example of a url link
+    array(
+      'title' => 'Craft',
+      'url' => 'http://buildwithcraft.com',
+      'type' => 'url',
+    ),
+    // an example of a CP link
+    array(
+      'title' => 'Entries',
+      'url' => 'entries',
+      'type' => 'cpUrl',
+    ),
+  );
+}
 ```
 
 * **title** *required*  – The label that will appear for this link in the Admin Bar.
@@ -43,24 +54,7 @@ craft()->adminbar->addPluginLink(array(
   * `url` – Used for relative or absolute URLs.
   * `cpUrl` – Prepends `baseCpUrl/cpTrigger/` to the **url** value for links found within the Control Panel. For example, if you wanted to link to Craft's default Entries page, set **url** to `'entries'` and **type** to `'cpUrl'`. The final url will be `http://example.com/admin/entries`
 
-Included in the `eventexample` directory is an example of the full event code that should go within your plugin's `init` function, in your main plugin class:
-
-```php
-// import event class and wait for adminbar to fire event
-Craft::import('plugins.adminbar.events.AdminbarEvent');
-craft()->on('adminbar.onFindPluginLinks', function(AdminbarEvent $event) {
-  
-  // call this for each link you want to add
-  craft()->adminbar->addPluginLink(array(
-    'title' => 'Entries',
-    'url' => 'entries',
-    'type' => 'cpUrl',
-  ));
-  
-});
-```
-
-*Please note: links in the admin bar are updated when the user saves the Admin Bar plugin settings. While you can use PHP to determine the argument values and which URLs appear based on your plugin's settings, the links will not update until the user goes back and updates their Admin Bar settings.*
+*Please note: links in the Admin Bar are updated when the user saves the Admin Bar plugin settings. While you can use PHP to determine the argument values and which URLs appear based on your plugin's settings, the links will not update until the user goes back and updates their Admin Bar settings.*
 
 ## To Do
 * ~~Add options to CP.~~
@@ -71,6 +65,10 @@ craft()->on('adminbar.onFindPluginLinks', function(AdminbarEvent $event) {
 * A few ideas are brewing...
 
 ## Releases
+##### *1.3.2*
+* @ktbartholomew helped me realize a much simpler way to integrate plugins links. **NOTE: the event has been removed, and this hook is taking its place.**
+* Added plugin names on Admin Bar settings page
+
 ##### *1.3.1*
 * Fixed a couple of PHP 5.3 errors
 

@@ -15,6 +15,7 @@
     <table class="data fullwidth">
     	<thead>
     		<th>Link Title</th>
+    		<th>Plugin</th>
     		<th>Enable Link</th>
     	</thead>
       {% for link in pluginLinks %}
@@ -25,6 +26,7 @@
           <input type="hidden" name="enabledLinks[{{ link.id }}][linkUrl]"value="{{ link.url }}">
           <input type="hidden" name="enabledLinks[{{ link.id }}][linkType]"value="{{ link.type }}">
     			<td>{{ link.title }}</td>
+    			<td class="light">{{ link.originator }}</td>
     			<td>
     				{{ forms.lightswitch({
     					name: "enabledLinks[" ~ link.id ~ "][linkStatus]",

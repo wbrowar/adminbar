@@ -49,20 +49,4 @@ class AdminbarService extends BaseApplicationComponent
     $plugin = craft()->plugins->getPlugin('Adminbar');
     return $plugin->getSettings();
   }
-  
-  // get links from other plugins
-  public function addPluginLink(Array $link) {
-    array_push($this->_pluginLinks, $link);
-  }
-  public function onFindPluginLinks(AdminbarEvent $event)
-	{
-		$this->raiseEvent('onFindPluginLinks', $event);
-		
-		foreach($this->_pluginLinks as $value) {
-  		if (isset($value['title']) && isset($value['url']) && isset($value['type'])) {
-    		$value['id'] = str_replace(' ', '', $value['title']) . $value['url'] . $value['type'];
-    		array_push($event->pluginLinksData, $value);
-  		}
-		}
-	}
 }
