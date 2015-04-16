@@ -56,6 +56,9 @@ public function addAdminBarLinks() {
 
 *Please note: links in the Admin Bar are updated when the user saves the Admin Bar plugin settings. While you can use PHP to determine the argument values and which URLs appear based on your plugin's settings, the links will not update until the user goes back and updates their Admin Bar settings.*
 
+### Plugins using Admin Bar
+* [Craft Help](https://github.com/70kft/craft-help)
+
 ## To Do
 * ~~Add options to CP.~~
 * Add a new type to be used within multiple entries.
