@@ -22,10 +22,26 @@
       {% endfor %}
       {% for link in enabledLinks %}
         {% if link.linkStatus == '1' %}
+          {% if link.linkParams is defined %}
+            {% set adminbarParams = link.linkParams %}
+          {% else %}
+            {% set adminbarParams = '' %}
+          {% endif %}
+          {% if link.linkProtocol is defined %}
+            {% set adminbarProtocol = link.linkProtocol %}
+          {% else %}
+            {% set adminbarProtocol = '' %}
+          {% endif %}
+          {% if link.linkMustShowScriptName is defined and link.linkMustShowScriptName == '1' %}
+            {% set adminbarMustShowScriptName = true %}
+          {% else %}
+            {% set adminbarMustShowScriptName = false %}
+          {% endif %}
+          
           {% if link.linkType == 'url' %}
-            <a href="{{ link.linkUrl }}">{{ link.linkTitle }}</a>
+            <a href="{{ url(link.linkUrl, adminbarParams, adminbarProtocol, adminbarMustShowScriptName) }}">{{ link.linkTitle }}</a>
           {% elseif link.linkType == 'cpUrl' %}
-            <a href="{{ craft.config.baseCpUrl }}/{{ craft.config.cpTrigger }}/{{ link.linkUrl }}">{{ link.linkTitle }}</a>
+            <a href="{{ url(craft.config.cpTrigger ~ '/' ~ link.linkUrl, adminbarParams, adminbarProtocol, adminbarMustShowScriptName) }}">{{ link.linkTitle }}</a>
           {% endif %}
         {% endif %}
       {% endfor %}
@@ -38,7 +54,7 @@
   {% if adminbarEmbedded != true %}
     {% if type == 'bar' or type == 'primary' %}
       {% set adminbarCss %}
-.admin_bar_wrapper{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-flow:row nowrap;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;margin:0;padding:0;width:100%;box-sizing:border-box;background-color:#000;background-color:rgba(0,0,0,.8);font-family:'Trebuchet MS','Lucida Grande','Lucida Sans Unicode','Lucida Sans',Tahoma,sans-serif;font-size:17px;color:#fff}.admin_bar_wrapper a{margin:0;padding:6px 10px;text-align:center;text-decoration:none;transition:color .2s ease-out,background .2s ease-out}.admin_bar_greeting{display:none;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;padding:0 15px;color:rgba(255,255,255,.8);white-space:nowrap}.admin_bar_links{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex-flow:row wrap;-ms-flex-flow:row wrap;flex-flow:row wrap;-webkit-flex:1 1 auto;-ms-flex:1 1 auto;flex:1 1 auto;padding:0}.admin_bar_links a{-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;color:#fff}.admin_bar_links a:hover{background-color:#fff;color:{{ color }}}.admin_bar_logout{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;padding:0;text-align:right}.admin_bar_logout a{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-ms-flex-align:center;align-items:center;padding:6px 25px;background-color:transparent;color:#fff}.admin_bar_logout a:hover{background-color:{{ color }}}.admin_bar_user_photo{padding-right:7px;width:23px;line-height:0}.admin_bar_user_photo img{max-width:100%;height:auto;border-radius:50%}@media screen and (min-width:601px){.admin_bar_wrapper{font-size:14px}.admin_bar_greeting{display:-webkit-flex;display:-ms-flexbox;display:flex}}
+.admin_bar_wrapper{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-flow:row nowrap;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;margin:0;padding:0;width:100%;box-sizing:border-box;background-color:#000;background-color:rgba(0,0,0,.8);font-family:'Trebuchet MS','Lucida Grande','Lucida Sans Unicode','Lucida Sans',Tahoma,sans-serif;font-size:17px;color:#fff}.admin_bar_wrapper a{margin:0;padding:6px 10px;text-align:center;text-decoration:none;transition:color .2s ease-out,background .2s ease-out}.admin_bar_greeting{display:none;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;padding:0 15px;color:rgba(255,255,255,.8);white-space:nowrap}.admin_bar_links{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex-flow:row wrap;-ms-flex-flow:row wrap;flex-flow:row wrap;-webkit-flex:1 1 auto;-ms-flex:1 1 auto;flex:1 1 auto;padding:0}.admin_bar_links a{-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;color:#fff}.admin_bar_links a:hover{background-color:#fff;color:{{ color }}}.admin_bar_logout{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;padding:0;text-align:right;font-size:.9em}.admin_bar_logout a{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex:1 1 100%;-ms-flex:1 1 100%;flex:1 1 100%;padding:6px 25px;background-color:transparent;color:#fff}.admin_bar_logout a:hover{background-color:{{ color }}}.admin_bar_client_logo,.admin_bar_user_photo{padding-right:7px;line-height:0}.admin_bar_client_logo img,.admin_bar_user_photo img{max-width:100%;height:auto}.admin_bar_user_photo{width:23px}.admin_bar_user_photo img{border-radius:50%}.admin_bar_client_logo{padding-top:2px;padding-bottom:2px;width:50px}@media screen and (min-width:601px){.admin_bar_wrapper{font-size:14px}.admin_bar_greeting{display:-webkit-flex;display:-ms-flexbox;display:flex}.admin_bar_logout{font-size:1em}.admin_bar_logout a{padding:6px 25px}}
       {% endset %}
       {% includeCss adminbarCss %}
     {% endif %}

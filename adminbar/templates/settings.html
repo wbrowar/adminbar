@@ -1,10 +1,10 @@
 {% import "_includes/forms" as forms %}
 
 {{ forms.lightswitchField({
-'label': 'Auto Embed', 'instructions': 'Add the Admin Bar to your front-end template without using the embed tag.', 'id': 'autoEmbed', 'name': 'autoEmbed', 'on': autoEmbedValue}) }}
+'label': 'Auto Embed', 'instructions': 'Add the Admin Bar to your front-end template without using the Twig embed tag.', 'id': 'autoEmbed', 'name': 'autoEmbed', 'on': autoEmbedValue}) }}
 
 {{ forms.colorField({
-'label': 'Default Color', 'instructions': 'Color used for highlights and rollovers. This can be overridden if color value is added to the embed tag.', 'id': 'defaultColor', 'name': 'defaultColor', 'value': defaultColorValue}) }}
+'label': 'Default Color', 'instructions': 'Color used for highlights and rollovers. This can be overridden if color value is added to the Twig embed tag.', 'id': 'defaultColor', 'name': 'defaultColor', 'value': defaultColorValue}) }}
 
 {{ customLinksTable }}
 
@@ -24,6 +24,15 @@
           <input type="hidden" name="enabledLinks[{{ link.id }}][linkId]"value="{{ link.id }}">
           <input type="hidden" name="enabledLinks[{{ link.id }}][linkTitle]"value="{{ link.title }}">
           <input type="hidden" name="enabledLinks[{{ link.id }}][linkUrl]"value="{{ link.url }}">
+          {% if link.params is defined %}
+	          <input type="hidden" name="enabledLinks[{{ link.id }}][linkParams]"value="{{ link.params }}">
+          {% endif %}
+          {% if link.protocol is defined %}
+	          <input type="hidden" name="enabledLinks[{{ link.id }}][linkProtocol]"value="{{ link.protocol }}">
+          {% endif %}
+          {% if link.mustShowScriptName is defined %}
+	          <input type="hidden" name="enabledLinks[{{ link.id }}][linkMustShowScriptName]"value="{{ link.mustShowScriptName }}">
+          {% endif %}
           <input type="hidden" name="enabledLinks[{{ link.id }}][linkType]"value="{{ link.type }}">
     			<td>{{ link.title }}</td>
     			<td class="light">{{ link.originator }}</td>
