@@ -10,8 +10,6 @@ Simple front-end shortcut bar for users logged into [Craft CMS](https://buildwit
 2. Enable the plugin in the CP.
 3. Either add the Admin Bar through the plugin settings page, or add the tag, `{{ craft.Adminbar.show(entry) }}`, to your template.
 
-![Screenshot](screenshot-settings.png)
-
 ## Auto Embed
 Using the "Auto Embed" setting will add the Admin Bar to the top of your `<body>` tag. Doing it this way will base the "Edit" button off of the current page entry. Branding colors will use the color selected through the "Default Color" color picker.
 
@@ -72,6 +70,8 @@ public function addAdminBarLinks() {
 
 ### Plugins using Admin Bar
 * [Craft Help](https://github.com/70kft/craft-help)
+
+![Screenshot](screenshot-settings.png)
 
 ---
 
