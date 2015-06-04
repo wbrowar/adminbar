@@ -33,6 +33,12 @@
           {% if link.mustShowScriptName is defined %}
 	          <input type="hidden" name="enabledLinks[{{ link.id }}][linkMustShowScriptName]"value="{{ link.mustShowScriptName }}">
           {% endif %}
+          {% if link.permissions is defined and link.permissions|length %}
+          	{% for permission in link.permissions %}
+							<input type="hidden" name="enabledLinks[{{ link.id }}][linkPermissions][{{ loop.index }}]"value="{{ permission }}">
+							{{ permission }}
+          	{% endfor %}
+          {% endif %}
           <input type="hidden" name="enabledLinks[{{ link.id }}][linkType]"value="{{ link.type }}">
     			<td>{{ link.title }}</td>
     			<td class="light">{{ link.originator }}</td>

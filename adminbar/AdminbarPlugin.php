@@ -31,7 +31,7 @@ class AdminbarPlugin extends BasePlugin
   }
   public function getVersion()
   {
-    return '1.3.3';
+    return '1.3.4';
   }
   public function getDeveloper()
   {

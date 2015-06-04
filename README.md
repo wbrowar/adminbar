@@ -3,8 +3,6 @@ Simple front-end shortcut bar for users logged into [Craft CMS](https://buildwit
 
 ![Screenshot](screenshot-bar.png)
 
-> IMPORTANT: plugin authors, if you had started to use the `onFindPluginLinks` event, please see [Adding Links Through Plugins](#adding-links-through-plugins) below
-
 ## Installation
 1. Upload the adminbar/ folder to your craft/plugins/ folder.
 2. Enable the plugin in the CP.
@@ -52,6 +50,7 @@ public function addAdminBarLinks() {
       'params' => 'foo=1&bar=2',
       'protocol' => 'http',
       'mustShowScriptName' => true,
+			'permissions' => array('myPluginPermission', 'thisIsRequiredToo'),
     ),
   );
 }
@@ -65,6 +64,7 @@ public function addAdminBarLinks() {
 * **params** – Passes along url parameters, as [documented here](http://buildwithcraft.com/docs/templating/functions#url).
 * **protocol** – Changes the url protocol, as [documented here](http://buildwithcraft.com/docs/templating/functions#url). This only supports this string format: `'foo=1&bar=2'`
 * **mustShowScriptName** – Appends `index.php`, as [documented here](http://buildwithcraft.com/docs/templating/functions#url).
+* **permissions** – An array of required permissions that are needed for this link to be displayed. All permissions in this array will be required.
 
 *Please note: links in the Admin Bar are updated when the user saves the Admin Bar plugin settings. While you can use PHP to determine the argument values and which URLs appear based on your plugin's settings, the links will not update until the user goes back and updates their Admin Bar settings.*
 
@@ -81,18 +81,21 @@ public function addAdminBarLinks() {
 * ~~Automatically add the bar to the top of the `<body>` tag.~~
 * ~~Add custom hook for other plugins to add custom links.~~ (turns out it used an Event)
 * ~~Add a way to toggle links from other plugins in the CP if users don't want to use them.~~
-* A few ideas are brewing...
 
 ---
 
 ## Releases
+##### *1.3.4*
+* Added permissions to `addAdminBarLinks()` for plugin authors.
+* Added `url()` functions accross the board.
+
 ##### *1.3.3*
-* Plugin authors can pass along [url() arguments](http://buildwithcraft.com/docs/templating/functions#url) into `addAdminBarLinks()`
-* Fixed some minor CSS issues in the front-end admin bar
+* Plugin authors can pass along [url() arguments](http://buildwithcraft.com/docs/templating/functions#url) into `addAdminBarLinks()`.
+* Fixed some minor CSS issues in the front-end admin bar.
 
 ##### *1.3.2*
 * @ktbartholomew helped me realize a much simpler way to integrate plugins links. **NOTE: the event has been removed, and this hook is taking its place.**
-* Added plugin names on Admin Bar settings page
+* Added plugin names on Admin Bar settings page.
 
 ##### *1.3.1*
 * Fixed a couple of PHP 5.3 errors
