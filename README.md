@@ -60,7 +60,7 @@ public function addAdminBarLinks() {
 * **url** *required* – The url or path used for the link.
 * **type** *required* – The context of the url or path.
   * `url` – Used for relative or absolute URLs.
-  * `cpUrl` – Prepends `baseCpUrl/cpTrigger/` to the **url** value for links found within the Control Panel. For example, if you wanted to link to Craft's default Entries page, set **url** to `'entries'` and **type** to `'cpUrl'`. The final url will be `http://example.com/admin/entries`
+  * `cpUrl` – Prepends `cpTrigger` to the **url** value for links found within the Control Panel. For example, if you wanted to link to Craft's default Entries page, set **url** to `'entries'` and **type** to `'cpUrl'`. The final url will be `http://example.com/admin/entries`
 * **params** – Passes along url parameters, as [documented here](http://buildwithcraft.com/docs/templating/functions#url).
 * **protocol** – Changes the url protocol, as [documented here](http://buildwithcraft.com/docs/templating/functions#url). This only supports this string format: `'foo=1&bar=2'`
 * **mustShowScriptName** – Appends `index.php`, as [documented here](http://buildwithcraft.com/docs/templating/functions#url).
