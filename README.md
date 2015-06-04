@@ -50,7 +50,7 @@ public function addAdminBarLinks() {
       'params' => 'foo=1&bar=2',
       'protocol' => 'http',
       'mustShowScriptName' => true,
-			'permissions' => array('myPluginPermission', 'thisIsRequiredToo'),
+      'permissions' => array('myPluginPermission', 'thisIsRequiredToo'),
     ),
   );
 }
