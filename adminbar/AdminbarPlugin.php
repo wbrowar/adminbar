@@ -17,7 +17,7 @@ class AdminbarPlugin extends BasePlugin
     craft()->on('plugins.onLoadPlugins', function(Event $event) {
       $plugin = craft()->plugins->getPlugin('Adminbar');
     	
-    	if (!craft()->request->isCpRequest() && $plugin->getSettings()->autoEmbed == 1) {
+    	if ($this->_canEmbed($plugin)) {
       	// show adminbar in template
       	$element = craft()->urlManager->getMatchedElement();
         craft()->adminbar->show($element, $plugin->getSettings()->defaultColor, 'primary');
@@ -127,4 +127,15 @@ class AdminbarPlugin extends BasePlugin
 			}
 		}
 	}
+
+    //I felt this was a little long winded to put into one "if" statement.
+    private function _canEmbed($plugin)
+    {
+        return (
+            !craft()->isConsole() &&
+            !craft()->request->isCpRequest() &&
+            craft()->userSession->isLoggedIn() &&
+            $plugin->getSettings()->autoEmbed == 1
+        );
+    }
 }
