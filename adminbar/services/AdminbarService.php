@@ -19,6 +19,12 @@ class AdminbarService extends BaseApplicationComponent
 			$pluginLinks = array();
 			$externalLinksStringData = '';
 			
+			// @todo 2.0 remove
+			// update settings if new settings aren't set
+			if (!isset($plugin->getSettings()->externalLinksString['default'])) {
+				$plugin->defineSettings();
+			}
+			
 			foreach ($pluginLinksHook as $key => $link) {
 				$pluginName = craft()->plugins->getPlugin($key)->getName();
 				
