@@ -3,6 +3,8 @@ Simple front-end shortcut bar for users logged into [Craft CMS](https://buildwit
 
 ![Screenshot](screenshot-bar.png)
 
+> BETA MODE: 1.4 might have some bugs related to caching, so please send your feedback my way if you find any
+
 ## Installation
 1. Upload the adminbar/ folder to your craft/plugins/ folder.
 2. Enable the plugin in the CP.
@@ -14,7 +16,7 @@ Using the "Auto Embed" setting will add the Admin Bar to the top of your `<body>
 For more control, or to add the admin bar to multiple entries, use the Twig embed tag, below.
 
 ## Embed Options
-Format: `{{ craft.Adminbar.show(currentEntry, color, type) }}`
+Format: `{{ craft.Adminbar.bar(currentEntry, color, type) }}`
 
 Embedding the Admin Bar using this tag will let you overwrite the settings found on the plugin settings page.
 
@@ -73,18 +75,48 @@ public function addAdminBarLinks() {
 
 ![Screenshot](screenshot-settings.png)
 
+## Overriding the Edit Link
+By default, Admin Bar will try to look for an `entry` or `category` object and use its `cpEditUrl` property to create the default "Edit" link. In some cases, you might want to change the label, or you might be using a different variable for an entry. It's not that common, but in these cases, you can add an array into your config.php file with the following:
+
+```php
+'adminBarEditLink' => array(
+  array(
+    'label' => 'Edit Page',
+    'object' => 'entryAlias',
+  ),
+  array(
+    'label' => 'Edit Page',
+    'object' => 'entry',
+  ),
+  array(
+    'label' => 'Edit Category',
+    'object' => 'categoryAlias',
+    'overrideEdit' => false,
+  ),
+),
+```
+
+In this case, Admin Bar will look for an entry object using the variable, "entryAlias". If it find that object, it will add a link, called "Edit Page", and if not it will look for the next object in the array, "entry". If it finds an "entry" object, it will add that link, as "Edit Page".
+
+Adding `'overrideEdit' => false` will force a link to show up, even if there are other items above it, as long as the object it is referring to exists and has a `cpEditUrl`.
+
 ---
 
 ## To Do
-* ~~Add options to CP.~~
+* Update plugin to support Craft 3
 * Add a new type to be used within multiple entries. [Looking for some typical use case suggestions.](https://github.com/wbrowar/craft-admin-bar/issues/new)
-* ~~Automatically add the bar to the top of the `<body>` tag.~~
-* ~~Add custom hook for other plugins to add custom links.~~ (turns out it used an Event)
-* ~~Add a way to toggle links from other plugins in the CP if users don't want to use them.~~
 
 ---
 
 ## Releases
+##### *1.4.0*
+* Added per-user caching for the default Admin Bar when Auto Embed is on
+* Added public function to clear the Admin Bar cache, `clearAdminBarCache`
+* Added option to fix Admin Bar when Auto Embed is on (if you're using the embed tag, you can do this with CSS: `position: fixed;`)
+* Added more conditionals when the Auto Embed option is checked (thanks to PR from @lwilkowskeBC)
+* Added ability to override default entry "Edit" link with any object that has the `getCpEditUrl` property (kind of still in beta).
+* Changed embed tag from `craft.Adminbar.show()` to `craft.Adminbar.bar()` (`craft.Adminbar.show()` still works, but it's deprecated)
+
 ##### *1.3.4*
 * Added permissions to `addAdminBarLinks()` for plugin authors.
 * Added `url()` functions accross the board.

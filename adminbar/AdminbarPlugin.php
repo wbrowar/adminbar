@@ -3,56 +3,65 @@ namespace Craft;
 
 class AdminbarPlugin extends BasePlugin
 {
-  private $_customLinks;
-  
-  public function init()
+	private $_customLinks;
+	
+	public function getName()
+	{
+		return Craft::t('Admin Bar');
+	}
+	public function getVersion()
+	{
+		return '1.4.0';
+	}
+	public function getDeveloper()
+	{
+		return 'Will Browar';
+	}
+	public function getDeveloperUrl()
+	{
+		return 'http://wbrowar.com';
+	}
+	public function hasCpSection()
+	{
+		return false;
+	}
+	
+	public function init()
 	{
 		parent::init();
 		if (craft()->request->isCpRequest()) {
-  		// get data for custom links
+			// get data for custom links
 			$this->_customLinks();
 		}
-	
-  	// add event listeners
-    craft()->on('plugins.onLoadPlugins', function(Event $event) {
-      $plugin = craft()->plugins->getPlugin('Adminbar');
-    	
-    	if ($this->_canEmbed($plugin)) {
-      	// show adminbar in template
-      	$element = craft()->urlManager->getMatchedElement();
-        craft()->adminbar->show($element, $plugin->getSettings()->defaultColor, 'primary');
-    	}
-    });
+		
+		craft()->on('plugins.onLoadPlugins', array($this, 'onLoadPlugins'));
+		
+		// update settings if new settings aren't set
+		if (!isset($this->getSettings()->externalLinksString)) {
+			$this->defineSettings();
+		}
 	}
-  
-  public function getName()
-  {
-    return Craft::t('Admin Bar');
-  }
-  public function getVersion()
-  {
-    return '1.3.4';
-  }
-  public function getDeveloper()
-  {
-    return 'Will Browar';
-  }
-  public function getDeveloperUrl()
-  {
-    return 'http://wbrowar.com';
-  }
-  public function hasCpSection()
-  {
-    return false;
-  }
-  
-  protected function defineSettings()
+	
+	// handle on load plugins
+	public function onLoadPlugins(Event $event) {
+		$plugin = craft()->plugins->getPlugin('Adminbar');
+		
+		if ($this->_canAutoEmbed($plugin)) {
+			// show adminbar in template
+			$element = craft()->urlManager->getMatchedElement();
+			craft()->adminbar->bar($element, $plugin->getSettings()->defaultColor, 'primary');
+		}
+	}
+	
+	protected function defineSettings()
 	{
 		return array(
-  		'autoEmbed' => array(AttributeType::Bool, 'default' => false),
+			'autoEmbed' => array(AttributeType::Bool, 'default' => false),
+			'autoEmbedSticky' => array(AttributeType::Bool, 'default' => false),
 			'customLinks' => array(AttributeType::Mixed, 'label' => 'Custom Links', 'default' => array()),
 			'defaultColor' => array(AttributeType::String, 'label' => 'Default Color', 'default' => '#d85b4b'),
 			'enabledLinks' => array(AttributeType::Mixed, 'label' => 'Enabled Link', 'default' => array()),
+			'externalLinksString' => array(AttributeType::String, 'label' => 'Plugin Links String', 'default' => ''),
 		);
 	}
 	public function getSettingsHtml()
@@ -65,26 +74,26 @@ class AdminbarPlugin extends BasePlugin
 		// generate table for custom links
 		$customLinksTable = craft()->templates->renderMacro('_includes/forms', 'editableTableField', array(
 			array(
-				'label'        => Craft::t('Custom Links'),
+				'label'				=> Craft::t('Custom Links'),
 				'instructions' => Craft::t('Add your own links to the Admin Bar.'),
-				'id'           => 'customLinks',
-				'name'         => 'customLinks',
-				'cols'         => array(
+				'id'					 => 'customLinks',
+				'name'				 => 'customLinks',
+				'cols'				 => array(
 					'linkLabel' => array(
 						'heading' => Craft::t('Label'),
-						'type'    => 'singleline',
+						'type'		=> 'singleline',
 					),
 					'linkUrl' => array(
 						'heading' => Craft::t('URL'),
-						'type'    => 'singleline',
+						'type'		=> 'singleline',
 					),
 					'adminOnly' => array(
 						'heading' => Craft::t('Admins Only'),
-						'type'    => 'checkbox',
+						'type'		=> 'checkbox',
 					),
 				),
 				'rows' => $this->_customLinks,
-				'addRowLabel'  => Craft::t('Add a link'),
+				'addRowLabel'	=> Craft::t('Add a link'),
 			)
 		));
 		
@@ -93,25 +102,34 @@ class AdminbarPlugin extends BasePlugin
 		$pluginLinks = array();
 		
 		foreach ($pluginLinksHook as $key => $link) {
-  		$pluginName = craft()->plugins->getPlugin($key)->getName();
-  		
-  		for($i=0; $i<count($link); $i++) {
-    		if (isset($link[$i]['title']) && isset($link[$i]['url']) && isset($link[$i]['type'])) {
-      		$link[$i]['id'] = str_replace(' ', '', $link[$i]['title']) . $link[$i]['url'] . $link[$i]['type'];
-      		$link[$i]['originator'] = $pluginName;
-      		array_push($pluginLinks, $link[$i]);
-    		}
-  		}
+			$pluginName = craft()->plugins->getPlugin($key)->getName();
+			
+			for($i=0; $i<count($link); $i++) {
+				if (isset($link[$i]['title']) && isset($link[$i]['url']) && isset($link[$i]['type'])) {
+					$link[$i]['id'] = str_replace(' ', '', $link[$i]['title']) . $link[$i]['url'] . $link[$i]['type'];
+					$link[$i]['originator'] = $pluginName;
+					array_push($pluginLinks, $link[$i]);
+				}
+			}
 		}
+		
+		$this->clearAdminBarCache();
 		
 		// output settings template
 		return craft()->templates->render('adminbar/settings', array(
 			'autoEmbedValue' => $this->getSettings()->autoEmbed,
+			'autoEmbedStickyValue' => $this->getSettings()->autoEmbedSticky,
 			'defaultColorValue' => $this->getSettings()->defaultColor,
 			'customLinksTable' => $customLinksTable,
 			'pluginLinks' => $pluginLinks,
 			'enabledLinks' => $this->getSettings()->enabledLinks,
 		));
+	}
+	
+	public function clearAdminBarCache() {
+		$user = craft()->userSession->getUser();
+		
+		craft()->templateCache->deleteCachesByKey('adminbar' . $user->id);
 	}
 	
 	// retrieve custom links settings
@@ -123,19 +141,20 @@ class AdminbarPlugin extends BasePlugin
 			foreach ($this->_customLinks as $row) {
 				if ($customLinks) {$customLinks .= ',';}
 				$adminOnly = isset($row['adminOnly']) ? ":'{$row['adminOnly']}'" : null;
-  			$customLinks .= "'{$row['linkLabel']}':'{$row['linkUrl']} . $adminOnly";
+				// @TODO 2.0 remove and combine
+				$customLinks .= "'{$row['linkLabel']}':'{$row['linkUrl']} . $adminOnly";
 			}
 		}
 	}
 
-    //I felt this was a little long winded to put into one "if" statement.
-    private function _canEmbed($plugin)
-    {
-        return (
-            !craft()->isConsole() &&
-            !craft()->request->isCpRequest() &&
-            craft()->userSession->isLoggedIn() &&
-            $plugin->getSettings()->autoEmbed == 1
-        );
-    }
+	// check to see if bar should be auto embedded
+	private function _canAutoEmbed($plugin)
+	{
+		return (
+			!craft()->isConsole() &&
+			!craft()->request->isCpRequest() &&
+			craft()->userSession->isLoggedIn() &&
+			$plugin->getSettings()->autoEmbed == 1
+		);
+	}
 }

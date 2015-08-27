@@ -3,6 +3,11 @@
 {{ forms.lightswitchField({
 'label': 'Auto Embed', 'instructions': 'Add the Admin Bar to your front-end template without using the Twig embed tag.', 'id': 'autoEmbed', 'name': 'autoEmbed', 'on': autoEmbedValue}) }}
 
+<div id="auto_embed_extras">
+	{{ forms.lightswitchField({
+'label': 'Stick to Top', 'instructions': 'Make Admin Bar stay at the top of the screen (on tablets and desktops).', 'id': 'autoEmbedSticky', 'name': 'autoEmbedSticky', 'on': autoEmbedStickyValue}) }}
+</div>
+
 {{ forms.colorField({
 'label': 'Default Color', 'instructions': 'Color used for highlights and rollovers. This can be overridden if color value is added to the Twig embed tag.', 'id': 'defaultColor', 'name': 'defaultColor', 'value': defaultColorValue}) }}
 
@@ -36,7 +41,6 @@
           {% if link.permissions is defined and link.permissions|length %}
           	{% for permission in link.permissions %}
 							<input type="hidden" name="enabledLinks[{{ link.id }}][linkPermissions][{{ loop.index }}]"value="{{ permission }}">
-							{{ permission }}
           	{% endfor %}
           {% endif %}
           <input type="hidden" name="enabledLinks[{{ link.id }}][linkType]"value="{{ link.type }}">
@@ -55,3 +59,21 @@
     <p>Other plugins can add links to the Admin Bar. After installing supporting plugins, come back here to enable new links.</p>
 	{% endif %}
 </div>
+
+{% includejs %}
+	var jq = jQuery;
+	
+	function showAutoEmbedExtras() {
+		if (jq('#settings-autoEmbed-field > .input > .lightswitch').hasClass('on')) {
+			jq('#settings-auto_embed_extras').show();
+		} else {
+			jq('#settings-auto_embed_extras').hide();
+		}
+	}
+	
+	jq('#settings-autoEmbed-field > .input > .lightswitch').click(function() {
+		showAutoEmbedExtras();
+	});
+	
+	showAutoEmbedExtras();
+{% endincludejs %}
