@@ -19,12 +19,6 @@ class AdminbarService extends BaseApplicationComponent
 			$pluginLinks = array();
 			$externalLinksStringData = '';
 			
-			// @todo 2.0 remove
-			// update settings if new settings aren't set
-			if (!isset($plugin->getSettings()->externalLinksString['default'])) {
-				$plugin->defineSettings();
-			}
-			
 			foreach ($pluginLinksHook as $key => $link) {
 				$pluginName = craft()->plugins->getPlugin($key)->getName();
 				
@@ -41,7 +35,11 @@ class AdminbarService extends BaseApplicationComponent
 			}
 			
 			// if settings don't match, clear template cache
-			$externalLinksStringSettingString = $this->getAdminbarSettings()->externalLinksString['default'];
+			if (isset($this->getAdminbarSettings()->externalLinksString['default'])) {
+				$externalLinksStringSettingString = $this->getAdminbarSettings()->externalLinksString['default'];
+			} else {
+				$externalLinksStringSettingString = '...';
+			}
 			
 			if ($externalLinksStringSettingString == '' || $externalLinksStringSettingString != $externalLinksStringData) {
 				$this->updateAdminbarSettings(array('externalLinksString' => array(AttributeType::String, 'label' => 'Plugin Links String', 'default' => $externalLinksStringData)));
