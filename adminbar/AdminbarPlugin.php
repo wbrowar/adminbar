@@ -61,7 +61,7 @@ class AdminbarPlugin extends BasePlugin
 			'customLinks' => array(AttributeType::Mixed, 'label' => 'Custom Links', 'default' => array()),
 			'defaultColor' => array(AttributeType::String, 'label' => 'Default Color', 'default' => '#d85b4b'),
 			'enabledLinks' => array(AttributeType::Mixed, 'label' => 'Enabled Link', 'default' => array()),
-			'externalLinksString' => array(AttributeType::String, 'label' => 'Plugin Links String', 'default' => ''),
+			'externalLinksString' => array(AttributeType::String, 'label' => 'Plugin Links String', 'default' => '...'),
 		);
 	}
 	public function getSettingsHtml()
