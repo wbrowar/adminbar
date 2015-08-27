@@ -37,7 +37,7 @@ class AdminbarPlugin extends BasePlugin
 		craft()->on('plugins.onLoadPlugins', array($this, 'onLoadPlugins'));
 		
 		// update settings if new settings aren't set
-		if (!isset($this->getSettings()->externalLinksString)) {
+		if (!isset($this->getSettings()->externalLinksString['default'])) {
 			$this->defineSettings();
 		}
 	}
