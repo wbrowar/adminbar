@@ -8,10 +8,29 @@
 'label': 'Stick to Top', 'instructions': 'Make Admin Bar stay at the top of the screen (on tablets and desktops).', 'id': 'autoEmbedSticky', 'name': 'autoEmbedSticky', 'on': autoEmbedStickyValue}) }}
 </div>
 
+<div id="embed_tag_instructions">
+	<div class="field">
+		<div class="heading">
+			<label for="embed_tag">Embed Tag</label>
+			<div class="instructions"><p>Instead of using Auto Embed, add this tag into your template for more flexibility.</p>
+			</div>
+		</div>
+		<div class="input ltr">
+			<input class="text fullwidth" type="text" name="embed_tag" value="{% verbatim %}{{ craft.Adminbar.show(entry) }}{% endverbatim %}" disabled>
+		</div>
+	</div>
+</div>
+
+<hr>
+
 {{ forms.colorField({
 'label': 'Default Color', 'instructions': 'Color used for highlights and rollovers. This can be overridden if color value is added to the Twig embed tag.', 'id': 'defaultColor', 'name': 'defaultColor', 'value': defaultColorValue}) }}
 
+<hr>
+
 {{ customLinksTable }}
+
+<hr>
 
 <div class="field">
   <label>Plugins Links</label>
@@ -65,9 +84,11 @@
 	
 	function showAutoEmbedExtras() {
 		if (jq('#settings-autoEmbed-field > .input > .lightswitch').hasClass('on')) {
-			jq('#settings-auto_embed_extras').show();
+			jq('#settings-auto_embed_extras').show(200);
+			jq('#settings-embed_tag_instructions').hide(200);
 		} else {
-			jq('#settings-auto_embed_extras').hide();
+			jq('#settings-auto_embed_extras').hide(200);
+			jq('#settings-embed_tag_instructions').show(200);
 		}
 	}
 	
