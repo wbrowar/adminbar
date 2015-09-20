@@ -3,7 +3,7 @@ Simple front-end shortcut bar for users logged into [Craft CMS](https://buildwit
 
 ![Screenshot](screenshot-bar.png)
 
-> BETA MODE: 1.4 might have some bugs related to caching, so please send your feedback my way if you find any
+> NOTE: 1.4 might have some bugs related to caching, so please send your feedback my way if you find any
 
 ## Installation
 1. Upload the adminbar/ folder to your craft/plugins/ folder.
@@ -13,7 +13,7 @@ Simple front-end shortcut bar for users logged into [Craft CMS](https://buildwit
 ## Auto Embed
 Using the "Auto Embed" setting will add the Admin Bar to the top of your `<body>` tag. Doing it this way will base the "Edit" button off of the current page entry. Branding colors will use the color selected through the "Default Color" color picker.
 
-For more control, or to add the admin bar to multiple entries, use the Twig embed tag, below.
+For more control, or to add the admin bar to multiple entries, use the Twig embed tag, below. _NOTE: using Auto Embed caches Admin Bar automatically, where using the Embed Tag leaves caching up to you._
 
 ## Embed Options
 Format: `{{ craft.Adminbar.bar(currentEntry, color, type) }}`
@@ -102,20 +102,28 @@ Adding `'overrideEdit' => false` will force a link to show up, even if there are
 
 ---
 
+## Build Tool Extras
+It is probably uncommon to need this, but: if you are using a build tool, such as [Grunt](http://gruntjs.com) or [Gulp](http://gulpjs.com), and you are using the embed tag with the type set to `none`, AND your `plugins` folder happens to be within your build tool root folder, you can find the uncompressed, un-[autoprefixed](https://github.com/postcss/autoprefixer) CSS at this location: `adminbar/buildsource/style.css`. This could be helpful if you want to include Admin Bar CSS into your own stylesheet.
+
+---
+
 ## To Do
 * Update plugin to support Craft 3
 * Add a new type to be used within multiple entries. [Looking for some typical use case suggestions.](https://github.com/wbrowar/craft-admin-bar/issues/new)
+* Change—in Craft 3 version—Embed Options in Embed Tag to array
 
 ---
 
 ## Releases
 ##### *1.4.0*
 * Added per-user caching for the default Admin Bar when Auto Embed is on
-* Added public function to clear the Admin Bar cache, `clearAdminBarCache`
-* Added option to fix Admin Bar when Auto Embed is on (if you're using the embed tag, you can do this with CSS: `position: fixed;`)
+* Added public hook to clear the Admin Bar cache, `clearAdminBarCache`
+* Added option to make Admin Bar sticky to the top of the page when Auto Embed is on (if you're using the embed tag, you can do this with CSS: `position: fixed;`)
+* Added embed tag example into plugin settings page
 * Added more conditionals when the Auto Embed option is checked (thanks to PR from @lwilkowskeBC)
-* Added ability to override default entry "Edit" link with any object that has the `getCpEditUrl` property (kind of still in beta).
-* Changed embed tag from `craft.Adminbar.show()` to `craft.Adminbar.bar()` (`craft.Adminbar.show()` still works, but it's deprecated)
+* Added ability to override default entry "Edit" link with any object that has the `getCpEditUrl` property (kind of still in beta)
+* Changed embed tag from `craft.Adminbar.show()` to `craft.Adminbar.bar()` (`craft.Adminbar.show()` still works, but it is deprecated)
+* Changed CSS and JS included in the front-end Admin Bar from `includecss` and `includejs` to `<style>` and `<script>` tags, respectively, so the Embed Tag can be included in cache tags
 * Fixed issue where you could not delete all of your Custom Links
 
 ##### *1.3.4*
