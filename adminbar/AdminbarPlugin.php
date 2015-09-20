@@ -125,6 +125,13 @@ class AdminbarPlugin extends BasePlugin
 			'enabledLinks' => $this->getSettings()->enabledLinks,
 		));
 	}
+	public function prepSettings($settings) {
+	  if (!isset($settings['customLinks'])) {
+		  $settings['customLinks'] = array();
+	  }
+	
+	  return $settings;
+	}
 	
 	public function clearAdminBarCache() {
 		$user = craft()->userSession->getUser();

@@ -116,6 +116,7 @@ Adding `'overrideEdit' => false` will force a link to show up, even if there are
 * Added more conditionals when the Auto Embed option is checked (thanks to PR from @lwilkowskeBC)
 * Added ability to override default entry "Edit" link with any object that has the `getCpEditUrl` property (kind of still in beta).
 * Changed embed tag from `craft.Adminbar.show()` to `craft.Adminbar.bar()` (`craft.Adminbar.show()` still works, but it's deprecated)
+* Fixed issue where you could not delete all of your Custom Links
 
 ##### *1.3.4*
 * Added permissions to `addAdminBarLinks()` for plugin authors.
