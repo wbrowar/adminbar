@@ -160,6 +160,7 @@ class AdminbarPlugin extends BasePlugin
 		return (
 			!craft()->isConsole() &&
 			!craft()->request->isCpRequest() &&
+			!craft()->request->isAjaxRequest() &&
 			craft()->userSession->isLoggedIn() &&
 			$plugin->getSettings()->autoEmbed == 1
 		);
