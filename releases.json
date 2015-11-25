@@ -1,0 +1,122 @@
+[
+  {
+    "version": "1.0.0",
+    "downloadUrl": "https://github.com/wbrowar/craft-admin-bar/archive/master.zip",
+    "date": "2015-12-01T10:00:00-08:00",
+    "notes": [
+        "Basic admin bar with Edit, Settings, and Logout buttons."
+    ]
+  },
+  {
+    "version": "1.1.0",
+    "downloadUrl": "https://github.com/wbrowar/craft-admin-bar/archive/master.zip",
+    "date": "2015-12-01T10:00:00-08:00",
+    "notes": [
+        "[Added] Added ability to add custom links to CP settings."
+    ]
+  },
+  {
+    "version": "1.2.0",
+    "downloadUrl": "https://github.com/wbrowar/craft-admin-bar/archive/master.zip",
+    "date": "2015-12-01T10:00:00-08:00",
+    "notes": [
+        "[Added] Added option to make custom links available only to users with the admin role.",
+        "[Added] Added option to embed Admin Bar from the plugin settings page.",
+        "[Added] Added color picker for default branding color.",
+        "[Improved] Removed duplicate CSS and JS code for multiple instances of the Admin Bar."
+    ]
+  },
+  {
+    "version": "1.2.1",
+    "downloadUrl": "https://github.com/wbrowar/craft-admin-bar/archive/master.zip",
+    "date": "2015-12-01T10:00:00-08:00",
+    "notes": [
+        "[Fixed] Fixed an error when checking for user permissions (flagged an error in devMode)."
+    ]
+  },
+  {
+    "version": "1.2.2",
+    "downloadUrl": "https://github.com/wbrowar/craft-admin-bar/archive/master.zip",
+    "date": "2015-12-01T10:00:00-08:00",
+    "notes": [
+        "[Improved] Changed the hard-coded url for the \"Settings\" link to use Craft's cpTrigger variable (thanks to @mildlygeeky for the tip)."
+    ]
+  },
+  {
+    "version": "1.3.0",
+    "downloadUrl": "https://github.com/wbrowar/craft-admin-bar/archive/master.zip",
+    "date": "2015-12-01T10:00:00-08:00",
+    "notes": [
+        "[Added] Added the logged in user photo. Just for kicks. :bust_in_silhouette:",
+        "[Added] Added a new \"Dashboard\" link.",
+        "[Added] Added `baseCpUrl` in front of root-relative links.",
+        "[Added] Added support for plugins to add links to the Admin Bar.",
+        "[Added] Added setting to enable/disable links added by plugins.",
+        "[Added] Added example plugin for plugin makers."
+    ]
+  },
+  {
+    "version": "1.3.1",
+    "downloadUrl": "https://github.com/wbrowar/craft-admin-bar/archive/master.zip",
+    "date": "2015-12-01T10:00:00-08:00",
+    "notes": [
+        "[Fixed] Fixed a couple of PHP 5.3 errors"
+    ]
+  },
+  {
+    "version": "1.3.2",
+    "downloadUrl": "https://github.com/wbrowar/craft-admin-bar/archive/master.zip",
+    "date": "2015-12-01T10:00:00-08:00",
+    "notes": [
+        "@ktbartholomew helped me realize a much simpler way to integrate plugins links. **NOTE: the event has been removed, and this hook is taking its place.**",
+        "[Added] Added plugin names on Admin Bar settings page."
+    ]
+  },
+  {
+    "version": "1.3.3",
+    "downloadUrl": "https://github.com/wbrowar/craft-admin-bar/archive/master.zip",
+    "date": "2015-12-01T10:00:00-08:00",
+    "notes": [
+        "[Added] Plugin authors can pass along [url() arguments](http://buildwithcraft.com/docs/templating/functions#url) into `addAdminBarLinks()`.",
+        "[Fixed] Fixed some minor CSS issues in the front-end admin bar."
+    ]
+  },
+  {
+    "version": "1.3.4",
+    "downloadUrl": "https://github.com/wbrowar/craft-admin-bar/archive/master.zip",
+    "date": "2015-12-01T10:00:00-08:00",
+    "notes": [
+        "[Added] Added permissions to `addAdminBarLinks()` for plugin authors.",
+        "[Improved] Added `url()` functions accross the board."
+    ]
+  },
+  {
+    "version": "1.4.0",
+    "downloadUrl": "https://github.com/wbrowar/craft-admin-bar/archive/master.zip",
+    "date": "2015-12-01T10:00:00-08:00",
+    "notes": [
+        "[Added] Added per-user caching for the default Admin Bar when Auto Embed is on.",
+        "[Added] Added public hook to clear the Admin Bar cache, `clearAdminBarCache`.",
+        "[Added] Added option to make Admin Bar sticky to the top of the page when Auto Embed is on (if you're using the embed tag, you can do this with CSS: `position: fixed;`).",
+        "[Added] Added embed tag example into plugin settings page.",
+        "[Added] Added more conditionals when the Auto Embed option is checked (thanks to PR from @lwilkowskeBC).",
+        "[Added] Added ability to override default entry \"Edit\" link with any object that has the `getCpEditUrl` property (kind of still in beta).",
+        "[Improved] Changed embed tag from `craft.Adminbar.show()` to `craft.Adminbar.bar()` (`craft.Adminbar.show()` still works, but it is deprecated)",
+        "[Improved] Changed CSS and JS included in the front-end Admin Bar from `includecss` and `includejs` to `<style>` and `<script>` tags, respectively, so the Embed Tag can be included in cache tags",
+        "[Fixed] Fixed issue where you could not delete all of your Custom Links",
+        "NOTE: release dates and download links are probably wrong from here down... Will come back and fix this later"
+    ]
+  },
+  {
+    "version": "1.4.1",
+    "downloadUrl": "https://github.com/wbrowar/craft-admin-bar/archive/master.zip",
+    "date": "2015-12-01T10:00:00-08:00",
+    "notes": [
+        "[Added] Added indicator for when the site is running in `devMode` (using the same indicator as the CP).",
+        "[Added] Added icon, documentation link, download link, and release information for Craft 2.5.",
+        "[Improved] Admin Bar no longer embeds itself during AJAX requests (thanks to @jayelkaake).",
+        "[Fixed] Fixed Plugins Settings page in Craft 2.5.",
+        "[Fixed] Fixed sticky setting on mobile-sized screens."
+    ]
+  },
+]
