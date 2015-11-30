@@ -1,7 +1,7 @@
 # Craft – Admin Bar
 Simple front-end shortcut bar for users logged into [Craft CMS](https://buildwithcraft.com).
 
-![Screenshot](screenshot-bar.png)
+![Screenshot](resources/screenshots/screenshot-bar.png)
 
 > NOTE: 1.4 might have some bugs related to caching, so please send your feedback my way if you find any
 
@@ -73,7 +73,7 @@ public function addAdminBarLinks() {
 ### Plugins using Admin Bar
 * [Craft Help](https://github.com/70kft/craft-help)
 
-![Screenshot](screenshot-settings.png)
+![Screenshot](resources/screenshots/screenshot-settings.png)
 
 ## Overriding the Edit Link
 By default, Admin Bar will try to look for an `entry` or `category` object and use its `cpEditUrl` property to create the default "Edit" link. In some cases, you might want to change the label, or you might be using a different variable for an entry. It's not that common, but in these cases, you can add an array into your config.php file with the following:
@@ -115,57 +115,7 @@ It is probably uncommon to need this, but: if you are using a build tool, such a
 ---
 
 ## Releases
-##### *1.4.0*
-* Added per-user caching for the default Admin Bar when Auto Embed is on
-* Added public hook to clear the Admin Bar cache, `clearAdminBarCache`
-* Added option to make Admin Bar sticky to the top of the page when Auto Embed is on (if you're using the embed tag, you can do this with CSS: `position: fixed;`)
-* Added embed tag example into plugin settings page
-* Added more conditionals when the Auto Embed option is checked (thanks to PR from @lwilkowskeBC)
-* Added ability to override default entry "Edit" link with any object that has the `getCpEditUrl` property (kind of still in beta)
-* Changed embed tag from `craft.Adminbar.show()` to `craft.Adminbar.bar()` (`craft.Adminbar.show()` still works, but it is deprecated)
-* Changed CSS and JS included in the front-end Admin Bar from `includecss` and `includejs` to `<style>` and `<script>` tags, respectively, so the Embed Tag can be included in cache tags
-* Fixed issue where you could not delete all of your Custom Links
 
-##### *1.3.4*
-* Added permissions to `addAdminBarLinks()` for plugin authors.
-* Added `url()` functions accross the board.
-
-##### *1.3.3*
-* Plugin authors can pass along [url() arguments](http://buildwithcraft.com/docs/templating/functions#url) into `addAdminBarLinks()`.
-* Fixed some minor CSS issues in the front-end admin bar.
-
-##### *1.3.2*
-* @ktbartholomew helped me realize a much simpler way to integrate plugins links. **NOTE: the event has been removed, and this hook is taking its place.**
-* Added plugin names on Admin Bar settings page.
-
-##### *1.3.1*
-* Fixed a couple of PHP 5.3 errors
-
-##### *1.3.0*
-* Added the logged in user photo. Just for kicks. :bust_in_silhouette:
-* Added a new "Dashboard" link.
-* Added `baseCpUrl` in front of root-relative links.
-* Added support for plugins to add links to the Admin Bar.
-* Added setting to enable/disable links added by plugins.
-* Added example plugin for plugin makers.
-
-##### *1.2.2*
-* Changed the hard-coded url for the "Settings" link to use Craft's cpTrigger variable (thanks to @mildlygeeky for the tip).
-
-##### *1.2.1*
-* Fixed an error when checking for user permissions (flagged an error in devMode).
-
-##### *1.2.0*
-**NOTE:** Craft will ask you to make a one-time database update to accommodate the new options. 
-* Added option to make custom links available only to users with the admin role.
-* Added option to embed Admin Bar from the plugin settings page.
-* Added color picker for default branding color.
-* Removed duplicate CSS and JS code for multiple instances of the Admin Bar.
-
-##### *1.1.0*
-* Added ability to add custom links to CP settings.
-
-##### *1.0*
-* Basic admin bar with Edit, Settings, and Logout buttons.
+Release notes moved to [releases.json](https://github.com/wbrowar/craft-admin-bar/blob/master/releases.json)
 
 Please, let me know if this plugin is useful or if you have any suggestions or issues. [@wbrowar](https://twitter.com/wbrowar)

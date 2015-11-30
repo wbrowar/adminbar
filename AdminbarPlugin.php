@@ -11,7 +11,11 @@ class AdminbarPlugin extends BasePlugin
 	}
 	public function getVersion()
 	{
-		return '1.4.0';
+		return '1.4.1';
+	}
+	public function getDescription()
+	{
+		return 'Simple front-end shortcut bar for users logged into Craft CMS.';
 	}
 	public function getDeveloper()
 	{
@@ -20,6 +24,14 @@ class AdminbarPlugin extends BasePlugin
 	public function getDeveloperUrl()
 	{
 		return 'http://wbrowar.com';
+	}
+	public function getDocumentationUrl()
+	{
+		return 'https://github.com/wbrowar/craft-admin-bar';
+	}
+	public function getReleaseFeedUrl()
+	{
+		return 'https://raw.githubusercontent.com/wbrowar/craft-admin-bar/master/releases.json';
 	}
 	public function hasCpSection()
 	{

@@ -2,6 +2,7 @@
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
+  position: relative;
   margin: 0;
   padding: 0;
   width: 100%;
@@ -11,12 +12,27 @@
   font-family: 'Trebuchet MS', 'Lucida Grande', 'Lucida Sans Unicode', 'Lucida Sans', Tahoma, sans-serif;
   font-size: 17px;
   color: white; }
+  .admin_bar_wrapper.sticky {
+    position: fixed;
+    top: 0;
+    left: 0; }
+  .admin_bar_wrapper.admin_bar_devmode_enabled {
+    padding-top: 4px; }
   .admin_bar_wrapper a {
     margin: 0;
     padding: 6px 10px;
     text-align: center;
     text-decoration: none;
     transition: color .2s ease-out, background .2s ease-out; }
+
+.admin_bar_devmode {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 4px;
+  width: 100%;
+  background: url(/cptrigger/resources/images/dev-mode.svg) repeat-x 15px 0; }
 
 .admin_bar_greeting {
   display: none;

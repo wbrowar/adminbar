@@ -115,6 +115,7 @@
         "[Added] Added indicator for when the site is running in `devMode` (using the same indicator as the CP).",
         "[Added] Added icon, documentation link, download link, and release information for Craft 2.5.",
         "[Improved] Admin Bar no longer embeds itself during AJAX requests (thanks to @jayelkaake).",
+        "[Improved] Re-organized repo to allow for easier `git` cloning.",
         "[Fixed] Fixed Plugins Settings page in Craft 2.5.",
         "[Fixed] Fixed sticky setting on mobile-sized screens."
     ]
