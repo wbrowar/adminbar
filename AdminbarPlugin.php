@@ -11,7 +11,7 @@ class AdminbarPlugin extends BasePlugin
 	}
 	public function getVersion()
 	{
-		return '1.4.1';
+		return '1.4.2';
 	}
 	public function getDescription()
 	{
@@ -27,11 +27,11 @@ class AdminbarPlugin extends BasePlugin
 	}
 	public function getDocumentationUrl()
 	{
-		return 'https://github.com/wbrowar/craft-admin-bar';
+		return 'https://github.com/wbrowar/adminbar';
 	}
 	public function getReleaseFeedUrl()
 	{
-		return 'https://raw.githubusercontent.com/wbrowar/craft-admin-bar/master/releases.json';
+		return 'https://raw.githubusercontent.com/wbrowar/adminbar/master/releases.json';
 	}
 	public function hasCpSection()
 	{

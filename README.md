@@ -116,6 +116,6 @@ It is probably uncommon to need this, but: if you are using a build tool, such a
 
 ## Releases
 
-Release notes moved to [releases.json](https://github.com/wbrowar/craft-admin-bar/blob/master/releases.json)
+Release notes moved to [releases.json](https://github.com/wbrowar/adminbar/blob/master/releases.json)
 
 Please, let me know if this plugin is useful or if you have any suggestions or issues. [@wbrowar](https://twitter.com/wbrowar)

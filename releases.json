@@ -1,24 +1,24 @@
 [
   {
     "version": "1.0.0",
-    "downloadUrl": "https://github.com/wbrowar/craft-admin-bar/archive/master.zip",
-    "date": "2015-12-01T10:00:00-08:00",
+    "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
+    "date": "2015-12-01T10:00:00-05:00",
     "notes": [
         "Basic admin bar with Edit, Settings, and Logout buttons."
     ]
   },
   {
     "version": "1.1.0",
-    "downloadUrl": "https://github.com/wbrowar/craft-admin-bar/archive/master.zip",
-    "date": "2015-12-01T10:00:00-08:00",
+    "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
+    "date": "2015-12-01T10:00:00-05:00",
     "notes": [
         "[Added] Added ability to add custom links to CP settings."
     ]
   },
   {
     "version": "1.2.0",
-    "downloadUrl": "https://github.com/wbrowar/craft-admin-bar/archive/master.zip",
-    "date": "2015-12-01T10:00:00-08:00",
+    "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
+    "date": "2015-12-01T10:00:00-05:00",
     "notes": [
         "[Added] Added option to make custom links available only to users with the admin role.",
         "[Added] Added option to embed Admin Bar from the plugin settings page.",
@@ -28,24 +28,24 @@
   },
   {
     "version": "1.2.1",
-    "downloadUrl": "https://github.com/wbrowar/craft-admin-bar/archive/master.zip",
-    "date": "2015-12-01T10:00:00-08:00",
+    "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
+    "date": "2015-12-01T10:00:00-05:00",
     "notes": [
         "[Fixed] Fixed an error when checking for user permissions (flagged an error in devMode)."
     ]
   },
   {
     "version": "1.2.2",
-    "downloadUrl": "https://github.com/wbrowar/craft-admin-bar/archive/master.zip",
-    "date": "2015-12-01T10:00:00-08:00",
+    "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
+    "date": "2015-12-01T10:00:00-05:00",
     "notes": [
         "[Improved] Changed the hard-coded url for the \"Settings\" link to use Craft's cpTrigger variable (thanks to @mildlygeeky for the tip)."
     ]
   },
   {
     "version": "1.3.0",
-    "downloadUrl": "https://github.com/wbrowar/craft-admin-bar/archive/master.zip",
-    "date": "2015-12-01T10:00:00-08:00",
+    "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
+    "date": "2015-12-01T10:00:00-05:00",
     "notes": [
         "[Added] Added the logged in user photo. Just for kicks. :bust_in_silhouette:",
         "[Added] Added a new \"Dashboard\" link.",
@@ -57,16 +57,16 @@
   },
   {
     "version": "1.3.1",
-    "downloadUrl": "https://github.com/wbrowar/craft-admin-bar/archive/master.zip",
-    "date": "2015-12-01T10:00:00-08:00",
+    "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
+    "date": "2015-12-01T10:00:00-05:00",
     "notes": [
         "[Fixed] Fixed a couple of PHP 5.3 errors"
     ]
   },
   {
     "version": "1.3.2",
-    "downloadUrl": "https://github.com/wbrowar/craft-admin-bar/archive/master.zip",
-    "date": "2015-12-01T10:00:00-08:00",
+    "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
+    "date": "2015-12-01T10:00:00-05:00",
     "notes": [
         "@ktbartholomew helped me realize a much simpler way to integrate plugins links. **NOTE: the event has been removed, and this hook is taking its place.**",
         "[Added] Added plugin names on Admin Bar settings page."
@@ -74,8 +74,8 @@
   },
   {
     "version": "1.3.3",
-    "downloadUrl": "https://github.com/wbrowar/craft-admin-bar/archive/master.zip",
-    "date": "2015-12-01T10:00:00-08:00",
+    "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
+    "date": "2015-12-01T10:00:00-05:00",
     "notes": [
         "[Added] Plugin authors can pass along [url() arguments](http://buildwithcraft.com/docs/templating/functions#url) into `addAdminBarLinks()`.",
         "[Fixed] Fixed some minor CSS issues in the front-end admin bar."
@@ -83,8 +83,8 @@
   },
   {
     "version": "1.3.4",
-    "downloadUrl": "https://github.com/wbrowar/craft-admin-bar/archive/master.zip",
-    "date": "2015-12-01T10:00:00-08:00",
+    "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
+    "date": "2015-12-01T10:00:00-05:00",
     "notes": [
         "[Added] Added permissions to `addAdminBarLinks()` for plugin authors.",
         "[Improved] Added `url()` functions accross the board."
@@ -92,8 +92,8 @@
   },
   {
     "version": "1.4.0",
-    "downloadUrl": "https://github.com/wbrowar/craft-admin-bar/archive/master.zip",
-    "date": "2015-12-01T10:00:00-08:00",
+    "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
+    "date": "2015-12-01T10:00:00-05:00",
     "notes": [
         "[Added] Added per-user caching for the default Admin Bar when Auto Embed is on.",
         "[Added] Added public hook to clear the Admin Bar cache, `clearAdminBarCache`.",
@@ -109,8 +109,8 @@
   },
   {
     "version": "1.4.1",
-    "downloadUrl": "https://github.com/wbrowar/craft-admin-bar/archive/master.zip",
-    "date": "2015-12-01T10:00:00-08:00",
+    "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
+    "date": "2015-11-30T10:00:00-05:00",
     "notes": [
         "[Added] Added indicator for when the site is running in `devMode` (using the same indicator as the CP).",
         "[Added] Added icon, documentation link, download link, and release information for Craft 2.5.",
@@ -118,6 +118,14 @@
         "[Improved] Re-organized repo to allow for easier `git` cloning.",
         "[Fixed] Fixed Plugins Settings page in Craft 2.5.",
         "[Fixed] Fixed sticky setting on mobile-sized screens."
+    ]
+  },
+  {
+    "version": "1.4.2",
+    "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
+    "date": "2015-12-01T12:40:00-05:00",
+    "notes": [
+        "[Fixed] Redirected repo to make it easier for renaming when using `git` to download the plugin."
     ]
   }
 ]
