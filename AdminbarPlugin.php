@@ -13,6 +13,10 @@ class AdminbarPlugin extends BasePlugin
 	{
 		return '1.4.2';
 	}
+	public function getSchemaVersion()
+	{
+		return '1.0.0';
+	}
 	public function getDescription()
 	{
 		return 'Simple front-end shortcut bar for users logged into Craft CMS.';
