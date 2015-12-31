@@ -75,6 +75,13 @@ public function addAdminBarLinks() {
 
 ![Screenshot](resources/screenshots/screenshot-settings.png)
 
+## Clear Template Caches from Admin Bar
+Add a link so that content editors can clear the site's template caches from the front-end by adding this setting into your config.php file. The link will not appear if `enableTemplateCaching` is set to `false`.
+
+```php
+'adminBarClearCacheLink' => true,
+```
+
 ## Overriding the Edit Link
 By default, Admin Bar will try to look for an `entry` or `category` object and use its `cpEditUrl` property to create the default "Edit" link. In some cases, you might want to change the label, or you might be using a different variable for an entry. It's not that common, but in these cases, you can add an array into your config.php file with the following:
 

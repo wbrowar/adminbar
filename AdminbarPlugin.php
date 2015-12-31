@@ -11,7 +11,7 @@ class AdminbarPlugin extends BasePlugin
 	}
 	public function getVersion()
 	{
-		return '1.4.2';
+		return '1.4.3';
 	}
 	public function getSchemaVersion()
 	{

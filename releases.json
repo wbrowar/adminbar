@@ -127,5 +127,15 @@
     "notes": [
         "[Fixed] Redirected repo to make it easier for renaming when using `git` to download the plugin."
     ]
+  },
+  {
+    "version": "1.4.3",
+    "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
+    "date": "2015-12-31T12:00:00-05:00",
+    "notes": [
+        "[Added] Added Clear Cache button that clears the template cache from the front-end.",
+        "[Added] Added section labels to default Edit links on entry and category pages.",
+        "[Improved] Made some slight changes to the Admin Bar CSS to allow for multiple buttons on the right."
+    ]
   }
 ]
