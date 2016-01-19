@@ -8,7 +8,7 @@
 		<div class="admin_bar_links">
 			<a href="{{ url(craft.config.cpTrigger ~ '/dashboard') }}">Dashboard</a>
 			
-			{% set entrySectionName = entry.elementType == 'Entry' ? ' ' ~ entry.section.name : '' %}
+			{% set entrySectionName = '' %}
 			
 			{% if craft.config.adminBarEditLink is defined and craft.config.adminBarEditLink|length %}
 				
