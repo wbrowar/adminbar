@@ -47,9 +47,14 @@ class AdminbarService extends BaseApplicationComponent
 			}
 			
 			// redirect tempalate path to plugin path
-			$oldTemplatesPath = craft()->path->getTemplatesPath();
+			//$oldTemplatesPath = craft()->path->getTemplatesPath();
+			//$newTemplatesPath = craft()->path->getPluginsPath().'adminbar/templates/';
+			//craft()->path->setTemplatesPath($newTemplatesPath);
+			
+			$oldTemplatesPath = method_exists(craft()->templates, 'getTemplatesPath') ? craft()->templates->getTemplatesPath() : craft()->path->getTemplatesPath();
 			$newTemplatesPath = craft()->path->getPluginsPath().'adminbar/templates/';
-			craft()->path->setTemplatesPath($newTemplatesPath);
+			method_exists(craft()->templates, 'setTemplatesPath') ? craft()->templates->setTemplatesPath($newTemplatesPath) : craft()->path->setTemplatesPath($newTemplatesPath);
+
 			
 			// check to see if defaults are overriden
 			if ($color === '') {
@@ -74,7 +79,8 @@ class AdminbarService extends BaseApplicationComponent
 			}
 			
 			// return templates path to original locatiojn
-			craft()->path->setTemplatesPath($oldTemplatesPath);
+			//craft()->path->setTemplatesPath($oldTemplatesPath);
+			method_exists(craft()->templates, 'setTemplatesPath') ? craft()->templates->setTemplatesPath($oldTemplatesPath) : craft()->path->setTemplatesPath($oldTemplatesPath);
 			
 			// change embedded value to true
 			$this->_adminbarEmbedded = true;

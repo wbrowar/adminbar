@@ -1,0 +1,22 @@
+{% set js = options.js is defined ? options.js : true %}
+{% set editTitle = element.title is defined ? element.title : '' %}
+{% set editUrl = element.cpEditUrl is defined ? element.cpEditUrl : '' %}
+
+<span class="admin_bar_edit_wrapper">
+	{% if js != 1 %}
+		<a class="admin_bar_edit_edit" href="{{ url(editUrl) }}">{{ 'Edit'|t }}{% if editTitle|length %} {{ editTitle }}{% endif %}</a>
+	{% endif %}
+</span>
+
+{#
+{% if adminbarEditEmbedded != true %}
+	<style>
+.admin_bar_wrapper{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-flow:row nowrap;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;position:relative;margin:0;padding:0;width:100%;box-sizing:border-box;background-color:#000;background-color:rgba(0,0,0,.8);font-family:"Trebuchet MS","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Tahoma,sans-serif;font-size:17px;color:#fff}.admin_bar_wrapper.sticky{position:fixed;top:0;left:0}.admin_bar_wrapper.admin_bar_devmode_enabled{padding-top:4px}.admin_bar_wrapper a{margin:0;padding:6px 10px;text-align:center;text-decoration:none;transition:color .2s ease-out,background .2s ease-out}.admin_bar_devmode{display:block;position:absolute;top:0;left:0;height:4px;width:100%;background:url(/{{ craft.config.cpTrigger }}/resources/images/dev-mode.svg) 15px 0 repeat-x}.admin_bar_greeting{display:none;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;padding:0 15px;color:rgba(255,255,255,.8);white-space:nowrap}.admin_bar_links,.admin_bar_logout{display:-webkit-flex;display:-ms-flexbox;-webkit-align-items:center;padding:0}.admin_bar_links{display:flex;-ms-flex-align:center;align-items:center;-webkit-flex-flow:row wrap;-ms-flex-flow:row wrap;flex-flow:row wrap;-webkit-flex:1 1 auto;-ms-flex:1 1 auto;flex:1 1 auto}.admin_bar_links a{-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;color:#fff}.admin_bar_links a:hover{background-color:#fff;color:{{ color }}}.admin_bar_logout{display:flex;-ms-flex-align:center;align-items:center;-webkit-flex-flow:column nowrap;-ms-flex-flow:column nowrap;flex-flow:column nowrap;-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;text-align:right;font-size:.9em}.admin_bar_logout a{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex:1 1 auto;-ms-flex:1 1 auto;flex:1 1 auto;padding:6px 25px;background-color:transparent;color:#fff}.admin_bar_logout a:hover{background-color:{{ color }}}.admin_bar_client_logo,.admin_bar_user_photo{padding-right:7px;line-height:0}.admin_bar_client_logo img,.admin_bar_user_photo img{max-width:100%;height:auto}.admin_bar_user_photo{width:23px}.admin_bar_user_photo img{border-radius:50%}.admin_bar_client_logo{padding-top:2px;padding-bottom:2px;width:50px}@media screen and (min-width:601px){.admin_bar_wrapper{font-size:14px}.admin_bar_wrapper.sticky{position:fixed;top:0;left:0}.admin_bar_greeting{display:-webkit-flex;display:-ms-flexbox;display:flex}.admin_bar_logout{font-size:1em;-webkit-flex-flow:row wrap;-ms-flex-flow:row wrap;flex-flow:row wrap}.admin_bar_logout a{padding:6px 25px}}
+	</style>
+	
+	<script type="text/javascript">
+	//var adminbar_primary = document.getElementById("admin_bar_primary");
+	//document.body.insertBefore(adminbar_primary, document.body.firstChild);
+	</script>
+{% endif %}
+#}

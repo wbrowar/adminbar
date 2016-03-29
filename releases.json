@@ -137,5 +137,14 @@
         "[Added] Added section labels to default Edit links on entry and category pages.",
         "[Improved] Made some slight changes to the Admin Bar CSS to allow for multiple buttons on the right."
     ]
+  },
+  {
+    "version": "1.4.4",
+    "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
+    "date": "2016-03-29T18:25:00-05:00",
+    "notes": [
+        "[Fixed] Removed Section Name for now to get rid of a template bug.",
+        "[Fixed] Fixed `get/setTemplatePath()` due to deprecation in Craft 2.6.2778. Thanks to @nystudio107: http://craftcms.stackexchange.com/a/14380"
+    ]
   }
 ]
