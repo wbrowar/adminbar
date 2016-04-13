@@ -99,7 +99,7 @@
 		</div>
 		<div class="admin_bar_logout">
 			{% if (craft.config.adminBarClearCacheLink is defined and craft.config.adminBarClearCacheLink) and craft.config.enableTemplateCaching %}
-				<a href="{{ actionUrl('adminbar/clearTemplateCache', { returnUrl: craft.request.url }) }}">{{ 'Clear&nbsp;Cache'|t }}</a>
+				<a href="{{ actionUrl('adminbar/clearTemplateCache', { returnUrl: craft.request.url }) }}">{{ 'Clear&nbsp;Cache'|t|raw }}</a>
 			{% endif %}
 			<a href="{{ url(logoutUrl) }}">{{ 'Logout'|t }}</a>
 		</div>
