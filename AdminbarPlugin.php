@@ -44,6 +44,7 @@ class AdminbarPlugin extends BasePlugin
   
   public function init()
   {
+    Craft:dd('hi');
     craft()->templates->hook('renderAdminBar', function() {
       $adminbar = craft()->plugins->getPlugin('Adminbar');
       
@@ -91,116 +92,4 @@ class AdminbarPlugin extends BasePlugin
       'settings' => $this->getSettings(),
     ));
   }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  /*
-  
-  
-  public function getSettingsHtml()
-  {
-    // if not set, create a default row for custom links table
-    if (!$this->_customLinks) {
-      $this->_customLinks = array(array('linkLabel' => '', 'linkUrl' => '', 'adminOnly' => ''));
-    }
-    
-    // generate table for custom links
-    $customLinksTable = craft()->templates->renderMacro('_includes/forms', 'editableTableField', array(
-      array(
-        'label'        => Craft::t('Custom Links'),
-        'instructions' => Craft::t('Add your own links to the Admin Bar.'),
-        'id'           => 'customLinks',
-        'name'         => 'customLinks',
-        'cols'         => array(
-          'linkLabel' => array(
-            'heading' => Craft::t('Label'),
-            'type'    => 'singleline',
-          ),
-          'linkUrl' => array(
-            'heading' => Craft::t('URL'),
-            'type'    => 'singleline',
-          ),
-          'adminOnly' => array(
-            'heading' => Craft::t('Admins Only'),
-            'type'    => 'checkbox',
-          ),
-        ),
-        'rows' => $this->_customLinks,
-        'addRowLabel'  => Craft::t('Add a link'),
-      )
-    ));
-    
-    // get links from other plugins
-    $pluginLinksHook = craft()->plugins->call('addAdminBarLinks');
-    $pluginLinks = array();
-    
-    foreach ($pluginLinksHook as $key => $link) {
-      $pluginName = craft()->plugins->getPlugin($key)->getName();
-      
-      for($i=0; $i<count($link); $i++) {
-        if (isset($link[$i]['title']) && isset($link[$i]['url']) && isset($link[$i]['type'])) {
-          $link[$i]['id'] = str_replace(' ', '', $link[$i]['title']) . $link[$i]['url'] . $link[$i]['type'];
-          $link[$i]['originator'] = $pluginName;
-          array_push($pluginLinks, $link[$i]);
-        }
-      }
-    }
-    
-    $this->clearAdminBarCache();
-    
-    // output settings template
-    return craft()->templates->render('adminbar/settings', array(
-      'autoEmbedValue' => $this->getSettings()->autoEmbed,
-      'autoEmbedStickyValue' => $this->getSettings()->autoEmbedSticky,
-      'defaultColorValue' => $this->getSettings()->defaultColor,
-      'customLinksTable' => $customLinksTable,
-      'pluginLinks' => $pluginLinks,
-      'enabledLinks' => $this->getSettings()->enabledLinks,
-    ));
-  }
-  public function prepSettings($settings) {
-    if (!isset($settings['customLinks'])) {
-      $settings['customLinks'] = array();
-    }
-  
-    return $settings;
-  }
-  
-  // retrieve custom links settings
-  private function _customLinks()
-  {
-    $this->_customLinks = $this->getSettings()->customLinks;
-    $customLinks = '';
-    if ($this->_customLinks) {
-      foreach ($this->_customLinks as $row) {
-        if ($customLinks) {$customLinks .= ',';}
-        $adminOnly = isset($row['adminOnly']) ? ":'{$row['adminOnly']}'" : null;
-        // @TODO 2.0 remove and combine
-        $customLinks .= "'{$row['linkLabel']}':'{$row['linkUrl']} . $adminOnly";
-      }
-    }
-  }
-  */
 }
