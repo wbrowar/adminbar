@@ -19,7 +19,8 @@
   width: 100%;
   background-color: whitesmoke;
   border: 1px solid rgba(0, 0, 0, 0.8);
-  font-size: 16px;
+  font-family: "BlinkMacSystemFont", -apple-system, "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+  font-size: 17px;
   color: rgba(0, 0, 0, 0.8);
   transition: border .2s ease-out; }
   .admin_edit.admin_edit_embedded:hover {
