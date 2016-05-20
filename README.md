@@ -98,7 +98,7 @@ Here are some settings you can change with the config file:
 
 | Setting | Default | Description |
 | --- | --- | --- |
-| `additionalLinks` | *array()* | Add links to Admin Bar using the properties found below |
+| `additionalLinks` | *array()* | Add links to Admin Bar using the [properties found below](https://github.com/wbrowar/adminbar#additional-links) |
 | `cacheBar` | *true* | Enable caching of Admin Bar links |
 | `displayGreeting` | *true* | Displays the logged in user's photo (if it's set) and "Hi, [friendlyname]" |
 | `displayDashboardLink` | *true* | A link to the CP Dashboard |
