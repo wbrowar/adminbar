@@ -14,9 +14,10 @@ Front-end shortcuts for clients logged into [Craft CMS](https://craftcms.com).
 
 ---
 
+# Admin Bar
+
 ![Screenshot](resources/screenshots/screenshot-bar.png)
 
-# Admin Bar
 ## Add the Default Admin Bar
 The easiest way to add Admin Bar to your website is by adding the hook, `{{ hook 'renderAdminBar' }}`, anywhere within your page template. Admin Bar will appear at the top of any page that includes this hook when someone—who has the permission to view the CP—is logged into your website.
 
@@ -50,9 +51,10 @@ Here is a list of available arguments:
 
 ---
 
+# Entry Edit Links
+
 ![Screenshot](resources/screenshots/screenshot-edit.png)
 
-# Entry Edit Links
 ## Edit Links for Multiple Entries
 When looping through entries in an Element Criteria Model, entries in search results, or related entries to a page, you can now place edit links that make it easier to find and edit these entries.
 
