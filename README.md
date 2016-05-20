@@ -3,6 +3,10 @@ Front-end shortcuts for clients logged into [Craft CMS](https://craftcms.com).
 
 > NOTE: This release is not a seamless upgrade from 1.0. [Read below for more info about upgrading](https://github.com/wbrowar/adminbar#upgrading-from-1x). Also, there are probably some bugs...
 
+## Requirements
+* Craft 2.6+
+* PHP 5.3+
+
 ## Installation
 1. Move the `adminbar/` folder to your `craft/plugins/` folder.
 2. Enable the plugin in the CP.
