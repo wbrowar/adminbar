@@ -1,16 +1,16 @@
 # Craft – Admin Bar
 Front-end shortcuts for clients logged into [Craft CMS](https://craftcms.com).
 
-> NOTE: This release is not a seamless upgrade from 1.0. [Read below for more info about upgrading](#). Also, there are probably some bugs...
+> NOTE: This release is not a seamless upgrade from 1.0. [Read below for more info about upgrading](https://github.com/wbrowar/adminbar#upgrading-from-1x). Also, there are probably some bugs...
 
 ## Installation
 1. Move the `adminbar/` folder to your `craft/plugins/` folder.
 2. Enable the plugin in the CP.
 3. Copy `config.php`, paste it into your `craft/config/` folder, and rename it to `adminbar.php`.
 4. Add one of the Twig tags to your template:
-  * [Admin Bar default hook](#)
-  * [Admin Bar Twig tag](#)
-  * [Entry Edit Link Twig tag](#)
+  * [Admin Bar default hook](https://github.com/wbrowar/adminbar#add-the-default-admin-bar)
+  * [Admin Bar Twig tag](https://github.com/wbrowar/adminbar#using-the-admin-bar-twig-tag)
+  * [Entry Edit Link Twig tag](https://github.com/wbrowar/adminbar#edit-links-for-multiple-entries)
 
 ---
 
