@@ -146,5 +146,27 @@
         "[Fixed] Removed Section Name for now to get rid of a template bug.",
         "[Fixed] Fixed `get/setTemplatePath()` due to deprecation in Craft 2.6.2778. Thanks to @nystudio107: http://craftcms.stackexchange.com/a/14380"
     ]
+  },
+  {
+    "version": "2.0.0",
+    "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
+    "date": "2016-05-20T06:00:00-05:00",
+    "notes": [
+        "[Added] NOTE: Upgrading to 2.0 will involve changing your template files. Please see the docs before upgrading.",
+        "[Added] Improved the way Admin Bar works on mobile screens by adding a new responsive theme.",
+        "[Added] Added icons to default Dashboard, Edit, and Settings links.",
+        "[Added] Added the ability to perform plugin actions from Admin Bar links.",
+        "[Added] Added plugin config.php file with the ability turn off default links and add environment-specific links to Admin Bar.",
+        "[Added] Added horizontal scrolling to Admin Bar (with the ability to turn this off in config settings).",
+        "[Improved] Lowered amount of template cache rows used by Admin Bar to one per user.",
+        "[Improved] Refactored and cleaned up plugin code and front-end templates.",
+        "[Improved] Embed tag is more flexible with new options available.",
+        "[Fixed] Fixed an issue that caused by using Auto Embed that affeced other plugins, by removing Auto Embed and by adding the `{{ hook 'renderAdminBar' }}` hook.",
+        "[Added] Added Entry Edit Links for multiple edit links on ̄a page.",
+        "[Added] Added author and date of last update to Entry Edit Links.",
+        "[Added] Added the contents of Version Notes to Entry Edit Links.",
+        "[Added] Added ability to leave developer notes in Entry Edit Links.",
+        "[Improved] Added ability to ignore default CSS and JS and added all source files into the `adminbar/buildsource/` directory."
+    ]
   }
 ]

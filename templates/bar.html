@@ -1,125 +1,124 @@
-{% if currentUser and currentUser.can('accessCp') %}
-	{% cache using key "adminbar" ~ currentUser.id %}
-	<div {% if type == 'primary' %}id="admin_bar_primary"{% endif %} class="admin_bar_wrapper {% if type == 'primary' and sticky %}sticky{% endif %} {% if craft.config.devMode %}admin_bar_devmode_enabled{% endif %}">
-		{% if craft.config.devMode %}<div class="admin_bar_devmode"></div>{% endif %}
-		<div class="admin_bar_greeting">
-			{% if currentUser.photoUrl %}<span class="admin_bar_user_photo"><img src="{{ currentUser.photoUrl(40) }}" alt="{{ currentUser.friendlyName }}’s photo" /></span>{% endif %}{{ 'Hi, {name}'|t({ name: currentUser.friendlyName }) }}
-		</div>
-		<div class="admin_bar_links">
-			<a href="{{ url(craft.config.cpTrigger ~ '/dashboard') }}">{{ 'Dashboard'|t }}</a>
-			
-			{#
-			{% set entrySectionName = entry.elementType == 'Entry' ? ' ' ~ entry.section.name : '' %}
-			#}
-			{% set entrySectionName = '' %}
-			
-			{% if craft.config.adminBarEditLink is defined and craft.config.adminBarEditLink|length %}
-				
-				{% if entry is defined and entry|length %}
-					{% set editLinkArray = [{ 'label':'Edit'|t ~ entrySectionName, 'object':'entry', 'override':true }] %}
-				{% elseif category is defined and category|length %}
-					{% set editLinkArray = [{ 'label':'Edit Category'|t, 'object':'category', 'override':true }] %}
-				{% else %}
-					{% set editLinkArray = [] %}
-				{% endif %}
-				
-				{% for editLink in craft.config.adminBarEditLink|reverse %}
-					{% set addEditLink = false %}
-					
-					{% if attribute(_context, "#{editLink.object}") is defined and editLink.overrideEdit is defined and editLink.overrideEdit == false %}
-						{% set editLinkArray = editLinkArray|merge([{ 'label':editLink.label, 'object':editLink.object, 'override':false }]) %}
-					{% elseif attribute(_context, "#{editLink.object}") is defined %}
-						{% set editLinkArray = editLinkArray|merge([{ 'label':editLink.label, 'object':editLink.object, 'override':true }]) %}
-					{% endif %}
-					
-				{% endfor %}
-				
-				{% set editLinkOverridden = false %}
-				{% for link in editLinkArray|reverse %}
-					{% if attribute(_context, "#{link.object}").cpEditUrl and (editLinkOverridden == false or not link.override) %}
-						<a href="{{ url(attribute(_context, "#{link.object}").cpEditUrl) }}">{{ link.label|t }}</a>
-						{% set editLinkOverridden = true %}
-					{% endif %}
-				{% endfor %}
-			{% else %}
-				{% if entry is defined and entry|length %}
-					<a href="{{ url(entry.cpEditUrl) }}">{{ 'Edit {name}'|t({ name: entrySectionName }) }}</a>
-				{% endif %}
-			{% endif %}
-			
-			{% if category is defined and entry|length %}
-				<a href="{{ url(category.cpEditUrl) }}">{{ 'Edit Category'|t }}</a>
-			{% endif %}
-			{% if currentUser.admin %}
-				<a href="{{ url(craft.config.cpTrigger ~ '/settings') }}">{{ 'Settings'|t }}</a>
-			{% endif %}
-			{% for link in customLinks %}
-				{% if link.linkUrl|length %}
-					{% if link.adminOnly != true %}
-						<a href="{{ url(link.linkUrl) }}">{{ link.linkLabel|t }}</a>
-					{% elseif link.adminOnly and currentUser.admin %}
-						<a href="{{ url(link.linkUrl) }}">{{ link.linkLabel|t }}</a>
-					{% endif %}
-				{% endif %}
-			{% endfor %}
-			{% for link in enabledLinks %}
-				{% if link.linkStatus == '1' %}
-					{% if link.linkParams is defined %}
-						{% set adminbarParams = link.linkParams %}
-					{% else %}
-						{% set adminbarParams = '' %}
-					{% endif %}
-					{% if link.linkProtocol is defined %}
-						{% set adminbarProtocol = link.linkProtocol %}
-					{% else %}
-						{% set adminbarProtocol = '' %}
-					{% endif %}
-					{% if link.linkMustShowScriptName is defined and link.linkMustShowScriptName == '1' %}
-						{% set adminbarMustShowScriptName = true %}
-					{% else %}
-						{% set adminbarMustShowScriptName = false %}
-					{% endif %}
-					
-					{% set userHasPermission = true %}
-					{% if link.linkPermissions is defined and link.linkPermissions|length %}
-						{% for permission in link.linkPermissions %}
-							{% if not currentUser.can(permission) %}
-								{% set userHasPermission = false %}
-							{% endif %}
-						{% endfor %}
-					{% endif %}
-					
-					{% if link.linkType == 'url' and userHasPermission %}
-						<a href="{{ url(link.linkUrl, adminbarParams, adminbarProtocol, adminbarMustShowScriptName) }}">{{ link.linkTitle|t }}</a>
-					{% elseif link.linkType == 'cpUrl' and userHasPermission %}
-						<a href="{{ url(craft.config.cpTrigger ~ '/' ~ link.linkUrl, adminbarParams, adminbarProtocol, adminbarMustShowScriptName) }}">{{ link.linkTitle|t }}</a>
-					{% endif %}
-				{% endif %}
-			{% endfor %}
-		</div>
-		<div class="admin_bar_logout">
-			{% if (craft.config.adminBarClearCacheLink is defined and craft.config.adminBarClearCacheLink) and craft.config.enableTemplateCaching %}
-				<a href="{{ actionUrl('adminbar/clearTemplateCache', { returnUrl: craft.request.url }) }}">{{ 'Clear&nbsp;Cache'|t|raw }}</a>
-			{% endif %}
-			<a href="{{ url(logoutUrl) }}">{{ 'Logout'|t }}</a>
-		</div>
-	</div>
-	
-	{% endcache %}
-	
-	{% if adminbarEmbedded != true %}
-		{% if type == 'bar' or type == 'primary' %}
-			<style>
-.admin_bar_wrapper{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-flow:row nowrap;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;position:relative;margin:0;padding:0;width:100%;box-sizing:border-box;background-color:#000;background-color:rgba(0,0,0,.8);font-family:"Trebuchet MS","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Tahoma,sans-serif;font-size:17px;color:#fff}.admin_bar_wrapper.sticky{position:fixed;top:0;left:0}.admin_bar_wrapper.admin_bar_devmode_enabled{padding-top:4px}.admin_bar_wrapper a{margin:0;padding:6px 10px;text-align:center;text-decoration:none;transition:color .2s ease-out,background .2s ease-out}.admin_bar_devmode{display:block;position:absolute;top:0;left:0;height:4px;width:100%;background:url(/{{ craft.config.cpTrigger }}/resources/images/dev-mode.svg) 15px 0 repeat-x}.admin_bar_greeting{display:none;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;padding:0 15px;color:rgba(255,255,255,.8);white-space:nowrap}.admin_bar_links,.admin_bar_logout{display:-webkit-flex;display:-ms-flexbox;-webkit-align-items:center;padding:0}.admin_bar_links{display:flex;-ms-flex-align:center;align-items:center;-webkit-flex-flow:row wrap;-ms-flex-flow:row wrap;flex-flow:row wrap;-webkit-flex:1 1 auto;-ms-flex:1 1 auto;flex:1 1 auto}.admin_bar_links a{-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;color:#fff}.admin_bar_links a:hover{background-color:#fff;color:{{ color }}}.admin_bar_logout{display:flex;-ms-flex-align:center;align-items:center;-webkit-flex-flow:column nowrap;-ms-flex-flow:column nowrap;flex-flow:column nowrap;-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;text-align:right;font-size:.9em}.admin_bar_logout a{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex:1 1 auto;-ms-flex:1 1 auto;flex:1 1 auto;padding:6px 25px;background-color:transparent;color:#fff}.admin_bar_logout a:hover{background-color:{{ color }}}.admin_bar_client_logo,.admin_bar_user_photo{padding-right:7px;line-height:0}.admin_bar_client_logo img,.admin_bar_user_photo img{max-width:100%;height:auto}.admin_bar_user_photo{width:23px}.admin_bar_user_photo img{border-radius:50%}.admin_bar_client_logo{padding-top:2px;padding-bottom:2px;width:50px}@media screen and (min-width:601px){.admin_bar_wrapper{font-size:14px}.admin_bar_wrapper.sticky{position:fixed;top:0;left:0}.admin_bar_greeting{display:-webkit-flex;display:-ms-flexbox;display:flex}.admin_bar_logout{font-size:1em;-webkit-flex-flow:row wrap;-ms-flex-flow:row wrap;flex-flow:row wrap}.admin_bar_logout a{padding:6px 25px}}
-			</style>
-		{% endif %}
-		
-		{% if type == 'primary' and not sticky %}
-			<script type="text/javascript">
-			var adminbar_primary = document.getElementById("admin_bar_primary");
-			document.body.insertBefore(adminbar_primary, document.body.firstChild);
-			</script>
-		{% endif %}
-	{% endif %}
+{% set color = color ?? '#d85b4b' %}
+{% set devMode = craft.config.devMode %}
+{% set sticky = sticky ?? false %}
+{% set type = type ?? 'default' %}
+{% set useCss = useCss ?? true %}
+{% set useJs = useJs ?? true %}
 
+{% from _self import addConfigLink %}
+
+{% if currentUser and currentUser.can('accessCp') %}
+  <div {% if type == 'primary' %}id="admin_bar_primary"{% endif %} class="admin_bar_wrapper{% if sticky %} admin_bar_sticky{% endif %}{% if devMode %} admin_bar_devmode_enabled{% endif %}{% if enableMobileMenu %} admin_bar_mobile{% endif %}{% if scrollLinks %} admin_bar_scroll_links{% endif %}">
+
+    {% if devMode %}<div class="admin_bar_devmode"></div>{% endif %}
+
+    {% if displayGreeting %}
+      <div class="admin_bar_greeting">
+        {% if currentUser.photoUrl %}<span class="admin_bar_user_photo"><img src="{{ currentUser.photoUrl(40) }}" alt="{{ currentUser.friendlyName }}’s photo" /></span>{% endif %}{{ 'Hi, {name}'|t({ name: currentUser.friendlyName }) }}
+      </div>
+    {% endif %}
+
+    <div id="admin_bar_links" class="admin_bar_links_wrapper admin_bar_overlay">
+      <nav class="admin_bar_links">
+        {% if displayDashboardLink %}
+          <a href="{{ url(craft.config.cpTrigger ~ '/dashboard') }}" class="admin_bar_has_icon"><span class="admin_bar_icon"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 228.47 193.88"><defs><style>.cls-1{fill:#fff;}</style></defs><title>dashboard</title><path class="cls-1" d="M126,97.31A18.93,18.93,0,0,0,118,92.55L57,56l37.48,60.79A19,19,0,1,0,126,97.31Z" transform="translate(-0.03 -0.13)"/><path class="cls-1" d="M114.26,0.13C51.17,0.13,0,51.46,0,114.55A115.09,115.09,0,0,0,17.83,176c4.25,6,11.17,18,21.67,18h148c10.5,0,18.95-12,23.2-18A114.54,114.54,0,0,0,114.26.13ZM40.66,176A96.86,96.86,0,0,1,18.5,114.49,95.76,95.76,0,1,1,187.87,176H40.66Z" transform="translate(-0.03 -0.13)"/></svg></span>{{ 'Dashboard'|t }}</a>
+        {% endif %}
+  
+        {% if entry ?? false %}
+          {% set sectionName = entry.section %}
+          <a href="{{ url(entry.cpEditUrl) }}" class="admin_bar_has_icon"><span class="admin_bar_icon"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 228.93 228.72"><defs><style>.cls-1{fill:#fff;}</style></defs><title>edit</title><path class="cls-1" d="M227.35,48.35a14.64,14.64,0,0,0-2.79-17L197.84,4.58a15.47,15.47,0,0,0-17.42-3.17l-5.95,4.74L14.29,166.33,0,228.72l62.39-14.29L222.57,54.26ZM32.59,210.92a30,30,0,0,0-14.84-14.58l5.53-24.15,14.14,6.91,13.06,13.06,6.86,13,0,0Z" transform="translate(0 0)"/></svg></span>{{ 'Edit {name}'|t({ name: sectionName }) }}</a>
+        {% endif %}
+  
+        {% if category ?? false %}
+          <a href="{{ url(category.cpEditUrl) }}" class="admin_bar_has_icon"><span class="admin_bar_icon"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 228.93 228.72"><defs><style>.cls-1{fill:#fff;}</style></defs><title>edit</title><path class="cls-1" d="M227.35,48.35a14.64,14.64,0,0,0-2.79-17L197.84,4.58a15.47,15.47,0,0,0-17.42-3.17l-5.95,4.74L14.29,166.33,0,228.72l62.39-14.29L222.57,54.26ZM32.59,210.92a30,30,0,0,0-14.84-14.58l5.53-24.15,14.14,6.91,13.06,13.06,6.86,13,0,0Z" transform="translate(0 0)"/></svg></span>{{ 'Edit '|t ~ category }}</a>
+        {% endif %}
+  
+        {% if customLinks|length %}
+          {% cache globally using key "adminbar" ~ currentUser.id if cacheBar %}
+            {% for link in customLinks %}
+              {% if link.linkUrl|length %}
+                {% if link.adminOnly != true %}
+                  <a href="{{ url(link.linkUrl) }}">{{ link.linkLabel|t }}</a>
+                {% elseif link.adminOnly and currentUser.admin %}
+                  <a href="{{ url(link.linkUrl) }}">{{ link.linkLabel|t }}</a>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          {% endcache %}
+        {% endif %}
+        
+        {% for link in additionalLinks %}
+          {{ addConfigLink(link) }}
+        {% endfor %}
+        
+        {% if currentUser.admin and displaySettingsLink %}
+          <a href="{{ url(craft.config.cpTrigger ~ '/settings') }}" class="admin_bar_has_icon"><span class="admin_bar_icon"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240"><defs><style>.cls-1{fill:#fff;}</style></defs><title>settings</title><path class="cls-1" d="M240,135V104.5l-35.93-15L201.32,81l15-34.87L194.87,24.5,158.63,39l-8.25-3.75L134.64,0h-29.5L90.06,35.55,82,38.84,45.33,24.94,24,46.38,39.55,81l-4,9L0,105v30l35.82,14.75,4,9-14.72,35.5L46.37,215l35.76-14.5,8.75,4L105.64,240h30l14.74-36.25,8.49-3.25,35.74,14.75L216.09,194l-14.55-36,3.27-8.5ZM120.45,165.13a45.25,45.25,0,1,1,45.25-45.25A45.25,45.25,0,0,1,120.45,165.13Z"/></svg></span>{{ 'Settings'|t }}</a>
+        {% endif %}
+      </nav>
+      <div class="admin_bar_close">{{ 'Close'|t }}</div>
+    </div>
+    <div class="admin_bar_logout">
+      {% if displayLogout %}
+        <a class="admin_bar_logout_link" href="{{ url(logoutUrl) }}">{{ 'Logout'|t }}</a>
+      {% endif %}
+      {% if enableMobileMenu %}
+        <div id="admin_bar_mobile_toggle" class="admin_bar_mobile_toggle">{{ 'Admin'|t }}</div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if not barEmbedded %}
+    {% if useCss %}
+      <style>
+.admin_bar_icon{display:inline-block;margin-right:5px;width:15px;-webkit-transform:translateY(2px);transform:translateY(2px)}.admin_bar_icon svg{width:100%}@media screen and (max-width:600px){.admin_bar_wrapper .admin_bar_icon{margin-right:7px;width:22px}}.admin_bar_wrapper{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-flow:row nowrap;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-webkit-justify-content:flex-start;-ms-flex-pack:start;justify-content:flex-start;position:relative;margin:0;padding:0;width:100%;box-sizing:border-box;background-color:#000;background-color:rgba(0,0,0,.8);font-family:BlinkMacSystemFont,-apple-system,"Trebuchet MS","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Tahoma,sans-serif;font-size:17px;color:#fff;z-index:100000}.admin_bar_wrapper.admin_bar_sticky{position:fixed;top:0;left:0}.admin_bar_wrapper.admin_bar_devmode_enabled{padding-top:4px}.admin_bar_wrapper a{margin:0;padding:9px 10px;text-align:center;text-decoration:none;transition:color .2s ease-out,background .2s ease-out}.admin_bar_wrapper a svg path{transition:fill .2s ease-out}.admin_bar_devmode{display:block;position:absolute;top:0;left:0;height:4px;width:100%;background:url(/{{ craft.config.cpTrigger }}/resources/images/dev-mode.svg) 15px 0 repeat-x}.admin_bar_greeting{display:none;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;padding:0 15px;color:rgba(255,255,255,.8);white-space:nowrap}.admin_bar_mobile .admin_bar_greeting{display:-webkit-flex;display:-ms-flexbox;display:flex}.admin_bar_user_photo{padding-right:7px;width:23px;line-height:0}.admin_bar_user_photo img{max-width:100%;height:auto;border-radius:50%}.admin_bar_links_wrapper{-webkit-flex:1 1 auto;-ms-flex:1 1 auto;flex:1 1 auto;min-width:1px}.admin_bar_active .admin_bar_links_wrapper{overflow:scroll}.admin_bar_links{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex-flow:row wrap;-ms-flex-flow:row wrap;flex-flow:row wrap;padding:0}.admin_bar_mobile .admin_bar_links{display:none}.admin_bar_mobile .admin_bar_active .admin_bar_links{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-flow:column nowrap;-ms-flex-flow:column nowrap;flex-flow:column nowrap;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;padding:40px;min-height:100%;box-sizing:border-box;font-size:1.4em}.admin_bar_links a{-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;color:#fff}.admin_bar_logout{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-align-self:flex-end;-ms-flex-item-align:end;align-self:flex-end;-webkit-flex-flow:column nowrap;-ms-flex-flow:column nowrap;flex-flow:column nowrap;-webkit-flex:0 0 auto;-ms-flex:0 0 auto;flex:0 0 auto;padding:0;text-align:right;font-size:.9em}.admin_bar_logout a{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex:1 1 auto;-ms-flex:1 1 auto;flex:1 1 auto;padding:9px 25px;background-color:transparent;color:#fff}.admin_bar_logout a:hover{background-color:{{ color }}}.admin_bar_mobile .admin_bar_logout_link{display:none}.admin_bar_mobile_toggle{display:none;-webkit-align-items:center;-ms-flex-align:center;align-items:center;-webkit-flex:1 1 auto;-ms-flex:1 1 auto;flex:1 1 auto;padding:12px 25px;font-size:1.1em}.admin_bar_mobile .admin_bar_mobile_toggle{display:block}.admin_bar_overlay.admin_bar_active{position:fixed;top:0;left:0;width:100%;height:100%;box-sizing:border-box;background-color:{{ color }};overflow:auto}.admin_bar_overlay>.admin_bar_close{display:none;position:fixed;top:0;right:0;padding:12px 25px;font-size:1.1em}.admin_bar_overlay.admin_bar_active>.admin_bar_close{display:block}@media screen and (min-width:601px){.admin_bar_wrapper{font-size:14px}.admin_bar_wrapper.admin_bar_sticky{position:fixed;top:0;left:0}.admin_bar_greeting{display:-webkit-flex;display:-ms-flexbox;display:flex}.admin_bar_scroll_links .admin_bar_greeting{border-right:1px solid #505050}.admin_bar_mobile .admin_bar_links{display:-webkit-flex;display:-ms-flexbox;display:flex}.admin_bar_scroll_links .admin_bar_links{-webkit-flex-flow:row nowrap;-ms-flex-flow:row nowrap;flex-flow:row nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;-ms-overflow-style:-ms-autohiding-scrollbar}.admin_bar_links a:hover{background-color:#fff;color:{{ color }}}.admin_bar_links a:hover svg path{fill:{{ color }}}.admin_bar_logout{-webkit-align-self:stretch;-ms-flex-item-align:stretch;align-self:stretch;font-size:1em}.admin_bar_logout a{padding:9px 25px}.admin_bar_mobile .admin_bar_logout_link{display:-webkit-flex;display:-ms-flexbox;display:flex}.admin_bar_scroll_links .admin_bar_logout_link{border-left:1px solid #505050}.admin_bar_mobile .admin_bar_mobile_toggle{display:none}}
+      </style>
+    {% endif %}
+    
+    {% if useJs %}
+      {% set js = '' %}
+      {% set newJs %}
+function adminBarShowMobile(a){var b=document.getElementById("admin_bar_links");b.classList?b.classList.add("admin_bar_active"):b.className+=" admin_bar_active"}function adminBarHideMobile(a){var b=document.getElementById("admin_bar_links");b.classList?b.classList.remove("admin_bar_active"):b.className=b.className.replace(new RegExp("(^|\\b)"+className.split(" ").join("|")+"(\\b|$)","gi")," ")}document.getElementById("admin_bar_mobile_toggle").addEventListener("click",adminBarShowMobile);for(var adminBarCloseButtons=document.querySelectorAll(".admin_bar_overlay .admin_bar_close"),i=0;i<adminBarCloseButtons.length;i++)adminBarCloseButtons[i].addEventListener("click",adminBarHideMobile);
+      {% endset %}
+      {% set js = js ~ newJs %}
+      
+      {% if js|length %}
+        <script type="text/javascript">
+          {{ js|raw }}
+        </script>
+      {% endif %}
+    {% endif %}
+  {% endif %}
 {% endif %}
+
+{% macro addConfigLink(link) %}
+  {% if link.linkParams is defined %}
+    {% set params = link.linkParams %}
+  {% else %}
+    {% set params = '' %}
+  {% endif %}
+  
+  {% set params = link.params ?? '' %}
+  {% set protocol = link.protocol ?? '' %}
+  {% set mustShowScriptName = link.mustShowScriptName ?? '' %}
+  
+  {% set userHasPermission = true %}
+  {% if link.admin is defined and link.admin %}
+    {% if not currentUser.admin %}
+      {% set userHasPermission = false %}
+    {% endif %}
+  {% elseif link.permissions is defined and link.permissions|length %}
+    {% for permission in link.permissions %}
+      {% if not currentUser.can(permission) %}
+        {% set userHasPermission = false %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+  
+  {% if link.type == 'url' and userHasPermission %}
+    <a href="{{ url(link.url, params, protocol, mustShowScriptName) }}">{{ link.title|t }}</a>
+  {% elseif link.type == 'cpUrl' and userHasPermission %}
+    <a href="{{ url(craft.config.cpTrigger ~ '/' ~ link.url, params, protocol, mustShowScriptName) }}">{{ link.title|t }}</a>
+  {% elseif link.type == 'action' and userHasPermission %}
+    <a href="{{ actionUrl(link.url, { returnUrl: craft.request.url }) }}">{{ link.title|t }}</a>
+  {% endif %}
+{% endmacro %}

@@ -1,128 +1,168 @@
 # Craft – Admin Bar
-Simple front-end shortcut bar for users logged into [Craft CMS](https://buildwithcraft.com).
+Front-end shortcuts for clients logged into [Craft CMS](https://craftcms.com).
+
+> NOTE: This release is not a seamless upgrade from 1.0. [Read below for more info about upgrading](#). Also, there are probably some bugs...
+
+## Installation
+1. Move the `adminbar/` folder to your `craft/plugins/` folder.
+2. Enable the plugin in the CP.
+3. Copy `config.php`, paste it into your `craft/config/` folder, and rename it to `adminbar.php`.
+4. Add one of the Twig tags to your template:
+  * [Admin Bar default hook](#)
+  * [Admin Bar Twig tag](#)
+  * [Entry Edit Link Twig tag](#)
+
+---
 
 ![Screenshot](resources/screenshots/screenshot-bar.png)
 
-> NOTE: 1.4 might have some bugs related to caching, so please send your feedback my way if you find any
+# Admin Bar
+## Add the Default Admin Bar
+The easiest way to add Admin Bar to your website is by adding the hook, `{{ hook 'renderAdminBar' }}`, anywhere within your page template. Admin Bar will appear at the top of any page that includes this hook when someone—who has the permission to view the CP—is logged into your website.
 
-## Installation
-1. Upload the adminbar/ folder to your craft/plugins/ folder.
-2. Enable the plugin in the CP.
-3. Either add the Admin Bar through the plugin settings page, or add the tag, `{{ craft.Adminbar.show(entry) }}`, to your template.
+Because Admin Bar is HTML, CSS, and Javascript added to your website's front-end, you may need to make some slight adjustments to override Admin Bar's CSS to make it fit your website.
 
-## Auto Embed
-Using the "Auto Embed" setting will add the Admin Bar to the top of your `<body>` tag. Doing it this way will base the "Edit" button off of the current page entry. Branding colors will use the color selected through the "Default Color" color picker.
+## Using the Admin Bar Twig Tag
+Using the hook method to add Admin Bar to your template is the same as using the Admin Bar Twig tag, but the Twig tag allows you more flexibility.
 
-For more control, or to add the admin bar to multiple entries, use the Twig embed tag, below. _NOTE: using Auto Embed caches Admin Bar automatically, where using the Embed Tag leaves caching up to you._
+Use the tag, `{{ craft.adminbar.bar() }}`, to add Admin Bar anywhere you'd like within your template.
 
-## Embed Options
-Format: `{{ craft.Adminbar.bar(currentEntry, color, type) }}`
+You may pass in an array of arguments to make some changes on how Admin Bar looks and functions. In this example, you may pass in the entry that you'd like to appear when someone clicks the "Edit" link.
 
-Embedding the Admin Bar using this tag will let you overwrite the settings found on the plugin settings page.
+```twig
+{% set config = {
+  entry: entry,
+} %}
 
-* **currentEntry** *`entry`*  – Current entry passed in as a TWIG object.
-* **color** *`'#d85b4b'`* – The color used for rollovers or highlights. You can change this to better fit the branding of your website. Use any CSS color format.
-* **type** *`'bar'`* – Changes the style of the Admin Bar. For now, the only options are `bar` or `none`.
-  * `bar` – Creates a black bar that spans 100% the width of the element that it is placed in. It's *slightly* responsive.
-  * `none` – Has the same markup as `bar`, but removes all of the CSS, so you may style it however you'd like.
-
-## Adding Links Through Plugins
-Links can be added through the `addAdminBarLinks()` method in your main plugin class. Return an array for each link you'd like to add.
-
-```php
-public function addAdminBarLinks() {
-  return array(
-    // an example of a simple url link
-    array(
-      'title' => 'Craft',
-      'url' => 'http://buildwithcraft.com',
-      'type' => 'url',
-    ),
-    // an example of a CP link
-    array(
-      'title' => 'Entries',
-      'url' => 'entries',
-      'type' => 'cpUrl',
-    ),
-    // an example of a url link that passes along some extras
-    array(
-      'title' => 'Blog',
-      'url' => 'blog',
-      'type' => 'url',
-      'params' => 'foo=1&bar=2',
-      'protocol' => 'http',
-      'mustShowScriptName' => true,
-      'permissions' => array('myPluginPermission', 'thisIsRequiredToo'),
-    ),
-  );
-}
+{{ craft.adminbar.bar(config) }}
 ```
 
-* **title** *required*  – The label that will appear for this link in the Admin Bar.
-* **url** *required* – The url or path used for the link.
-* **type** *required* – The context of the url or path.
-  * `url` – Used for relative or absolute URLs.
-  * `cpUrl` – Prepends `cpTrigger` to the **url** value for links found within the Control Panel. For example, if you wanted to link to Craft's default Entries page, set **url** to `'entries'` and **type** to `'cpUrl'`. The final url will be `http://example.com/admin/entries`
-* **params** – Passes along url parameters, as [documented here](http://buildwithcraft.com/docs/templating/functions#url).
-* **protocol** – Changes the url protocol, as [documented here](http://buildwithcraft.com/docs/templating/functions#url). This only supports this string format: `'foo=1&bar=2'`
-* **mustShowScriptName** – Appends `index.php`, as [documented here](http://buildwithcraft.com/docs/templating/functions#url).
-* **permissions** – An array of required permissions that are needed for this link to be displayed. All permissions in this array will be required.
+Here is a list of available arguments:
 
-*Please note: links in the Admin Bar are updated when the user saves the Admin Bar plugin settings. While you can use PHP to determine the argument values and which URLs appear based on your plugin's settings, the links will not update until the user goes back and updates their Admin Bar settings.*
+| Argument | Default | Description |
+| --- | --- | --- |
+| `category` | *null* | Pass in a category object to add an edit link for that category |
+| `color` | *#d85b4b* | Color used for rollovers and for the background of the mobile theme |
+| `entry` | *null* | Pass in an entry object to add an edit link for that entry |
+| `sticky` | *true* | Uses css to `position: fixed;` Admin Bar to the top of the page |
+| `useCss` | *true* | Add the default styles to Admin Bar or leave them off and style it your way |
+| `useJs` | *true* | Add/remove the default Javascript used by Admin Bar |
 
-### Plugins using Admin Bar
-* [Craft Help](https://github.com/70kft/craft-help)
+---
 
-![Screenshot](resources/screenshots/screenshot-settings.png)
+![Screenshot](resources/screenshots/screenshot-edit-hover.png)
 
-## Clear Template Caches from Admin Bar
-Add a link so that content editors can clear the site's template caches from the front-end by adding this setting into your config.php file. The link will not appear if `enableTemplateCaching` is set to `false`.
+# Entry Edit Links
+## Edit Links for Multiple Entries
+When looping through entries in an Element Criteria Model, entries in search results, or related entries to a page, you can now place edit links that make it easier to find and edit these entries.
 
-```php
-'adminBarClearCacheLink' => true,
+To add an Entry Edit Link, use the tag, `{{ craft.Adminbar.edit(entry) }}`, and pass in the entry you'd like the link to edit.
+
+By default, Entry Edit Links use Javascript to add the links to your page, so you can feel free to use `{% cache %}` tags around the Twig tag. The only thing a non-logged in user would see is this in the HTML markup: `<div class="admin_edit" data-id="0"></div>`.
+
+You can also add developer notes to content editors, or pass along other arguments.
+
+```twig
+{% set myNote %}{% spaceless %}
+  {% if loop.last %}
+    <p>The last entry always stays full width, even in the 2-column layout. See the <a href="{{ url('style-guide') }}">Style Guide</a> for layout examples.</p>
+  {% endif %}
+{% endspaceless %}{% endset %}
+
+{{ craft.Adminbar.edit(entry, {
+  devNote: myNote,
+}) }}
 ```
+![Screenshot](resources/screenshots/screenshot-edit-hover.png)
 
-## Overriding the Edit Link
-By default, Admin Bar will try to look for an `entry` or `category` object and use its `cpEditUrl` property to create the default "Edit" link. In some cases, you might want to change the label, or you might be using a different variable for an entry. It's not that common, but in these cases, you can add an array into your config.php file with the following:
+Here is a full list of available arguments:
 
-```php
-'adminBarEditLink' => array(
-  array(
-    'label' => 'Edit Page',
-    'object' => 'entryAlias',
-  ),
-  array(
-    'label' => 'Edit Page',
-    'object' => 'entry',
-  ),
-  array(
-    'label' => 'Edit Category',
-    'object' => 'categoryAlias',
-    'overrideEdit' => false,
-  ),
-),
-```
+| Argument | Default | Description |
+| --- | --- | --- |
+| `color` | *#d85b4b* | Color used for rollovers and links |
+| `devNote` | *null* | Display information to content editors. You may use plain text or HTML markup |
+| `showEditInfo` | *true* | If set to `true`, the Entry Edit Link will display the last updated date and the name of the author that last saved the entry |
+| `useCss` | *true* | Add the default styles to Entry Edit Links or leave them off and style it your way |
+| `useJs` | *true* | Add the default Javascript used by Entry Edit Links. Setting this to `false` embeds the Entry Edit Link through Twig, instead |
 
-In this case, Admin Bar will look for an entry object using the variable, "entryAlias". If it find that object, it will add a link, called "Edit Page", and if not it will look for the next object in the array, "entry". If it finds an "entry" object, it will add that link, as "Edit Page".
+---
 
-Adding `'overrideEdit' => false` will force a link to show up, even if there are other items above it, as long as the object it is referring to exists and has a `cpEditUrl`.
+## Configuration settings
+The config file gives you the ability to adjust how Admin Bar looks and functions in multiple environments. It also allows you to create additional links for the Admin Bar, and allows for plugin actions to be called through these additional links.
+
+Here are some settings you can change with the config file:
+
+### Admin Bar
+
+| Setting | Default | Description |
+| --- | --- | --- |
+| `additionalLinks` | *array()* | Add links to Admin Bar using the properties found below |
+| `cacheBar` | *true* | Enable caching of Admin Bar links |
+| `displayGreeting` | *true* | Displays the logged in user's photo (if it's set) and "Hi, [friendlyname]" |
+| `displayDashboardLink` | *true* | A link to the CP Dashboard |
+| `displaySettingsLink` | *true* | A link to the CP Settings page that appears only to admins |
+| `displayLogout` | *true* | Logs you out of Craft CMS |
+| `enableMobileMenu` | *true* | Enables Admin Bar to display a separate mobile theme below a width of 600 pixels |
+| `scrollLinks` | *true* | Enable Admin Bar to scroll horizontally when the browser window doesn't have enough room for all of the links |
+
+### Entry Edit Links
+
+| Setting | Default | Description |
+| --- | --- | --- |
+| `displayEditDate` | *true* | Shows the date of the last time the entry was updated |
+| `displayEditAuthor` | *true* | Shows the `friendlyName` of the person who last saved the entry |
+| `displayRevisionNote` | *true* | Displays text added to the "Notes about your changes"—a.k.a. Version Notes—field found when editing an entry |
+
+#### Additional Links
+You can add links to Admin Bar using the config file by passing properties into an array, called `additionalLinks`. There are examples commented out in the `config.php` file, and here are the properties you can use to create links.
+
+| Property | Values | Description |
+| --- | --- | --- |
+| `title` | *string* | Appears as the label for the link |
+| `url` | *string* | Depending on the `type` property, the `url` represents the location or action of the link |
+| `title` | `'url'`, `'cpUrl'`, `'action'` | If the `type` is `url`, the `url` value should be an absolute URL or a path relative to the site root. If the `type` is `cpUrl`, the `url` value should be a path relative to your site's CP root. If the `type` is `action`, set the value for `url` to the path used by the Controller Action |
+| `params` | *string* | Passes along url parameters, as [documented here](http://buildwithcraft.com/docs/templating/functions#url) |
+| `protocol` | *string* | Changes the url protocol, as [documented here](http://buildwithcraft.com/docs/templating/functions#url). This only supports this string format: `'foo=1&bar=2'` |
+| `mustShowScriptName` | *string* | Appends `index.php`, as [documented here](http://buildwithcraft.com/docs/templating/functions#url) |
+| `permissions` | *array* | An array of required permissions that are needed for this link to be displayed. All permissions in this array will be required for the link to appear |
 
 ---
 
 ## Build Tool Extras
-It is probably uncommon to need this, but: if you are using a build tool, such as [Grunt](http://gruntjs.com) or [Gulp](http://gulpjs.com), and you are using the embed tag with the type set to `none`, AND your `plugins` folder happens to be within your build tool root folder, you can find the uncompressed, un-[autoprefixed](https://github.com/postcss/autoprefixer) CSS at this location: `adminbar/buildsource/style.css`. This could be helpful if you want to include Admin Bar CSS into your own stylesheet.
+If you are using a build tool, such as [Grunt](http://gruntjs.com) or [Gulp](http://gulpjs.com), and you are using the Twig tag with `useCss` and/or `useJs` set to `false`, AND your `plugins` folder happens to be within your build tool root folder, you can find the uncompressed, un-[autoprefixed](https://github.com/postcss/autoprefixer) CSS and Javascript files at this location: `adminbar/buildsource/`. This could be helpful if you want to include Admin Bar CSS into your own stylesheet or modify the Javascript code.
+
+---
+
+## Upgrading from 1.x
+The 2.0 release of Admin Bar will break sites using the 1.x Twig tag and sites using Admin Bar's Auto Embed features will no longer display the Admin Bar on the front-end. Since we're breaking the plugin code, anyway, this let me move some settings into an `adminbar.php` config file. Between upgrading the Twig tag and the new config file, Admin Bar *shouldn't* need to go through another breaking change like this until a Craft 3 release (fingers crossed emoji).
+
+In learning how to write code better within Twig templates and Craft plugins, alike, I've made several adjustments that should improve the performance of Admin Bar and the new Entry Edit Links feature. The 2.0 release also gave me an excuse to remove a few features that were either underused (based on feedback) or just plain confusing.
+
+The 1.x branch will remain here on GitHub, but I don't plan on supporting it going forward. If you would still like to use it and you come across any bugs, please do a pull request with any fixes you can figure out and I'll make sure to commit it in.
+
+### Updating the Twig Tag
+The Twig tag changed for the sake of a more flexible approach. By passing in one array—and by smarter handling of arguments—more arguments can easily be added in the future. There's also no longer the need to pass in required arguments in a specific order.
+
+### Removing Auto Embed
+The Auto Embed feature in 1.x turned out to cause issues for other plugins that rendered templates on the front-end. The short explanation is that if another plugin was planning on rendering a template, but Admin Bar happened to be loaded first, Admin Bar's render function would trick the other plugins into rendering their code before they have an opportunity to configure their template properly. Since it's not cool to step on other plugins, I've removed Auto Embed and replaced it with a simple hook: `{{ hook 'renderAdminBar' }}`.
+
+The side-effect of switching to the hook method is that Admin Bar appearing on the front-end is now completely controlled by a Twig template, instead of confusion that might occur by adding front-end code through the CP.
+
+### Changes to the CP Settings page
+While the Auto Embed feature is now gone, all other settings made by developers or clients in the Admin Bar CP Settings page should remain the same. This includes the color picker for the default highlight color and the Custom Links field that allows for links to be added via the CP.
 
 ---
 
 ## To Do
+* New icon :horse:
 * Update plugin to support Craft 3
-* Add a new type to be used within multiple entries. [Looking for some typical use case suggestions.](https://github.com/wbrowar/craft-admin-bar/issues/new)
-* Change—in Craft 3 version—Embed Options in Embed Tag to array
+* ~Add a new type to be used within multiple entries.~
+* ~Change—in Craft 3 version—Embed Options in Embed Tag to array~
 
 ---
 
 ## Releases
 
-Release notes moved to [releases.json](https://github.com/wbrowar/adminbar/blob/master/releases.json)
+Release notes can be found at [releases.json](https://github.com/wbrowar/adminbar/blob/master/releases.json)
 
 Please, let me know if this plugin is useful or if you have any suggestions or issues. [@wbrowar](https://twitter.com/wbrowar)

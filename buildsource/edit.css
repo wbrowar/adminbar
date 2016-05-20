@@ -1,0 +1,68 @@
+.admin_bar_icon {
+  display: inline-block;
+  margin-right: 5px;
+  width: 15px;
+  transform: translateY(2px); }
+  .admin_bar_icon svg {
+    width: 100%; }
+  @media screen and (max-width: 600px) {
+    .admin_bar_wrapper .admin_bar_icon {
+      margin-right: 7px;
+      width: 22px; } }
+
+.admin_edit.admin_edit_embedded {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  margin: 30px 0 20px;
+  position: relative;
+  width: 100%;
+  background-color: whitesmoke;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  color: rgba(0, 0, 0, 0.8);
+  transition: border .2s ease-out; }
+  .admin_edit.admin_edit_embedded:hover {
+    border-color: #d85b4b; }
+
+.admin_edit_link {
+  display: inline-block;
+  padding: 9px 9px 7px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white !important;
+  text-decoration: none !important;
+  text-transform: uppercase;
+  transition: background .2s ease-out;
+  white-space: nowrap; }
+  .admin_edit_link:hover {
+    background-color: #d85b4b; }
+
+.admin_edit_info {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  flex: 1 0 100%;
+  padding: 8px 10px;
+  background-color: rgba(0, 0, 0, 0.05);
+  box-sizing: border-box;
+  font-family: "BlinkMacSystemFont", -apple-system, "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Tahoma, sans-serif;
+  font-size: .8em;
+  line-height: 1.5;
+  color: #505050; }
+  .admin_edit_info p {
+    margin: 0 0 8px;
+    max-width: 700px; }
+    .admin_edit_info p:last-child {
+      margin-bottom: 0; }
+  .admin_edit_info a {
+    color: #d85b4b !important; }
+
+.admin_edit_entry_updated {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  padding-right: 10px;
+  font-weight: 500;
+  font-size: .8em; }
+
+.admin_edit_revision_note {
+  max-width: 700px; }

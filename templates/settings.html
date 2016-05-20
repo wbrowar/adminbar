@@ -1,100 +1,70 @@
 {% import "_includes/forms" as forms %}
 
-{{ forms.lightswitchField({
-'label': 'Auto Embed', 'instructions': 'Add the Admin Bar to your front-end template without using the Twig embed tag.', 'id': 'autoEmbed', 'name': 'autoEmbed', 'on': autoEmbedValue}) }}
-
-<div id="auto_embed_extras">
-	{{ forms.lightswitchField({
-'label': 'Stick to Top', 'instructions': 'Make Admin Bar stay at the top of the screen (on tablets and desktops).', 'id': 'autoEmbedSticky', 'name': 'autoEmbedSticky', 'on': autoEmbedStickyValue}) }}
-</div>
-
-<div id="embed_tag_instructions">
-	<div class="field">
-		<div class="heading">
-			<label for="embed_tag">Embed Tag</label>
-			<div class="instructions"><p>Instead of using Auto Embed, add this tag into your template for more flexibility.</p>
-			</div>
-		</div>
-		<div class="input ltr">
-			<input class="text fullwidth" type="text" name="embed_tag" value="{% verbatim %}{{ craft.Adminbar.show(entry) }}{% endverbatim %}" disabled>
-		</div>
-	</div>
-</div>
-
-<hr>
+{% if settings.autoEmbed %}
+  <p style="padding: 1em 1em .8em; background-color: #da5a47; color: #fff;">Hi. It looks like you were previously using the Auto Embed feature, however, due to a bug that affected other Craft plugins, Auto Embed is no longer supported. <a href="#" style="text-decoration: underline; color: #fff;">Please see the docs for more information.</a> Saving this page will make this message go away.</p>
+  <hr>
+  <div style="display: none;">
+    {{ forms.lightswitchField({
+      'label': 'Auto Embed',
+      'id': 'autoEmbed',
+      'name': 'autoEmbed',
+      'on': false,
+      'instructions': 'Hello, clever dev.',
+    }) }}
+  </div>
+{% endif %}
 
 {{ forms.colorField({
-'label': 'Default Color', 'instructions': 'Color used for highlights and rollovers. This can be overridden if color value is added to the Twig embed tag.', 'id': 'defaultColor', 'name': 'defaultColor', 'value': defaultColorValue}) }}
+  'label': 'Highlight Color',
+  'id': 'defaultColor',
+  'name': 'defaultColor',
+  'value': settings.defaultColor,
+  'instructions': 'Color used for highlights and rollovers. This can be overridden if color value is added to the Twig embed tag.',
+  }) }}
 
 <hr>
 
-{{ customLinksTable|raw }}
+{{ forms.editableTableField({
+  'label': 'Custom Links',
+  'id': 'customLinks',
+  'name': 'customLinks',
+  'addRowLabel': 'Add a link',
+  'cols': {
+    'linkLabel': {
+      'heading': 'Label',
+      'type': 'singleline',
+    },
+    'linkUrl': {
+      'heading': 'URL',
+      'type': 'singleline',
+    },
+    'adminOnly': {
+      'heading': 'Label',
+      'type': 'checkbox',
+    },
+  },
+  'rows': settings.customLinks,
+  'instructions': 'Add your own links to the Admin Bar.'
+}) }}
 
-<hr>
-
-<div class="field">
-  <label>Plugins Links</label>
-	{% if pluginLinks|length %}
-    <div class="instructions"><p>Enable links provided by other plugins that you&rsquo;ve installed.</p></div>
-    <table class="data fullwidth">
-    	<thead>
-    		<th>Link Title</th>
-    		<th>Plugin</th>
-    		<th>Enable Link</th>
-    	</thead>
-      {% for link in pluginLinks %}
-        {% set linkRendered = '<a href="' ~ link.url ~ '">' ~ link.title ~ '</a>' %}
-    		<tr>
-          <input type="hidden" name="enabledLinks[{{ link.id }}][linkId]"value="{{ link.id }}">
-          <input type="hidden" name="enabledLinks[{{ link.id }}][linkTitle]"value="{{ link.title }}">
-          <input type="hidden" name="enabledLinks[{{ link.id }}][linkUrl]"value="{{ link.url }}">
-          {% if link.params is defined %}
-	          <input type="hidden" name="enabledLinks[{{ link.id }}][linkParams]"value="{{ link.params }}">
-          {% endif %}
-          {% if link.protocol is defined %}
-	          <input type="hidden" name="enabledLinks[{{ link.id }}][linkProtocol]"value="{{ link.protocol }}">
-          {% endif %}
-          {% if link.mustShowScriptName is defined %}
-	          <input type="hidden" name="enabledLinks[{{ link.id }}][linkMustShowScriptName]"value="{{ link.mustShowScriptName }}">
-          {% endif %}
-          {% if link.permissions is defined and link.permissions|length %}
-          	{% for permission in link.permissions %}
-							<input type="hidden" name="enabledLinks[{{ link.id }}][linkPermissions][{{ loop.index }}]"value="{{ permission }}">
-          	{% endfor %}
-          {% endif %}
-          <input type="hidden" name="enabledLinks[{{ link.id }}][linkType]"value="{{ link.type }}">
-    			<td>{{ link.title }}</td>
-    			<td class="light">{{ link.originator }}</td>
-    			<td>
-    				{{ forms.lightswitch({
-    					name: "enabledLinks[" ~ link.id ~ "][linkStatus]",
-    					on: (enabledLinks[link.id]["linkStatus"] is defined and enabledLinks[link.id]["linkStatus"] is not empty ? enabledLinks[link.id]["linkStatus"] : false),
-    				}) }}
-    			</td>
-    		</tr>
-      {% endfor %}
-    </table>
-	{% else %}
-    <p>Other plugins can add links to the Admin Bar. After installing supporting plugins, come back here to enable new links.</p>
-	{% endif %}
-</div>
-
+{#
 {% includejs %}
-	var jq = jQuery;
-	
-	function showAutoEmbedExtras() {
-		if (jq('#settings-autoEmbed-field > .input > .lightswitch').hasClass('on')) {
-			jq('#settings-auto_embed_extras').show(200);
-			jq('#settings-embed_tag_instructions').hide(200);
-		} else {
-			jq('#settings-auto_embed_extras').hide(200);
-			jq('#settings-embed_tag_instructions').show(200);
-		}
-	}
-	
-	jq('#settings-autoEmbed-field > .input > .lightswitch').click(function() {
-		showAutoEmbedExtras();
-	});
-	
-	showAutoEmbedExtras();
+  var jq = jQuery;
+  
+  function showAutoEmbedExtras() {
+    if (jq('#settings-autoEmbed-field > .input > .lightswitch').hasClass('on')) {
+      jq('#settings-auto_embed_extras').show(200);
+      jq('#settings-embed_tag_instructions').hide(200);
+    } else {
+      jq('#settings-auto_embed_extras').hide(200);
+      jq('#settings-embed_tag_instructions').show(200);
+    }
+  }
+  
+  jq('#settings-autoEmbed-field > .input > .lightswitch').click(function() {
+    showAutoEmbedExtras();
+  });
+  
+  showAutoEmbedExtras();
 {% endincludejs %}
+#}

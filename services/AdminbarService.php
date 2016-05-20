@@ -3,102 +3,113 @@ namespace Craft;
 
 class AdminbarService extends BaseApplicationComponent
 {
-	private $_adminbarEmbedded;
-	private $_pluginLinks = array();
-	
-	// public methods
-	public function bar($currentEntry, $color, $type)
-	{
-		// check if user can access CP
-		$user = craft()->userSession->getUser();
-		if ($user && craft()->userSession->isAdmin() || $user && craft()->userPermissions->doesUserHavePermission($user->id, 'accessCp')) {
-			$plugin = craft()->plugins->getPlugin('Adminbar');
-			
-			// get links from other plugins
-			$pluginLinksHook = craft()->plugins->call('addAdminBarLinks');
-			$pluginLinks = array();
-			$externalLinksStringData = '';
-			
-			foreach ($pluginLinksHook as $key => $link) {
-				$pluginName = craft()->plugins->getPlugin($key)->getName();
-				
-				for($i=0; $i<count($link); $i++) {
-					if (isset($link[$i]['title']) && isset($link[$i]['url']) && isset($link[$i]['type'])) {
-						$link[$i]['id'] = str_replace(' ', '', $link[$i]['title']) . $link[$i]['url'] . $link[$i]['type'];
-						$link[$i]['originator'] = $pluginName;
-						array_push($pluginLinks, $link[$i]);
-					}
-					
-					// save data to compare later
-					$externalLinksStringData .= var_export($link[$i], true);
-				}
-			}
-			
-			// if settings don't match, clear template cache
-			if (isset($this->getAdminbarSettings()->externalLinksString['default'])) {
-				$externalLinksStringSettingString = $this->getAdminbarSettings()->externalLinksString['default'];
-			} else {
-				$externalLinksStringSettingString = '...';
-			}
-			
-			if ($externalLinksStringSettingString == '' || $externalLinksStringSettingString != $externalLinksStringData) {
-				$this->updateAdminbarSettings(array('externalLinksString' => array(AttributeType::String, 'label' => 'Plugin Links String', 'default' => $externalLinksStringData)));
-				$plugin->clearAdminBarCache();
-			}
-			
-			// redirect tempalate path to plugin path
-			//$oldTemplatesPath = craft()->path->getTemplatesPath();
-			//$newTemplatesPath = craft()->path->getPluginsPath().'adminbar/templates/';
-			//craft()->path->setTemplatesPath($newTemplatesPath);
-			
-			$oldTemplatesPath = method_exists(craft()->templates, 'getTemplatesPath') ? craft()->templates->getTemplatesPath() : craft()->path->getTemplatesPath();
-			$newTemplatesPath = craft()->path->getPluginsPath().'adminbar/templates/';
-			method_exists(craft()->templates, 'setTemplatesPath') ? craft()->templates->setTemplatesPath($newTemplatesPath) : craft()->path->setTemplatesPath($newTemplatesPath);
+  private $_barEmbedded = false;
+  private $_editEmbedded = false;
+  private $_editId = 0;
 
-			
-			// check to see if defaults are overriden
-			if ($color === '') {
-				$color = $this->getAdminbarSettings()->defaultColor;
-			}
-			
-			// render admin bar
-			$adminbarHtml = craft()->templates->render('bar', array(
-				'adminbarEmbedded' => $this->_adminbarEmbedded,
-				'sticky' => $this->getAdminbarSettings()->autoEmbedSticky,
-				'entry' => $currentEntry,
-				'color' => $color,
-				'type' => $type,
-				'customLinks' => $this->getAdminbarSettings()->customLinks,
-				'enabledLinks' => $this->getAdminbarSettings()->enabledLinks,
-			));
-			
-			if ($type == 'primary') {
-				craft()->templates->includeFootHtml($adminbarHtml);
-			} else {
-				print($adminbarHtml);
-			}
-			
-			// return templates path to original locatiojn
-			//craft()->path->setTemplatesPath($oldTemplatesPath);
-			method_exists(craft()->templates, 'setTemplatesPath') ? craft()->templates->setTemplatesPath($oldTemplatesPath) : craft()->path->setTemplatesPath($oldTemplatesPath);
-			
-			// change embedded value to true
-			$this->_adminbarEmbedded = true;
-		}
-	}
-	
-	// private methods
-	private function getAdminbarSettings()
-	{
-		// get values of links set in CP
-		$plugin = craft()->plugins->getPlugin('Adminbar');
-		return $plugin->getSettings();
-	}
-	private function updateAdminbarSettings(array $settings=array()) {
-		$plugin = craft()->plugins->getPlugin('Adminbar');
-    $savedSettings = $plugin->getSettings()->getAttributes();
-    $newSettingsRow = array_merge($savedSettings, $settings);
+  // public methods
+  public function bar($config = array())
+  {
+    $adminbar = craft()->plugins->getPlugin('Adminbar');
+    $config['barEmbedded'] = $this->_barEmbedded;
+    $config['customLinks'] = $adminbar->getSettings()->customLinks;
+    $config['color'] = isset($config['color']) ? $config['color'] : $adminbar->getSettings()->defaultColor;
 
-    return craft()->plugins->savePluginSettings($plugin, $newSettingsRow);
-	}
+    // add config file settings to config
+    $config['additionalLinks'] = $this->_getConfigSetting('additionalLinks');
+    $config['cacheBar'] = $this->_getConfigSetting('cacheBar');
+    $config['clearCacheLink'] = $this->_getConfigSetting('clearCacheLink');
+    $config['displayDashboardLink'] = $this->_getConfigSetting('displayDashboardLink');
+    $config['displayGreeting'] = $this->_getConfigSetting('displayGreeting');
+    $config['displayLogout'] = $this->_getConfigSetting('displayLogout');
+    $config['displaySettingsLink'] = $this->_getConfigSetting('displaySettingsLink');
+    $config['enableMobileMenu'] = $this->_getConfigSetting('enableMobileMenu');
+    $config['scrollLinks'] = $this->_getConfigSetting('scrollLinks');
+
+    // redirect tempalate path to plugin path
+    $oldTemplatesPath = method_exists(craft()->templates, 'getTemplatesPath') ? craft()->templates->getTemplatesPath() : craft()->path->getTemplatesPath();
+    $newTemplatesPath = craft()->path->getPluginsPath().'adminbar/templates/';
+    craft()->templates->setTemplatesPath($newTemplatesPath);
+
+    // render admin bar
+    $barHtml = craft()->templates->render('bar', $config);
+    
+    //print($barHtml);
+    if (isset($config['type']) && $config['type'] === 'primary') {
+      craft()->templates->includeFootHtml($barHtml);
+    } else {
+      print($barHtml);
+    }
+
+    // return templates path to original location
+    craft()->templates->setTemplatesPath($oldTemplatesPath);
+
+    // change embedded value to true
+    $this->_barEmbedded = true;
+  }
+  // public methods
+  public function edit($entry, $config = array())
+  {
+    $adminbar = craft()->plugins->getPlugin('Adminbar');
+    $config['editEmbedded'] = $this->_editEmbedded;
+    $config['entry'] = $entry;
+    $config['id'] = $this->_editId;
+    $config['enabled'] = $this->canEmbed() ? true : false;
+    $config['color'] = isset($config['color']) ? $config['color'] : $adminbar->getSettings()->defaultColor;
+
+    // add config file settings to config
+    $config['displayEditDate'] = $this->_getConfigSetting('displayEditDate');
+    $config['displayEditAuthor'] = $this->_getConfigSetting('displayEditAuthor');
+    $config['displayRevisionNote'] = $this->_getConfigSetting('displayRevisionNote');
+    
+    // get recent revision information
+    $revision = craft()->entryRevisions->getVersionsByEntryId($entry['id'], $entry['locale'], 1, true);
+    if (!empty($revision)) {
+      $revisionAuthor = craft()->users->getUserById($revision[0]->creatorId);
+      $config['revisionAuthor'] = $revisionAuthor;
+      $config['revisionNote'] = $revision[0]->revisionNotes;
+    } else {
+      $config['revisionAuthor'] = null;
+      $config['revisionNote'] = null;
+    }
+
+    // redirect tempalate path to plugin path
+    $oldTemplatesPath = method_exists(craft()->templates, 'getTemplatesPath') ? craft()->templates->getTemplatesPath() : craft()->path->getTemplatesPath();
+    $newTemplatesPath = craft()->path->getPluginsPath().'adminbar/templates/';
+    craft()->templates->setTemplatesPath($newTemplatesPath);
+
+    // render admin bar
+    $editHtml = craft()->templates->render('edit', $config);
+
+    print($editHtml);
+
+    // return templates path to original location
+    craft()->templates->setTemplatesPath($oldTemplatesPath);
+    
+    $this->_editId += 1;
+    $this->_editEmbedded = true;
+  }
+  
+  public function clearAdminBarCache() {
+    $user = craft()->userSession->getUser();
+    
+    craft()->templateCache->deleteCachesByKey('adminbar' . $user->id);
+  }
+  
+  // check to see if bar should be auto embedded
+  public function canEmbed()
+  {
+    return (
+      !craft()->request->isAjaxRequest() &&
+      !craft()->isConsole() &&
+      !craft()->request->isCpRequest() &&
+      craft()->userSession->isLoggedIn()
+    );
+  }
+  private function _getConfigSetting($key)
+  {
+    // get settings from config file
+    $configSetting = craft()->config->get($key, 'adminbar');
+    return $configSetting;
+  }
 }

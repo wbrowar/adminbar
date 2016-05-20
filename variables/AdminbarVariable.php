@@ -3,15 +3,14 @@ namespace Craft;
 
 class AdminbarVariable
 {
-  public function bar($currentEntry = '', $color = '', $type = 'bar')
+  public function bar($config = array())
   {
     // embed admin bar in twig template
-    craft()->adminbar->bar($currentEntry, $color, $type);
+    craft()->adminbar->bar($config);
   }
-  // duplication of 'bar()', depreciated in 1.4.0
-  public function show($currentEntry = '', $color = '', $type = 'bar')
+  public function edit($entry, $config = array())
   {
     // embed admin bar in twig template
-    craft()->adminbar->bar($currentEntry, $color, $type);
+    craft()->adminbar->edit($entry, $config);
   }
 }
