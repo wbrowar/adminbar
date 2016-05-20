@@ -19,6 +19,7 @@
   width: 100%;
   background-color: whitesmoke;
   border: 1px solid rgba(0, 0, 0, 0.8);
+  font-size: 14px;
   color: rgba(0, 0, 0, 0.8);
   transition: border .2s ease-out; }
   .admin_edit.admin_edit_embedded:hover {
