@@ -50,7 +50,7 @@ Here is a list of available arguments:
 
 ---
 
-![Screenshot](resources/screenshots/screenshot-edit-hover.png)
+![Screenshot](resources/screenshots/screenshot-edit.png)
 
 # Entry Edit Links
 ## Edit Links for Multiple Entries
