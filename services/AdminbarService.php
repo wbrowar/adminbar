@@ -27,14 +27,13 @@ class AdminbarService extends BaseApplicationComponent
     $config['scrollLinks'] = $this->_getConfigSetting('scrollLinks');
 
     // redirect tempalate path to plugin path
-    $oldTemplatesPath = method_exists(craft()->templates, 'getTemplatesPath') ? craft()->templates->getTemplatesPath() : craft()->path->getTemplatesPath();
-    $newTemplatesPath = craft()->path->getPluginsPath().'adminbar/templates/';
+    $oldTemplatesPath = craft()->templates->getTemplatesPath();
+    $newTemplatesPath = craft()->path->getPluginsPath() . 'adminbar/templates/';
     craft()->templates->setTemplatesPath($newTemplatesPath);
 
     // render admin bar
     $barHtml = craft()->templates->render('bar', $config);
     
-    //print($barHtml);
     if (isset($config['type']) && $config['type'] === 'primary') {
       craft()->templates->includeFootHtml($barHtml);
     } else {
@@ -74,8 +73,8 @@ class AdminbarService extends BaseApplicationComponent
     }
 
     // redirect tempalate path to plugin path
-    $oldTemplatesPath = method_exists(craft()->templates, 'getTemplatesPath') ? craft()->templates->getTemplatesPath() : craft()->path->getTemplatesPath();
-    $newTemplatesPath = craft()->path->getPluginsPath().'adminbar/templates/';
+    $oldTemplatesPath = craft()->templates->getTemplatesPath();
+    $newTemplatesPath = craft()->path->getPluginsPath() . 'adminbar/templates/';
     craft()->templates->setTemplatesPath($newTemplatesPath);
 
     // render admin bar

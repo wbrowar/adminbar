@@ -168,5 +168,15 @@
         "[Added] Added ability to leave developer notes in Entry Edit Links.",
         "[Improved] Added ability to ignore default CSS and JS and added all source files into the `adminbar/buildsource/` directory."
     ]
+  },
+  {
+    "version": "2.0.1",
+    "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
+    "date": "2016-05-22T06:00:00-05:00",
+    "notes": [
+        "[Added] NOTE: Upgrading from 1.x to 2.1 will involve changing your template files. Please see the docs before upgrading.",
+        "[Added] Added the `containerSelector` argument to Entry Edit Links to indicate what content could be edited when editing an entry. Thanks, @mildlygeeky",
+        "[Fixed] Added a few more font styles to Entry Edit Links for more consistency with Admin Bar."
+    ]
   }
 ]

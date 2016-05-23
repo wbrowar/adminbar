@@ -46,25 +46,3 @@
   'rows': settings.customLinks,
   'instructions': 'Add your own links to the Admin Bar.'
 }) }}
-
-{#
-{% includejs %}
-  var jq = jQuery;
-  
-  function showAutoEmbedExtras() {
-    if (jq('#settings-autoEmbed-field > .input > .lightswitch').hasClass('on')) {
-      jq('#settings-auto_embed_extras').show(200);
-      jq('#settings-embed_tag_instructions').hide(200);
-    } else {
-      jq('#settings-auto_embed_extras').hide(200);
-      jq('#settings-embed_tag_instructions').show(200);
-    }
-  }
-  
-  jq('#settings-autoEmbed-field > .input > .lightswitch').click(function() {
-    showAutoEmbedExtras();
-  });
-  
-  showAutoEmbedExtras();
-{% endincludejs %}
-#}

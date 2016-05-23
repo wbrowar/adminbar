@@ -86,10 +86,30 @@ Here is a full list of available arguments:
 | Argument | Default | Description |
 | --- | --- | --- |
 | `color` | *#d85b4b* | Color used for rollovers and links |
+| `containerSelector` | *null* | Outline a parent element to show content editors the entirety of an entry. [See below for an example](#) |
 | `devNote` | *null* | Display information to content editors. You may use plain text or HTML markup |
 | `showEditInfo` | *true* | If set to `true`, the Entry Edit Link will display the last updated date and the name of the author that last saved the entry |
 | `useCss` | *true* | Add the default styles to Entry Edit Links or leave them off and style it your way |
 | `useJs` | *true* | Add the default Javascript used by Entry Edit Links. Setting this to `false` embeds the Entry Edit Link through Twig, instead |
+
+### Inidcating What Will Change When Editing an Entry
+To help a content editor realize what part of an entry is editable, the `containerSelector` argument can select a containing parent HTML element of the Entry Edit Link Twig tag. For example, in the code below, by setting `containerSelector` to `'li'`, an outline would appear when a content editor rolls over the `<li>` element on the page.
+
+```twig
+<ul class="my_sweet_content">
+  {% for summary in mySweetContent %}
+    <li>
+      <h3>{{ summary.title }}</h3>
+      <p>{{ summary.teaser }}</p>
+      <a href="{{ summary.url }}">Read more</a>
+      
+      {{ craft.Adminbar.edit(summary, {
+        containerSelector: 'li',
+      }) }}
+    </li>
+  {% endfor %}
+</ul>
+```
 
 ---
 
