@@ -86,7 +86,7 @@ Here is a full list of available arguments:
 | Argument | Default | Description |
 | --- | --- | --- |
 | `color` | *#d85b4b* | Color used for rollovers and links |
-| `containerSelector` | *null* | Outline a parent element to show content editors the entirety of an entry. [See below for an example](#) |
+| `containerSelector` | *null* | Outline a parent element to show content editors the entirety of an entry. [See below for an example](https://github.com/wbrowar/adminbar#inidcating-what-will-change-when-editing-an-entry) |
 | `devNote` | *null* | Display information to content editors. You may use plain text or HTML markup |
 | `showEditInfo` | *true* | If set to `true`, the Entry Edit Link will display the last updated date and the name of the author that last saved the entry |
 | `useCss` | *true* | Add the default styles to Entry Edit Links or leave them off and style it your way |
