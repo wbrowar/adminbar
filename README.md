@@ -47,11 +47,11 @@ Here is a list of available arguments:
 | Argument | Default | Description |
 | --- | --- | --- |
 | `category` | *null* | Pass in a category object to add an edit link for that category |
-| `color` | *#d85b4b* | Color used for rollovers and for the background of the mobile theme |
+| `color` | *'#d85b4b'* | Color used for rollovers and for the background of the mobile theme |
 | `entry` | *null* | Pass in an entry object to add an edit link for that entry |
 | `sticky` | *true* | Uses css to `position: fixed;` Admin Bar to the top of the page |
 | `useCss` | *true* | Add the default styles to Admin Bar or leave them off and style it your way |
-| `useJs` | *true* | Add/remove the default Javascript used by Admin Bar |
+| `useJs` | *true* | Use the Admin Bar's default Javascript |
 
 ---
 
@@ -85,7 +85,7 @@ Here is a full list of available arguments:
 
 | Argument | Default | Description |
 | --- | --- | --- |
-| `color` | *#d85b4b* | Color used for rollovers and links |
+| `color` | *'#d85b4b'* | Color used for rollovers and links |
 | `containerSelector` | *null* | Outline a parent element to show content editors the entirety of an entry. [See below for an example](https://github.com/wbrowar/adminbar#inidcating-what-will-change-when-editing-an-entry) |
 | `devNote` | *null* | Display information to content editors. You may use plain text or HTML markup |
 | `showEditInfo` | *true* | If set to `true`, the Entry Edit Link will display the last updated date and the name of the author that last saved the entry |
@@ -110,6 +110,8 @@ To help a content editor realize what part of an entry is editable, the `contain
   {% endfor %}
 </ul>
 ```
+
+![Screenshot](resources/screenshots/screenshot-edit-outline.png)
 
 ---
 
@@ -146,10 +148,10 @@ You can add links to Admin Bar using the config file by passing properties into 
 | --- | --- | --- |
 | `title` | *string* | Appears as the label for the link |
 | `url` | *string* | Depending on the `type` property, the `url` represents the location or action of the link |
-| `title` | `'url'`, `'cpUrl'`, `'action'` | If the `type` is `url`, the `url` value should be an absolute URL or a path relative to the site root. If the `type` is `cpUrl`, the `url` value should be a path relative to your site's CP root. If the `type` is `action`, set the value for `url` to the path used by the Controller Action |
-| `params` | *string* | Passes along url parameters, as [documented here](http://buildwithcraft.com/docs/templating/functions#url) |
-| `protocol` | *string* | Changes the url protocol, as [documented here](http://buildwithcraft.com/docs/templating/functions#url). This only supports this string format: `'foo=1&bar=2'` |
-| `mustShowScriptName` | *string* | Appends `index.php`, as [documented here](http://buildwithcraft.com/docs/templating/functions#url) |
+| `title` | `'url'`, `'cpUrl'`, `'action'` | If the `type` is `'url'`, the `url` value should be an absolute URL or a path relative to the site root. If the `type` is `'cpUrl'`, the `url` value should be a path relative to your site's CP root. If the `type` is `'action'`, set the value for `url` to the path used by the Controller Action |
+| `params` | *string* | Passes along url parameters, as [documented here](https://craftcms.com/docs/templating/functions#url). This only supports this string format: `'foo=1&bar=2'` |
+| `protocol` | *string* | Changes the url protocol, as [documented here](https://craftcms.com/docs/templating/functions#url) |
+| `mustShowScriptName` | *string* | Appends `index.php`, as [documented here](https://craftcms.com/docs/templating/functions#url) |
 | `permissions` | *array* | An array of required permissions that are needed for this link to be displayed. All permissions in this array will be required for the link to appear |
 
 ---
@@ -182,8 +184,9 @@ While the Auto Embed feature is now gone, all other settings made by developers 
 ## To Do
 * New icon :horse:
 * Update plugin to support Craft 3
-* ~Add a new type to be used within multiple entries.~
-* ~Change—in Craft 3 version—Embed Options in Embed Tag to array~
+* Hold the door. Hold the door. Hold the door.
+* ~~Add a new type to be used within multiple entries.~~
+* ~~Change—in Craft 3 version—Embed Options in Embed Tag to array~~
 
 ---
 
