@@ -78,10 +78,10 @@
 
   .admin_edit_container {
     margin-bottom: 20px;
-    border: 1px dashed transparent;
-    box-sizing: border-box;
-    transition: border .2s ease-out; }
+    outline: 1px dashed transparent;
+    outline-offset: 3px;
+    transition: outline-color .2s ease-out; }
     .admin_edit_container:hover {
-      border-color: #d85b4b; }
+      outline-color: #d85b4b; }
       .admin_edit_container:hover .admin_edit {
         opacity: 1; } }
