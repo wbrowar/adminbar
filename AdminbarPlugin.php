@@ -91,4 +91,12 @@ class AdminbarPlugin extends BasePlugin
       'settings' => $this->getSettings(),
     ));
   }
+  public function prepSettings($settings) {
+    // if last custom link is deleted, replace old settings with blank array
+    if (!isset($settings['customLinks'])) {
+      $settings['customLinks'] = array();
+    }
+
+    return $settings;
+  }
 }

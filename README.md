@@ -23,7 +23,7 @@ Front-end shortcuts for clients logged into [Craft CMS](https://craftcms.com).
 ![Screenshot](resources/screenshots/screenshot-bar.png)
 
 ## Add the Default Admin Bar
-The easiest way to add Admin Bar to your website is by adding the hook, `{{ hook 'renderAdminBar' }}`, anywhere within your page template. Admin Bar will appear at the top of any page that includes this hook when someone—who has the permission to view the CP—is logged into your website.
+The easiest way to add Admin Bar to your website is by adding the hook, `{% hook 'renderAdminBar' %}`, anywhere within your page template. Admin Bar will appear at the top of any page that includes this hook when someone—who has the permission to view the CP—is logged into your website.
 
 Because Admin Bar is HTML, CSS, and Javascript added to your website's front-end, you may need to make some slight adjustments to override Admin Bar's CSS to make it fit your website.
 
@@ -172,7 +172,7 @@ The 1.x branch will remain here on GitHub, but I don't plan on supporting it goi
 The Twig tag changed for the sake of a more flexible approach. By passing in one array—and by smarter handling of arguments—more arguments can easily be added in the future. There's also no longer the need to pass in required arguments in a specific order.
 
 ### Removing Auto Embed
-The Auto Embed feature in 1.x turned out to cause issues for other plugins that rendered templates on the front-end. The short explanation is that if another plugin was planning on rendering a template, but Admin Bar happened to be loaded first, Admin Bar's render function would trick the other plugins into rendering their code before they have an opportunity to configure their template properly. Since it's not cool to step on other plugins, I've removed Auto Embed and replaced it with a simple hook: `{{ hook 'renderAdminBar' }}`.
+The Auto Embed feature in 1.x turned out to cause issues for other plugins that rendered templates on the front-end. The short explanation is that if another plugin was planning on rendering a template, but Admin Bar happened to be loaded first, Admin Bar's render function would trick the other plugins into rendering their code before they have an opportunity to configure their template properly. Since it's not cool to step on other plugins, I've removed Auto Embed and replaced it with a simple hook: `{% hook 'renderAdminBar' %}`.
 
 The side-effect of switching to the hook method is that Admin Bar appearing on the front-end is now completely controlled by a Twig template, instead of confusion that might occur by adding front-end code through the CP.
 
@@ -184,7 +184,6 @@ While the Auto Embed feature is now gone, all other settings made by developers 
 ## To Do
 * New icon :horse:
 * Update plugin to support Craft 3
-* Hold the door. Hold the door. Hold the door.
 * ~~Add a new type to be used within multiple entries.~~
 * ~~Change—in Craft 3 version—Embed Options in Embed Tag to array~~
 

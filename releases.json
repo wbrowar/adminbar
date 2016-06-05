@@ -178,5 +178,15 @@
         "[Added] Added the `containerSelector` argument to Entry Edit Links to indicate what content could be edited when editing an entry. Thanks, @mildlygeeky",
         "[Fixed] Added a few more font styles to Entry Edit Links for more consistency with Admin Bar."
     ]
+  },
+  {
+    "version": "2.0.2",
+    "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
+    "date": "2016-05-22T06:00:00-05:00",
+    "notes": [
+        "[Improved] Changed border on `containerSelector` from css `border` to `outline`."
+        "[Fixed] Fixed typo in Readme. It's `{% hook 'renderAdminBar' %}`, not `{{ hook 'renderAdminBar' }}`...",
+        "[Fixed] Fixed issue where removing the last Custom Link on the settings page wouldn't actually remove it."
+    ]
   }
 ]
