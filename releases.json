@@ -182,7 +182,7 @@
   {
     "version": "2.0.2",
     "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
-    "date": "2016-05-22T06:00:00-05:00",
+    "date": "2016-06-05T06:00:00-05:00",
     "notes": [
         "[Improved] Changed border on `containerSelector` from css `border` to `outline`."
         "[Fixed] Fixed typo in Readme. It's `{% hook 'renderAdminBar' %}`, not `{{ hook 'renderAdminBar' }}`...",
