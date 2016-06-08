@@ -172,7 +172,9 @@ The 1.x branch will remain here on GitHub, but I don't plan on supporting it goi
 The Twig tag changed for the sake of a more flexible approach. By passing in one array—and by smarter handling of arguments—more arguments can easily be added in the future. There's also no longer the need to pass in required arguments in a specific order.
 
 If you're using the *1.x* Twig tag that looks like this:
-`{{ craft.Adminbar.show(entry, 'rgb(255, 0, 128)', 'bar') }}`
+```twig
+{{ craft.Adminbar.show(entry, 'rgb(255, 0, 128)', 'bar') }}
+```
 
 Change the tag to this:
 
