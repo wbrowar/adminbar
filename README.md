@@ -171,6 +171,22 @@ The 1.x branch will remain here on GitHub, but I don't plan on supporting it goi
 ### Updating the Twig Tag
 The Twig tag changed for the sake of a more flexible approach. By passing in one array—and by smarter handling of arguments—more arguments can easily be added in the future. There's also no longer the need to pass in required arguments in a specific order.
 
+If you're using the *1.x* Twig tag that looks like this:
+`{{ craft.Adminbar.show(entry, 'rgb(255, 0, 128)', 'bar') }}`
+
+Change the tag to this:
+
+```twig
+{% set config = {
+  entry: entry,
+  color: 'rgb(255, 0, 128)',
+} %}
+
+{{ craft.adminbar.bar(config) }}
+```
+
+There are [more options you can pass into the Twig Tag](https://github.com/wbrowar/adminbar#using-the-admin-bar-twig-tag).
+
 ### Removing Auto Embed
 The Auto Embed feature in 1.x turned out to cause issues for other plugins that rendered templates on the front-end. The short explanation is that if another plugin was planning on rendering a template, but Admin Bar happened to be loaded first, Admin Bar's render function would trick the other plugins into rendering their code before they have an opportunity to configure their template properly. Since it's not cool to step on other plugins, I've removed Auto Embed and replaced it with a simple hook: `{% hook 'renderAdminBar' %}`.
 
