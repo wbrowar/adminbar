@@ -26,11 +26,11 @@
   
         {% if entry ?? false %}
           {% set sectionName = entry.section %}
-          <a href="{{ url(entry.cpEditUrl) }}" class="admin_bar_has_icon"><span class="admin_bar_icon"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 228.93 228.72"><defs><style>.cls-1{fill:#fff;}</style></defs><title>edit</title><path class="cls-1" d="M227.35,48.35a14.64,14.64,0,0,0-2.79-17L197.84,4.58a15.47,15.47,0,0,0-17.42-3.17l-5.95,4.74L14.29,166.33,0,228.72l62.39-14.29L222.57,54.26ZM32.59,210.92a30,30,0,0,0-14.84-14.58l5.53-24.15,14.14,6.91,13.06,13.06,6.86,13,0,0Z" transform="translate(0 0)"/></svg></span>{{ 'Edit {name}'|t({ name: sectionName }) }}</a>
+          <a href="{{ url(entry.cpEditUrl ~ '/' ~ entry.locale) }}" class="admin_bar_has_icon"><span class="admin_bar_icon"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 228.93 228.72"><defs><style>.cls-1{fill:#fff;}</style></defs><title>edit</title><path class="cls-1" d="M227.35,48.35a14.64,14.64,0,0,0-2.79-17L197.84,4.58a15.47,15.47,0,0,0-17.42-3.17l-5.95,4.74L14.29,166.33,0,228.72l62.39-14.29L222.57,54.26ZM32.59,210.92a30,30,0,0,0-14.84-14.58l5.53-24.15,14.14,6.91,13.06,13.06,6.86,13,0,0Z" transform="translate(0 0)"/></svg></span>{{ 'Edit {name}'|t({ name: sectionName }) }}</a>
         {% endif %}
   
         {% if category ?? false %}
-          <a href="{{ url(category.cpEditUrl) }}" class="admin_bar_has_icon"><span class="admin_bar_icon"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 228.93 228.72"><defs><style>.cls-1{fill:#fff;}</style></defs><title>edit</title><path class="cls-1" d="M227.35,48.35a14.64,14.64,0,0,0-2.79-17L197.84,4.58a15.47,15.47,0,0,0-17.42-3.17l-5.95,4.74L14.29,166.33,0,228.72l62.39-14.29L222.57,54.26ZM32.59,210.92a30,30,0,0,0-14.84-14.58l5.53-24.15,14.14,6.91,13.06,13.06,6.86,13,0,0Z" transform="translate(0 0)"/></svg></span>{{ 'Edit '|t ~ category }}</a>
+          <a href="{{ url(category.cpEditUrl ~ '/' ~ category.locale) }}" class="admin_bar_has_icon"><span class="admin_bar_icon"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 228.93 228.72"><defs><style>.cls-1{fill:#fff;}</style></defs><title>edit</title><path class="cls-1" d="M227.35,48.35a14.64,14.64,0,0,0-2.79-17L197.84,4.58a15.47,15.47,0,0,0-17.42-3.17l-5.95,4.74L14.29,166.33,0,228.72l62.39-14.29L222.57,54.26ZM32.59,210.92a30,30,0,0,0-14.84-14.58l5.53-24.15,14.14,6.91,13.06,13.06,6.86,13,0,0Z" transform="translate(0 0)"/></svg></span>{{ 'Edit '|t ~ category }}</a>
         {% endif %}
   
         {% if customLinks|length %}
@@ -77,7 +77,7 @@
     {% if useJs %}
       {% set js = '' %}
       {% set newJs %}
-function adminBarShowMobile(a){var b=document.getElementById("admin_bar_links");b.classList?b.classList.add("admin_bar_active"):b.className+=" admin_bar_active"}function adminBarHideMobile(a){var b=document.getElementById("admin_bar_links");b.classList?b.classList.remove("admin_bar_active"):b.className=b.className.replace(new RegExp("(^|\\b)"+className.split(" ").join("|")+"(\\b|$)","gi")," ")}document.getElementById("admin_bar_mobile_toggle").addEventListener("click",adminBarShowMobile);for(var adminBarCloseButtons=document.querySelectorAll(".admin_bar_overlay .admin_bar_close"),i=0;i<adminBarCloseButtons.length;i++)adminBarCloseButtons[i].addEventListener("click",adminBarHideMobile);
+function adminBarShowMobile(a){var b=document.getElementById("admin_bar_links");b.classList?b.classList.add("admin_bar_active"):b.className+=" admin_bar_active"}function adminBarHideMobile(a){var b=document.getElementById("admin_bar_links");b.classList?b.classList.remove("admin_bar_active"):b.className=b.className.replace(new RegExp("(^|\\b)"+className.split(" ").join("|")+"(\\b|$)","gi")," ")}document.getElementById("admin_bar_mobile_toggle").addEventListener("click",adminBarShowMobile);for(var adminBarCloseButtons=document.querySelectorAll(".admin_bar_overlay .admin_bar_close"),i=0;i<adminBarCloseButtons.length;i++)adminBarCloseButtons[i].addEventListener("click",adminBarHideMobile);document.documentElement.classList?document.documentElement.classList.add("adminbar"):document.documentElement.className+=" adminbar";
       {% endset %}
       {% set js = js ~ newJs %}
       
@@ -119,6 +119,7 @@ function adminBarShowMobile(a){var b=document.getElementById("admin_bar_links");
   {% elseif link.type == 'cpUrl' and userHasPermission %}
     <a href="{{ url(craft.config.cpTrigger ~ '/' ~ link.url, params, protocol, mustShowScriptName) }}">{{ link.title|t }}</a>
   {% elseif link.type == 'action' and userHasPermission %}
-    <a href="{{ actionUrl(link.url, { returnUrl: craft.request.url }) }}">{{ link.title|t }}</a>
+    {% set actionParams = params|length ? params ~ '&returnUrl=' ~ craft.request.url : 'returnUrl=' ~ craft.request.url %}
+    <a href="{{ actionUrl(link.url, actionParams) }}">{{ link.title|t }}</a>
   {% endif %}
 {% endmacro %}

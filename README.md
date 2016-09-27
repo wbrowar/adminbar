@@ -1,7 +1,7 @@
 # Craft – Admin Bar
 Front-end shortcuts for clients logged into [Craft CMS](https://craftcms.com).
 
-> NOTE: This release is not a seamless upgrade from 1.0. [Read below for more info about upgrading](https://github.com/wbrowar/adminbar#upgrading-from-1x). Also, there are probably some bugs...
+> The "hey, it's been a while" release
 
 ## Requirements
 * Craft 2.6+
@@ -62,7 +62,7 @@ Here is a list of available arguments:
 ## Edit Links for Multiple Entries
 When looping through entries in an Element Criteria Model, entries in search results, or related entries to a page, you can now place edit links that make it easier to find and edit these entries.
 
-To add an Entry Edit Link, use the tag, `{{ craft.Adminbar.edit(entry) }}`, and pass in the entry you'd like the link to edit.
+To add an Entry Edit Link, use the tag, `{{ craft.Adminbar.edit(entry) }}`, and pass in the entry you'd like the link to edit. You could also use Entry Edit Links to add shortcuts to other areas of the CP by passing in a string, `{{ craft.Adminbar.edit(craft.config.cpTrigger ~ '/categories/myCategories/5-some-category-page') }}`.
 
 By default, Entry Edit Links use Javascript to add the links to your page, so you can feel free to use `{% cache %}` tags around the Twig tag. The only thing a non-logged in user would see is this in the HTML markup: `<div class="admin_edit" data-id="0"></div>`.
 
@@ -200,7 +200,7 @@ While the Auto Embed feature is now gone, all other settings made by developers 
 ---
 
 ## To Do
-* New icon :horse:
+* ~~New icon :horse:~~
 * Update plugin to support Craft 3
 * ~~Add a new type to be used within multiple entries.~~
 * ~~Change—in Craft 3 version—Embed Options in Embed Tag to array~~

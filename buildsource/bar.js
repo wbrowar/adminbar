@@ -27,3 +27,10 @@ var adminBarCloseButtons = document.querySelectorAll('.admin_bar_overlay .admin_
 for (var i = 0; i < adminBarCloseButtons.length; i++) {
   adminBarCloseButtons[i].addEventListener('click', adminBarHideMobile);
 }
+
+// add adminbar link to <html> element
+if (document.documentElement.classList) {
+  document.documentElement.classList.add('adminbar');
+} else {
+  document.documentElement.className += ' adminbar';
+}

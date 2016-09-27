@@ -9,4 +9,16 @@ class AdminbarController extends BaseController
 
     $this->redirect($returnUrl, $terminate = true, $statusCode = 302);
   }
+  public function actionClearTemplateCacheByKey($returnUrl, $key)
+  {
+    craft()->templateCache->deleteCachesByKey($key);
+
+    $this->redirect($returnUrl, $terminate = true, $statusCode = 302);
+  }
+  public function actionClearTemplateCacheByElementType($returnUrl, $type)
+  {
+    craft()->templateCache->deleteCachesByElementType($type);
+
+    $this->redirect($returnUrl, $terminate = true, $statusCode = 302);
+  }
 }

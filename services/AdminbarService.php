@@ -61,8 +61,15 @@ class AdminbarService extends BaseApplicationComponent
     $config['displayEditAuthor'] = $this->_getConfigSetting('displayEditAuthor');
     $config['displayRevisionNote'] = $this->_getConfigSetting('displayRevisionNote');
     
+    // figure out if $entry is a custom URL string, otherwise assume it's an Entry
+    if (is_string($entry)) {
+      $config['type'] = 'string';
+    } else {
+      $config['type'] = 'entry';
+    }
+    
     // get recent revision information
-    $revision = craft()->entryRevisions->getVersionsByEntryId($entry['id'], $entry['locale'], 1, true);
+    $revision = $config['type'] == 'entry' ? craft()->entryRevisions->getVersionsByEntryId($entry['id'], $entry['locale'], 1, true) : '';
     if (!empty($revision)) {
       $revisionAuthor = craft()->users->getUserById($revision[0]->creatorId);
       $config['revisionAuthor'] = $revisionAuthor;

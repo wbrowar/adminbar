@@ -1,6 +1,7 @@
 {% set id = id ?? 0 %}
 {% set color = color ?? '#d85b4b' %}
 {% set containerSelector = containerSelector ?? null %}
+{% set editUrl = type == 'string' ? entry : url(entry.cpEditUrl ~ '/' ~ entry.locale) %}
 {% set devNote = devNote ?? '' %}
 {% set showEditInfo = showEditInfo ?? true %}
 {% set useCss = useCss ?? true %}
@@ -23,8 +24,8 @@ var adminBarEditLinks=[],ready=function(a){return"function"==typeof a?"complete"
 
 {% if enabled %}
   {% set editLink %}{% spaceless %}
-    <a class="admin_edit_link admin_bar_has_icon" href="{{ url(entry.cpEditUrl) }}"><span class="admin_bar_icon"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 228.93 228.72"><defs><style>.cls-1{ fill:#fff; }</style></defs><title>edit</title><path class="cls-1" d="M227.35,48.35a14.64,14.64,0,0,0-2.79-17L197.84,4.58a15.47,15.47,0,0,0-17.42-3.17l-5.95,4.74L14.29,166.33,0,228.72l62.39-14.29L222.57,54.26ZM32.59,210.92a30,30,0,0,0-14.84-14.58l5.53-24.15,14.14,6.91,13.06,13.06,6.86,13,0,0Z" transform="translate(0 0)"/></svg></span>{{ 'Edit'|t }}</a>
-    {% if (displayEditDate or displayEditAuthor) and showEditInfo %}
+    <a class="admin_edit_link admin_bar_has_icon" href="{{ editUrl }}"><span class="admin_bar_icon"><svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 228.93 228.72"><defs><style>.cls-1{ fill:#fff; }</style></defs><title>edit</title><path class="cls-1" d="M227.35,48.35a14.64,14.64,0,0,0-2.79-17L197.84,4.58a15.47,15.47,0,0,0-17.42-3.17l-5.95,4.74L14.29,166.33,0,228.72l62.39-14.29L222.57,54.26ZM32.59,210.92a30,30,0,0,0-14.84-14.58l5.53-24.15,14.14,6.91,13.06,13.06,6.86,13,0,0Z" transform="translate(0 0)"/></svg></span>{{ 'Edit'|t }}</a>
+    {% if type != 'string' and (displayEditDate or displayEditAuthor) and showEditInfo %}
       <div class="admin_edit_entry_updated">Last updated{% if displayEditDate %} {{ entry.dateUpdated|date('m/d/Y') }}{% endif %}{% if displayEditAuthor %} by {{ revisionAuthor.friendlyName ?? entry.author.friendlyName }}{% endif %}</div>
     {% endif %}
     {% if (displayRevisionNote and revisionNote is defined and revisionNote|length) or devNote|length %}
