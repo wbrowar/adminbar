@@ -14,6 +14,12 @@ class AdminbarService extends BaseApplicationComponent
     $config['barEmbedded'] = $this->_barEmbedded;
     $config['customLinks'] = $adminbar->getSettings()->customLinks;
     $config['color'] = isset($config['color']) ? $config['color'] : $adminbar->getSettings()->defaultColor;
+    
+    if (craft()->getEdition() >= Craft::Pro) {
+      $config['localesEnabled'] = true;
+    } else {
+      $config['localesEnabled'] = false;
+    }
 
     // add config file settings to config
     $config['additionalLinks'] = $this->_getConfigSetting('additionalLinks');
@@ -55,6 +61,12 @@ class AdminbarService extends BaseApplicationComponent
     $config['id'] = $this->_editId;
     $config['enabled'] = $this->canEmbed() ? true : false;
     $config['color'] = isset($config['color']) ? $config['color'] : $adminbar->getSettings()->defaultColor;
+    
+    if (craft()->getEdition() >= Craft::Pro) {
+      $config['localesEnabled'] = true;
+    } else {
+      $config['localesEnabled'] = false;
+    }
 
     // add config file settings to config
     $config['displayEditDate'] = $this->_getConfigSetting('displayEditDate');

@@ -190,15 +190,6 @@
     ]
   },
   {
-    "version": "2.0.2",
-    "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
-    "date": "2016-09-18T20:00:00-05:00",
-    "notes": [
-        "[Improved] Edit anything, by putting a URL instead an entry object in an Edit Entry Link."
-        "[Added] When Admin Bar is embedded, a class is added to the <html> element for easier styling."
-    ]
-  },
-  {
     "version": "2.1.0",
     "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
     "date": "2016-09-27T00:21:00-05:00",
@@ -207,6 +198,14 @@
         "[Added] Added locale support for the default edit link in Admin Bar and the default Edit link in Entry Edit Links.",
         "[Added] When Admin Bar is embedded, a class is added to the <html> element for easier styling.",
         "[Improved] New pluigin icon! ✏️",
+    ]
+  },
+  {
+    "version": "2.1.1",
+    "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
+    "date": "2016-09-28T13:00:00-05:00",
+    "notes": [
+        "[Fixed] Fixed an issue with locales on non-Pro Craft sites.",
     ]
   }
 ]

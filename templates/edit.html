@@ -1,11 +1,21 @@
 {% set id = id ?? 0 %}
 {% set color = color ?? '#d85b4b' %}
 {% set containerSelector = containerSelector ?? null %}
-{% set editUrl = type == 'string' ? entry : url(entry.cpEditUrl ~ '/' ~ entry.locale) %}
 {% set devNote = devNote ?? '' %}
 {% set showEditInfo = showEditInfo ?? true %}
 {% set useCss = useCss ?? true %}
 {% set useJs = useJs ?? true %}
+{% set localesEnabled = localesEnabled ?? false %}
+
+{% if type != 'string' %}
+  {% if localesEnabled %}
+    {% set editUrl = entry.cpEditUrl ~ '/' ~ entry.locale %}
+  {% else %}
+    {% set editUrl = entry.cpEditUrl %}
+  {% endif %}
+{% else %}
+  {% set editUrl = entry %}
+{% endif %}
 
 {% set js = '' %}
 
