@@ -1,7 +1,7 @@
 # Craft – Admin Bar
 Front-end shortcuts for clients logged into [Craft CMS](https://craftcms.com).
 
-> The "hey, it's been a while" release
+> NOTE: This is the Craft 2.x version of Admin Bar. [Here's the Craft 3 version](https://github.com/wbrowar/craft-3-adminbar).
 
 ## Requirements
 * Craft 2.6+
