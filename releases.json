@@ -215,7 +215,7 @@
     "notes": [
       "[Added] Added option to turn off the section title shown in the default Entry/Category edit link.",
       "[Improved] Removed Admin Bar and Edit Links from templates when in Live Preview.",
-      "[Improved] Remove embedded `<style>` tags and moved all styles over to be delivered by `includeCss`. This will help when using Vue.js and other tools that remove in-document tags."
+      "[Improved] Remove embedded style tags and moved all styles over to be delivered by `includeCss`. This will help when using Vue.js and other tools that remove in-document tags."
     ]
   }
 ]
