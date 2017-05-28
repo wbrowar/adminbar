@@ -6,6 +6,7 @@ return array(
   'cacheBar' => true,
   'displayGreeting' => true,
   'displayDashboardLink' => true,
+  'displayDefaultEditSection' => true,
   'displaySettingsLink' => true,
   'displayLogout' => true,
   'enableMobileMenu' => true,

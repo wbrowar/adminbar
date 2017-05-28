@@ -26,9 +26,11 @@ var adminBarEditLinks=[],ready=function(a){return"function"==typeof a?"complete"
   {% set js = js ~ newJs %}
 
   {% if useCss %}
-    <style>
+    {% set newCss %}
 .admin_bar_icon{display:inline-block;margin-right:5px;width:15px;-webkit-transform:translateY(2px);transform:translateY(2px)}.admin_edit.admin_edit_embedded,.admin_edit_info{display:-webkit-flex;display:-ms-flexbox;box-sizing:border-box;font-family:BlinkMacSystemFont,-apple-system,"Trebuchet MS","Lucida Grande","Lucida Sans Unicode","Lucida Sans",Tahoma,sans-serif}.admin_bar_icon svg{width:100%}@media screen and (max-width:600px){.admin_bar_wrapper .admin_bar_icon{margin-right:7px;width:22px}}.admin_edit.admin_edit_embedded{display:flex;-webkit-flex-flow:row wrap;-ms-flex-flow:row wrap;flex-flow:row wrap;-webkit-justify-content:space-between;-ms-flex-pack:justify;justify-content:space-between;margin:20px 0;position:relative;width:100%;background-color:#f5f5f5;border:1px solid rgba(0,0,0,.8);font-size:17px;color:rgba(0,0,0,.8);transition:border .2s ease-out,opacity .2s ease-out}.admin_edit.admin_edit_embedded:hover{border-color:{{ color }}}.admin_edit_link{display:inline-block;padding:9px 9px 7px;background-color:rgba(0,0,0,.8);color:#fff!important;text-decoration:none!important;text-transform:uppercase;transition:background .2s ease-out;white-space:nowrap}.admin_edit_link:hover{background-color:{{ color }}}.admin_edit_info{display:flex;-webkit-flex-flow:column nowrap;-ms-flex-flow:column nowrap;flex-flow:column nowrap;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;-webkit-flex:1 0 100%;-ms-flex:1 0 100%;flex:1 0 100%;padding:8px 10px;background-color:rgba(0,0,0,.05);font-size:.8em;line-height:1.5;color:#505050}.admin_edit_info p{margin:0 0 8px;max-width:700px}.admin_edit_info p:last-child{margin-bottom:0}.admin_edit_info a{color:{{ color }}!important}.admin_edit_entry_updated{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-flow:row nowrap;-ms-flex-flow:row nowrap;flex-flow:row nowrap;-webkit-align-items:center;-ms-flex-align:center;align-items:center;padding-right:10px;font-weight:500;font-size:.8em}.admin_edit_revision_note{max-width:700px}@media screen and (min-width:601px){.admin_edit_container .admin_edit.admin_edit_embedded{margin:20px 0 0;border:none;opacity:.3}.admin_edit_container{margin-bottom:20px;outline:transparent dashed 1px;outline-offset:3px;transition:outline-color .2s ease-out}.admin_edit_container:hover{outline-color:{{ color }}}.admin_edit_container:hover .admin_edit{opacity:1}}
-    </style>
+    {% endset %}
+
+    {% includeCss newCss %}
   {% endif %}
 {% endif %}
 

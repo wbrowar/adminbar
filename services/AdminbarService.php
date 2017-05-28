@@ -26,6 +26,7 @@ class AdminbarService extends BaseApplicationComponent
     $config['cacheBar'] = $this->_getConfigSetting('cacheBar');
     $config['clearCacheLink'] = $this->_getConfigSetting('clearCacheLink');
     $config['displayDashboardLink'] = $this->_getConfigSetting('displayDashboardLink');
+    $config['displayDefaultEditSection'] = $this->_getConfigSetting('displayDefaultEditSection');
     $config['displayGreeting'] = $this->_getConfigSetting('displayGreeting');
     $config['displayLogout'] = $this->_getConfigSetting('displayLogout');
     $config['displaySettingsLink'] = $this->_getConfigSetting('displaySettingsLink');
@@ -121,6 +122,7 @@ class AdminbarService extends BaseApplicationComponent
       !craft()->request->isAjaxRequest() &&
       !craft()->isConsole() &&
       !craft()->request->isCpRequest() &&
+      !craft()->request->isLivePreview() &&
       craft()->userSession->isLoggedIn()
     );
   }

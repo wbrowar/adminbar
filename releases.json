@@ -184,7 +184,7 @@
     "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
     "date": "2016-06-05T06:00:00-05:00",
     "notes": [
-        "[Improved] Changed border on `containerSelector` from css `border` to `outline`."
+        "[Improved] Changed border on `containerSelector` from css `border` to `outline`.",
         "[Fixed] Fixed typo in Readme. It's `{% hook 'renderAdminBar' %}`, not `{{ hook 'renderAdminBar' }}`...",
         "[Fixed] Fixed issue where removing the last Custom Link on the settings page wouldn't actually remove it."
     ]
@@ -197,7 +197,7 @@
         "[Improved] Edit anything, by putting a URL instead an entry object in an Edit Entry Link.",
         "[Added] Added locale support for the default edit link in Admin Bar and the default Edit link in Entry Edit Links.",
         "[Added] When Admin Bar is embedded, a class is added to the <html> element for easier styling.",
-        "[Improved] New pluigin icon! ✏️",
+        "[Improved] New pluigin icon! ✏️"
     ]
   },
   {
@@ -205,7 +205,17 @@
     "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
     "date": "2016-09-28T13:00:00-05:00",
     "notes": [
-        "[Fixed] Fixed an issue with locales on non-Pro Craft sites.",
+        "[Fixed] Fixed an issue with locales on non-Pro Craft sites."
+    ]
+  },
+  {
+    "version": "2.1.2",
+    "downloadUrl": "https://github.com/wbrowar/adminbar/archive/master.zip",
+    "date": "2017-05-27T13:00:00-05:00",
+    "notes": [
+      "[Added] Added option to turn off the section title shown in the default Entry/Category edit link.",
+      "[Improved] Removed Admin Bar and Edit Links from templates when in Live Preview.",
+      "[Improved] Remove embedded `<style>` tags and moved all styles over to be delivered by `includeCss`. This will help when using Vue.js and other tools that remove in-document tags."
     ]
   }
 ]

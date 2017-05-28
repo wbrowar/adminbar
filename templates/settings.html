@@ -1,24 +1,10 @@
 {% import "_includes/forms" as forms %}
 
-{% if settings.autoEmbed %}
-  <p style="padding: 1em 1em .8em; background-color: #da5a47; color: #fff;">Hi. It looks like you were previously using the Auto Embed feature, however, due to a bug that affected other Craft plugins, Auto Embed is no longer supported. <a href="https://github.com/wbrowar/adminbar#upgrading-from-1x" style="text-decoration: underline; color: #fff;">Please see the docs for more information.</a> Saving this page will make this message go away.</p>
-  <hr>
-  <div style="display: none;">
-    {{ forms.lightswitchField({
-      'label': 'Auto Embed',
-      'id': 'autoEmbed',
-      'name': 'autoEmbed',
-      'on': false,
-      'instructions': 'Hello, clever dev.',
-    }) }}
-  </div>
-{% endif %}
-
 {{ forms.colorField({
   'label': 'Highlight Color',
   'id': 'defaultColor',
   'name': 'defaultColor',
-  'value': settings.defaultColor,
+  'value': settings.defaultColor ?? '#d85b4b',
   'instructions': 'Color used for highlights and rollovers. This can be overridden if color value is added to the Twig embed tag.',
   }) }}
 
@@ -31,18 +17,18 @@
   'addRowLabel': 'Add a link',
   'cols': {
     'linkLabel': {
-      'heading': 'Link Label',
+      'heading': 'Label',
       'type': 'singleline',
     },
     'linkUrl': {
-      'heading': 'Link URL',
+      'heading': 'URL',
       'type': 'singleline',
     },
     'adminOnly': {
-      'heading': 'Admin Only',
+      'heading': 'Admin only?',
       'type': 'checkbox',
     },
   },
-  'rows': settings.customLinks,
+  'rows': settings.customLinks ?? [''],
   'instructions': 'Add your own links to the Admin Bar.'
 }) }}
