@@ -92,7 +92,7 @@ Here is a full list of available arguments:
 | `useCss` | *true* | Add the default styles to Entry Edit Links or leave them off and style it your way |
 | `useJs` | *true* | Add the default Javascript used by Entry Edit Links. Setting this to `false` embeds the Entry Edit Link through Twig, instead |
 
-### Inidcating What Will Change When Editing an Entry
+### Indicating What Will Change When Editing an Entry
 To help a content editor realize what part of an entry is editable, the `containerSelector` argument can select a containing parent HTML element of the Entry Edit Link Twig tag. For example, in the code below, by setting `containerSelector` to `'li'`, an outline would appear when a content editor rolls over the `<li>` element on the page.
 
 ```twig
