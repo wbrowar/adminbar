@@ -122,7 +122,8 @@
   padding: 12px 25px;
   font-size: 1.1em; }
   .admin_bar_mobile .admin_bar_mobile_toggle {
-    display: block; }
+    display: block;
+    cursor: pointer }
 
 .admin_bar_overlay.admin_bar_active {
   position: fixed;
